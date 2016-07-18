@@ -35,7 +35,7 @@ Yab\CrudMaker\CrudMakerProvider::class
 
 Time to publish those assets!
 ```php
-php artisan vendor:publish --provider="Yab\CrudMaker\LaracogsProvider"
+php artisan vendor:publish --provider="Yab\CrudMaker\CrudMakerProvider"
 ```
 
 ##### After these few steps you have the following tools at your fingertips:
