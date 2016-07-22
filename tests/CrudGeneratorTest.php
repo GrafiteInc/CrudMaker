@@ -12,6 +12,7 @@ class CrudGeneratorTest extends PHPUnit_Framework_TestCase
     {
         $this->generator = new CrudGenerator();
         $this->config = [
+            'framework'                  => 'laravel',
             'bootstrap'                  => false,
             'semantic'                   => false,
             'template_source'            => '',
@@ -45,7 +46,7 @@ class CrudGeneratorTest extends PHPUnit_Framework_TestCase
             '_lower_casePlural_'         => str_plural(strtolower('testTable')),
             '_camel_case_'               => ucfirst(camel_case('testTable')),
             '_camel_casePlural_'         => str_plural(camel_case('testTable')),
-            'template_source'            => __DIR__.'/../src/Templates',
+            'template_source'            => __DIR__.'/../src/Templates/Laravel',
         ];
     }
 
