@@ -84,12 +84,22 @@ class CrudMaker extends Command
         $section = '';
         $splitTable = [];
 
+        $appPath = app()->path();
+        $basePath = app()->basePath();
+        $appNamespace = $this->getAppNamespace();
+        $framework = ucfirst('Laravel');
+
+        if (stristr(get_class(app()), 'Lumen')) {
+            $framework = ucfirst('lumen');
+        }
+
         $table = ucfirst(str_singular($this->argument('table')));
 
         $validator->validateSchema($this);
         $validator->validateOptions($this);
 
         $config = [
+            'framework'                  => $framework,
             'bootstrap'                  => false,
             'semantic'                   => false,
             'template_source'            => '',
@@ -97,28 +107,28 @@ class CrudMaker extends Command
             '_sectionTablePrefix_'       => '',
             '_sectionRoutePrefix_'       => '',
             '_sectionNamespace_'         => '',
-            '_path_facade_'              => app_path('Facades'),
-            '_path_service_'             => app_path('Services'),
-            '_path_repository_'          => app_path('Repositories/_table_'),
-            '_path_model_'               => app_path('Repositories/_table_'),
-            '_path_controller_'          => app_path('Http/Controllers/'),
-            '_path_api_controller_'      => app_path('Http/Controllers/Api'),
-            '_path_views_'               => base_path('resources/views'),
-            '_path_tests_'               => base_path('tests'),
-            '_path_request_'             => app_path('Http/Requests/'),
-            '_path_routes_'              => app_path('Http/routes.php'),
-            '_path_api_routes_'          => app_path('Http/api-routes.php'),
-            '_path_migrations_'          => base_path('database/migrations'),
+            '_path_facade_'              => $appPath.'/Facades',
+            '_path_service_'             => $appPath.'/Services',
+            '_path_repository_'          => $appPath.'/Repositories/_table_',
+            '_path_model_'               => $appPath.'/Repositories/_table_',
+            '_path_controller_'          => $appPath.'/Http/Controllers/',
+            '_path_api_controller_'      => $appPath.'/Http/Controllers/Api',
+            '_path_views_'               => $basePath.'/resources/views',
+            '_path_tests_'               => $basePath.'/tests',
+            '_path_request_'             => $appPath.'/Http/Requests/',
+            '_path_routes_'              => $appPath.'/Http/routes.php',
+            '_path_api_routes_'          => $appPath.'/Http/api-routes.php',
+            '_path_migrations_'          => $basePath.'/database/migrations',
             'routes_prefix'              => '',
             'routes_suffix'              => '',
-            '_app_namespace_'            => $this->getAppNamespace(),
-            '_namespace_services_'       => $this->getAppNamespace().'Services',
-            '_namespace_facade_'         => $this->getAppNamespace().'Facades',
-            '_namespace_repository_'     => $this->getAppNamespace().'Repositories\_table_',
-            '_namespace_model_'          => $this->getAppNamespace().'Repositories\_table_',
-            '_namespace_controller_'     => $this->getAppNamespace().'Http\Controllers',
-            '_namespace_api_controller_' => $this->getAppNamespace().'Http\Controllers\Api',
-            '_namespace_request_'        => $this->getAppNamespace().'Http\Requests',
+            '_app_namespace_'            => 'App\\',
+            '_namespace_services_'       => $appNamespace.'Services',
+            '_namespace_facade_'         => $appNamespace.'Facades',
+            '_namespace_repository_'     => $appNamespace.'Repositories\_table_',
+            '_namespace_model_'          => $appNamespace.'Repositories\_table_',
+            '_namespace_controller_'     => $appNamespace.'Http\Controllers',
+            '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api',
+            '_namespace_request_'        => $appNamespace.'Http\Requests',
             '_table_name_'               => str_plural(strtolower($table)),
             '_lower_case_'               => strtolower($table),
             '_lower_casePlural_'         => str_plural(strtolower($table)),
@@ -133,14 +143,7 @@ class CrudMaker extends Command
 
         $config['schema'] = $this->option('schema');
         $config['relationships'] = $this->option('relationships');
-
-        $templateDirectory = __DIR__.'/../Templates';
-
-        if (is_dir(base_path('resources/crudmaker/crud'))) {
-            $templateDirectory = base_path('resources/crudmaker/crud');
-        }
-
-        $config['template_source'] = Config::get('crudmaker.template_source', $templateDirectory);
+        $config['template_source'] = $this->getTemplates($framework, $basePath);
 
         if (stristr($table, '_')) {
             $splitTable = explode('_', $table);
@@ -148,7 +151,7 @@ class CrudMaker extends Command
             $section = $splitTable[0];
             $config = $this->configASectionedCRUD($config, $section, $table, $splitTable);
         } else {
-            $config = array_merge($config, Config::get('crudmaker.single', []));
+            $config = array_merge($config, app('config')->get('crudmaker.single', []));
             $config = $this->setConfig($config, $section, $table);
         }
 
@@ -220,28 +223,28 @@ class CrudMaker extends Command
             '_sectionTablePrefix_'       => strtolower($section).'_',
             '_sectionRoutePrefix_'       => strtolower($section).'/',
             '_sectionNamespace_'         => ucfirst($section).'\\',
-            '_path_facade_'              => app_path('Facades'),
-            '_path_service_'             => app_path('Services'),
-            '_path_repository_'          => app_path('Repositories/'.ucfirst($section).'/'.ucfirst($table)),
-            '_path_model_'               => app_path('Repositories/'.ucfirst($section).'/'.ucfirst($table)),
-            '_path_controller_'          => app_path('Http/Controllers/'.ucfirst($section).'/'),
-            '_path_api_controller_'      => app_path('Http/Controllers/Api/'.ucfirst($section).'/'),
-            '_path_views_'               => base_path('resources/views/'.strtolower($section)),
-            '_path_tests_'               => base_path('tests'),
-            '_path_request_'             => app_path('Http/Requests/'.ucfirst($section)),
-            '_path_routes_'              => app_path('Http/routes.php'),
-            '_path_api_routes_'          => app_path('Http/api-routes.php'),
-            '_path_migrations_'          => base_path('database/migrations'),
+            '_path_facade_'              => $appPath.'Facades',
+            '_path_service_'             => $appPath.'Services',
+            '_path_repository_'          => $appPath.'Repositories/'.ucfirst($section).'/'.ucfirst($table),
+            '_path_model_'               => $appPath.'Repositories/'.ucfirst($section).'/'.ucfirst($table),
+            '_path_controller_'          => $appPath.'Http/Controllers/'.ucfirst($section).'/',
+            '_path_api_controller_'      => $appPath.'Http/Controllers/Api/'.ucfirst($section).'/',
+            '_path_views_'               => $basePath.'/resources/views/'.strtolower($section),
+            '_path_tests_'               => $basePath.'/tests',
+            '_path_request_'             => $appPath.'Http/Requests/'.ucfirst($section),
+            '_path_routes_'              => $appPath.'Http/routes.php',
+            '_path_api_routes_'          => $appPath.'Http/api-routes.php',
+            '_path_migrations_'          => $basePath.'/database/migrations',
             'routes_prefix'              => "\n\nRoute::group(['namespace' => '".ucfirst($section)."', 'prefix' => '".strtolower($section)."', 'middleware' => ['web']], function () { \n",
             'routes_suffix'              => "\n});",
-            '_app_namespace_'            => $this->getAppNamespace(),
-            '_namespace_services_'       => $this->getAppNamespace().'Services\\'.ucfirst($section),
-            '_namespace_facade_'         => $this->getAppNamespace().'Facades',
-            '_namespace_repository_'     => $this->getAppNamespace().'Repositories\\'.ucfirst($section).'\\'.ucfirst($table),
-            '_namespace_model_'          => $this->getAppNamespace().'Repositories\\'.ucfirst($section).'\\'.ucfirst($table),
-            '_namespace_controller_'     => $this->getAppNamespace().'Http\Controllers\\'.ucfirst($section),
-            '_namespace_api_controller_' => $this->getAppNamespace().'Http\Controllers\Api\\'.ucfirst($section),
-            '_namespace_request_'        => $this->getAppNamespace().'Http\Requests\\'.ucfirst($section),
+            '_app_namespace_'            => $appNamespace,
+            '_namespace_services_'       => $appNamespace.'Services\\'.ucfirst($section),
+            '_namespace_facade_'         => $appNamespace.'Facades',
+            '_namespace_repository_'     => $appNamespace.'Repositories\\'.ucfirst($section).'\\'.ucfirst($table),
+            '_namespace_model_'          => $appNamespace.'Repositories\\'.ucfirst($section).'\\'.ucfirst($table),
+            '_namespace_controller_'     => $appNamespace.'Http\Controllers\\'.ucfirst($section),
+            '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api\\'.ucfirst($section),
+            '_namespace_request_'        => $appNamespace.'Http\Requests\\'.ucfirst($section),
             '_lower_case_'               => strtolower($splitTable[1]),
             '_lower_casePlural_'         => str_plural(strtolower($splitTable[1])),
             '_camel_case_'               => ucfirst(camel_case($splitTable[1])),
@@ -251,7 +254,7 @@ class CrudMaker extends Command
         ];
 
         $config = array_merge($config, $sectionalConfig);
-        $config = array_merge($config, Config::get('crudmaker.sectioned', []));
+        $config = array_merge($config, app('config')->get('crudmaker.sectioned', []));
         $config = $this->setConfig($config, $section, $table);
 
         $pathsToMake = [
@@ -270,6 +273,28 @@ class CrudMaker extends Command
         }
 
         return $config;
+    }
+
+    /**
+     * Get the templates directory
+     *
+     * @param  string $framework
+     * @param  string $basePath
+     *
+     * @return string
+     */
+    public function getTemplates($framework, $basePath)
+    {
+        $templates = __DIR__.'/../Templates/'.$framework;
+
+        if ($framework === 'Laravel') {
+            $templateDirectory = $basePath.'/resources/crudmaker/crud';
+            if (is_dir($templateDirectory)) {
+                $templates = app('config')->get('crudmaker.template_source', $templateDirectory);
+            }
+        }
+
+        return $templates;
     }
 
     /**
@@ -308,8 +333,12 @@ class CrudMaker extends Command
     private function generateCore($crudGenerator, $config, $bar)
     {
         $crudGenerator->createRepository($config);
-        $crudGenerator->createRequest($config);
         $crudGenerator->createService($config);
+
+        if ($config['framework'] === 'laravel') {
+            $crudGenerator->createRequest($config);
+        }
+
         $bar->advance();
     }
 

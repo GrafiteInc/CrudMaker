@@ -14,12 +14,8 @@ class CrudMakerProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!is_dir(base_path('resources/crudmaker/crud'))) {
-            mkdir(base_path('resources/crudmaker/crud'), 0777, true);
-        }
-
         $this->publishes([
-            __DIR__.'/Templates'                               => base_path('resources/crudmaker/crud'),
+            __DIR__.'/Templates/Laravel'          => base_path('resources/crudmaker/crud'),
             __DIR__.'/../config/crudmaker.php'    => base_path('config/crudmaker.php'),
         ]);
     }
