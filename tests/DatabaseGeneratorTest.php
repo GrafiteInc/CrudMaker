@@ -1,9 +1,5 @@
 <?php
 
-use org\bovigo\vfs\vfsStream;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Container\Container as Container;
-use Illuminate\Support\Facades\Facade as Facade;
 use Yab\CrudMaker\Generators\DatabaseGenerator;
 
 class DatabaseGeneratorTest extends AppTest
@@ -15,6 +11,10 @@ class DatabaseGeneratorTest extends AppTest
     {
         parent::setUp();
         $this->generator = new DatabaseGenerator();
+        $this->command = Mockery::mock(\Illuminate\Console\Command::class);
+        $this->command->shouldReceive('callSilent')->andReturnUsing(function ($command, $data) {
+            \Artisan::call($command, $data);
+        });
         $this->config = [
             '_path_migrations_' => base_path('database/migrations')
         ];
@@ -23,64 +23,62 @@ class DatabaseGeneratorTest extends AppTest
     public function testCreateMigrationFail()
     {
         $this->setExpectedException('Exception');
-        $this->generator->createMigration('alskfdjbajlksbdfl', 'TestTable', 'lkdblkabflabsd');
+
+        $this->generator->createMigration('random_string', 'TestTable', 'another_random_string', $this->command);
     }
 
     public function testCreateMigrationSuccess()
     {
-        $this->generator->createMigration($this->config, '', 'TestTable', []);
-
-        $this->assertEquals(count(glob(base_path('database/migrations').'/*')), 1);
-
-        array_map('unlink', glob(base_path('database/migrations').'/*'));
-
-        $this->assertEquals(count(glob(base_path('database/migrations').'/*')), 0);
+        $this->createMigration();
     }
 
     public function testCreateMigrationSuccessAlternativeLocation()
     {
-        $config = [
-            '_path_migrations_' => base_path('alternative_migrations_location')
-        ];
-
-        $this->generator->createMigration($config, '', 'TestTable', []);
+        $this->createMigration('alternative_migrations_location');
 
         $this->assertCount(1, glob(base_path('alternative_migrations_location').'/*'));
-
-        array_map('unlink', glob(base_path('alternative_migrations_location').'/*'));
-
-        $this->assertCount(0, glob(base_path('alternative_migrations_location').'/*'));
     }
 
     public function testCreateSchema()
     {
-        $this->generator->createMigration($this->config, '', 'TestTable', []);
-        $migrations = glob(base_path('database/migrations').'/*');
-        $this->assertEquals(count($migrations), 1);
+        $migrations = $this->createMigration();
 
         $this->generator->createSchema($this->config, '', 'TestTable', [], 'id:increments,name:string');
 
-        $this->assertTrue(strpos(file_get_contents($migrations[0]), 'testtables') > 0);
-        $this->assertTrue(strpos(file_get_contents($migrations[0]), "table->increments('id')") > 0);
-
-        array_map('unlink', glob(base_path('database/migrations').'/*'));
+        $this->assertContains('testtables', file_get_contents($migrations[0]));
+        $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
     }
 
     public function testCreateSchemaAlternativeLocation()
     {
-        $config = [
-            '_path_migrations_' => base_path('alternative_migrations_location')
-        ];
+        $migrations = $this->createMigration('alternative_migrations_location');
 
-        $this->generator->createMigration($config, '', 'TestTable', []);
-        $migrations = glob(base_path('alternative_migrations_location').'/*');
-        $this->assertCount(1, $migrations);
-
-        $this->generator->createSchema($config, '', 'TestTable', [], 'id:increments,name:string');
+        $this->generator->createSchema($this->config, '', 'TestTable', [], 'id:increments,name:string');
 
         $this->assertContains('testtables', file_get_contents($migrations[0]));
         $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
+    }
 
-        array_map('unlink', glob(base_path('alternative_migrations_location').'/*'));
+    private function createMigration($location = null)
+    {
+        if ($location) {
+            $this->config = [
+                '_path_migrations_' => base_path($location)
+            ];
+        }
+
+        $this->generator->createMigration($this->config , '', 'TestTable', [], $this->command);
+        $migrations = glob($this->config['_path_migrations_'].'/*');
+
+        $this->assertCount(1, $migrations);
+
+        return $migrations;
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        array_map('unlink', glob($this->config['_path_migrations_'] . '/*'));
     }
 }
