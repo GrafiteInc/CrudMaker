@@ -4,7 +4,6 @@ namespace Yab\CrudMaker\Generators;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Artisan;
 
 /**
  * Generate the CRUD database components.
@@ -21,13 +20,14 @@ class DatabaseGenerator
     /**
      * Create the migrations.
      *
-     * @param string $section
-     * @param string $table
-     * @param array  $splitTable
+     * @param string   $section
+     * @param string   $table
+     * @param array    $splitTable
+     * @param Command  $command
      *
      * @return void
      */
-    public function createMigration($config, $section, $table, $splitTable)
+    public function createMigration($config, $section, $table, $splitTable, $command)
     {
         try {
             if (!empty($section)) {
@@ -38,7 +38,7 @@ class DatabaseGenerator
                 $tableName = str_plural(strtolower($table));
             }
 
-            Artisan::call('make:migration', [
+            $command->callSilent('make:migration', [
                 'name'     => $migrationName,
                 '--table'  => $tableName,
                 '--create' => true,

@@ -119,7 +119,7 @@ class TableService
      *
      * @return string
      */
-    private function tableDefintion($table)
+    public function tableDefintion($table)
     {
         $columnStringArray = [];
         $columns = $this->getTableColumns($table, true);

@@ -56,7 +56,7 @@ class CrudMaker extends Command
      *
      * @var string
      */
-    protected $signature = 'crudmaker:make {table}
+    protected $signature = 'crudmaker:new {table}
         {--api : Creates an API Controller and Routes}
         {--apiOnly : Creates only the API Controller and Routes}
         {--ui= : Select one of bootstrap|semantic for the UI}
@@ -379,7 +379,7 @@ class CrudMaker extends Command
     private function generateDB($dbGenerator, $config, $bar, $section, $table, $splitTable)
     {
         if ($this->option('migration')) {
-            $dbGenerator->createMigration($config, $section, $table, $splitTable);
+            $dbGenerator->createMigration($config, $section, $table, $splitTable, $this);
             if ($this->option('schema')) {
                 $dbGenerator->createSchema($config, $section, $table, $splitTable, $this->option('schema'));
             }

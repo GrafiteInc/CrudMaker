@@ -48,7 +48,7 @@ class TableCrudMaker extends Command
             throw new Exception("There is no table definition for $table. Are you sure you spelled it correctly? Table names are case sensitive.", 1);
         }
 
-        app('artisan')->call('laracogs:crud', [
+        $this->call('crudmaker:new', [
             'table'         => $table,
             '--api'         => $this->option('api'),
             '--ui'          => $this->option('ui'),
