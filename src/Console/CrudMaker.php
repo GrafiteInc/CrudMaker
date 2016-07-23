@@ -217,6 +217,10 @@ class CrudMaker extends Command
      */
     public function configASectionedCRUD($config, $section, $table, $splitTable)
     {
+        $appPath = app()->path();
+        $basePath = app()->basePath();
+        $appNamespace = $appService->getAppNamespace();
+
         $sectionalConfig = [
             '_sectionPrefix_'            => strtolower($section).'.',
             '_sectionTablePrefix_'       => strtolower($section).'_',

@@ -62,14 +62,7 @@ php artisan crudmaker:table {name or snake_names} {--api} {--ui=bootstrap|semant
 The API option will add in a controller to handle API requests and responses. It will also add in the API routes assuming this is v1.
 
 ### UI
-There are two primarily supported CSS frameworks (Bootstrap and Semantic), you can opt in for either or disregard them completely. Both expect a dashboard parent view, this can be generated with either of the following commands:
-
-```
-artisan crudmaker:bootstrap
-artisan crudmaker:semantic
-```
-
-These reskin your views with either of the CSS frameworks.
+There are two primarily supported CSS frameworks (Bootstrap and Semantic), you can opt in for either or disregard them completely. Both expect a dashboard parent view.
 
 ### Service Only
 The service only will allow you to generate CRUDs that are service layer and lower this includes: Service, Repository, Model, and Tests with the options for migrations. It will skip the Controllers, Routes, Views, etc. This keeps your code lean, and is optimal for relationships that don't maintain a 'visual' presence in your site/app such as downloads of an entity.

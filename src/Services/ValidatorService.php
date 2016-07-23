@@ -12,7 +12,7 @@ class ValidatorService
     /**
      * Validate the Schema.
      *
-     * @param \Yab\CrudMaker\Console\Crud $command
+     * @param \Yab\CrudMaker\Console\CrudMaker $command
      *
      * @return bool|Exception
      */
@@ -36,7 +36,7 @@ class ValidatorService
     /**
      * Validate the options.
      *
-     * @param \Yab\CrudMaker\Console\Crud $command
+     * @param \Yab\CrudMaker\Console\CrudMaker $command
      *
      * @return bool|Exception
      */
