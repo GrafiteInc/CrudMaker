@@ -39,7 +39,7 @@ class TestService
      */
     public function filterTestTemplates($templates, $serviceOnly, $apiOnly, $withApi)
     {
-        $serviceTests = $this->getServiceTestTemplates($templates, $serviceOnly);
+        $serviceTests = $this->getServiceTestTemplates($templates);
 
         if (!$serviceOnly) {
             $apiTests = $this->getApiTestTemplates($templates, $apiOnly, $withApi);
@@ -55,11 +55,10 @@ class TestService
      * Filter the services.
      *
      * @param array        $templates
-     * @param string|array $serviceOnly
      *
      * @return array
      */
-    public function getServiceTestTemplates($templates, $serviceOnly)
+    public function getServiceTestTemplates($templates)
     {
         $filteredTemplates = [];
 
@@ -101,7 +100,6 @@ class TestService
      *
      * @param array        $templates
      * @param string|array $apiOnly
-     * @param string|array $withApi
      *
      * @return array
      */
