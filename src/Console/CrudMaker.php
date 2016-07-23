@@ -4,16 +4,14 @@ namespace Yab\CrudMaker\Console;
 
 use Config;
 use Exception;
-use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;
 use Yab\CrudMaker\Generators\CrudGenerator;
 use Yab\CrudMaker\Generators\DatabaseGenerator;
+use Yab\CrudMaker\Services\AppService;
 use Yab\CrudMaker\Services\ValidatorService;
 
 class CrudMaker extends Command
 {
-    use AppNamespaceDetectorTrait;
-
     /**
      * Column Types.
      *
@@ -81,12 +79,13 @@ class CrudMaker extends Command
     public function handle()
     {
         $validator = new ValidatorService();
+        $appService = new AppService();
         $section = '';
         $splitTable = [];
 
         $appPath = app()->path();
         $basePath = app()->basePath();
-        $appNamespace = $this->getAppNamespace();
+        $appNamespace = $appService->getAppNamespace();
         $framework = ucfirst('Laravel');
 
         if (stristr(get_class(app()), 'Lumen')) {
