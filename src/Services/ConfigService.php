@@ -4,6 +4,58 @@ namespace Yab\CrudMaker\Services;
 
 class ConfigService
 {
+    public function basicConfig($framework, $appPath, $basePath, $appNamespace, $options)
+    {
+        $config = [
+            'framework'                  => $framework,
+            'bootstrap'                  => false,
+            'semantic'                   => false,
+            'template_source'            => '',
+            '_sectionPrefix_'            => '',
+            '_sectionTablePrefix_'       => '',
+            '_sectionRoutePrefix_'       => '',
+            '_sectionNamespace_'         => '',
+            '_path_facade_'              => $appPath.'/Facades',
+            '_path_service_'             => $appPath.'/Services',
+            '_path_repository_'          => $appPath.'/Repositories/_table_',
+            '_path_model_'               => $appPath.'/Repositories/_table_',
+            '_path_controller_'          => $appPath.'/Http/Controllers/',
+            '_path_api_controller_'      => $appPath.'/Http/Controllers/Api',
+            '_path_views_'               => $basePath.'/resources/views',
+            '_path_tests_'               => $basePath.'/tests',
+            '_path_request_'             => $appPath.'/Http/Requests/',
+            '_path_routes_'              => $appPath.'/Http/routes.php',
+            '_path_api_routes_'          => $appPath.'/Http/api-routes.php',
+            '_path_migrations_'          => $basePath.'/database/migrations',
+            'routes_prefix'              => '',
+            'routes_suffix'              => '',
+            '_app_namespace_'            => 'App\\',
+            '_namespace_services_'       => $appNamespace.'Services',
+            '_namespace_facade_'         => $appNamespace.'Facades',
+            '_namespace_repository_'     => $appNamespace.'Repositories\_table_',
+            '_namespace_model_'          => $appNamespace.'Repositories\_table_',
+            '_namespace_controller_'     => $appNamespace.'Http\Controllers',
+            '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api',
+            '_namespace_request_'        => $appNamespace.'Http\Requests',
+            '_table_name_'               => str_plural(strtolower($table)),
+            '_lower_case_'               => strtolower($table),
+            '_lower_casePlural_'         => str_plural(strtolower($table)),
+            '_camel_case_'               => ucfirst(camel_case($table)),
+            '_camel_casePlural_'         => str_plural(camel_case($table)),
+            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case($table))),
+            'options-api'                => $options['api'],
+            'options-apiOnly'            => $options['apiOnly'],
+            'options-ui'                 => $options['ui'],
+            'options-serviceOnly'        => $options['serviceOnly'],
+            'options-withFacade'         => $options['withFacade'],
+            'options-migration'          => $options['migration'],
+            'options-schema'             => $options['schema'],
+            'options-relationships'      => $options['relationships'],
+        ];
+
+        return $config;
+    }
+
     /**
      * Set the config of the CRUD.
      *

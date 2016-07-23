@@ -150,52 +150,18 @@ class CrudMaker extends Command
         $this->validator->validateSchema($this);
         $this->validator->validateOptions($this);
 
-        $config = [
-            'framework'                  => $framework,
-            'bootstrap'                  => false,
-            'semantic'                   => false,
-            'template_source'            => '',
-            '_sectionPrefix_'            => '',
-            '_sectionTablePrefix_'       => '',
-            '_sectionRoutePrefix_'       => '',
-            '_sectionNamespace_'         => '',
-            '_path_facade_'              => $appPath.'/Facades',
-            '_path_service_'             => $appPath.'/Services',
-            '_path_repository_'          => $appPath.'/Repositories/_table_',
-            '_path_model_'               => $appPath.'/Repositories/_table_',
-            '_path_controller_'          => $appPath.'/Http/Controllers/',
-            '_path_api_controller_'      => $appPath.'/Http/Controllers/Api',
-            '_path_views_'               => $basePath.'/resources/views',
-            '_path_tests_'               => $basePath.'/tests',
-            '_path_request_'             => $appPath.'/Http/Requests/',
-            '_path_routes_'              => $appPath.'/Http/routes.php',
-            '_path_api_routes_'          => $appPath.'/Http/api-routes.php',
-            '_path_migrations_'          => $basePath.'/database/migrations',
-            'routes_prefix'              => '',
-            'routes_suffix'              => '',
-            '_app_namespace_'            => 'App\\',
-            '_namespace_services_'       => $appNamespace.'Services',
-            '_namespace_facade_'         => $appNamespace.'Facades',
-            '_namespace_repository_'     => $appNamespace.'Repositories\_table_',
-            '_namespace_model_'          => $appNamespace.'Repositories\_table_',
-            '_namespace_controller_'     => $appNamespace.'Http\Controllers',
-            '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api',
-            '_namespace_request_'        => $appNamespace.'Http\Requests',
-            '_table_name_'               => str_plural(strtolower($table)),
-            '_lower_case_'               => strtolower($table),
-            '_lower_casePlural_'         => str_plural(strtolower($table)),
-            '_camel_case_'               => ucfirst(camel_case($table)),
-            '_camel_casePlural_'         => str_plural(camel_case($table)),
-            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case($table))),
-            'options-api'                => $this->option('api') ?: false,
-            'options-apiOnly'            => $this->option('apiOnly') ?: false,
-            'options-ui'                 => $this->option('ui') ?: false,
-            'options-serviceOnly'        => $this->option('serviceOnly') ?: false,
-            'options-withFacade'         => $this->option('withFacade') ?: false,
-            'options-migration'          => $this->option('migration') ?: false,
-            'options-schema'             => $this->option('schema') ?: false,
-            'options-relationships'      => $this->option('relationships') ?: false,
+        $options = [
+            'api'                => $this->option('api'),
+            'apiOnly'            => $this->option('apiOnly'),
+            'ui'                 => $this->option('ui'),
+            'serviceOnly'        => $this->option('serviceOnly'),
+            'withFacade'         => $this->option('withFacade'),
+            'migration'          => $this->option('migration'),
+            'schema'             => $this->option('schema'),
+            'relationships'      => $this->option('relationships'),
         ];
+
+        $config = $this->configService->basicConfig($framework, $appPath, $basePath, $appNamespace, $options);
 
         if ($this->option('ui')) {
             $config[$this->option('ui')] = true;
@@ -304,6 +270,6 @@ class CrudMaker extends Command
             }
         } else {
             $this->info("\nYou will want to create a migration in order to get the $table tests to work correctly.\n");
-    }
+        }
     }
 }
