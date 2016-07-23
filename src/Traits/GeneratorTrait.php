@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\CrudMaker\Generators;
+namespace Yab\CrudMaker\Traits;
 
 trait GeneratorTrait
 {
