@@ -25,7 +25,7 @@ class DatabaseGenerator
      * @param array    $splitTable
      * @param Command  $command
      *
-     * @return void
+     * @return bool
      */
     public function createMigration($config, $section, $table, $splitTable, $command)
     {
@@ -44,6 +44,8 @@ class DatabaseGenerator
                 '--create' => true,
                 '--path'   => $this->getMigrationsPath($config, true),
             ]);
+
+            return true;
         } catch (Exception $e) {
             throw new Exception('Could not create the migration', 1);
         }
@@ -56,7 +58,7 @@ class DatabaseGenerator
      * @param string $table
      * @param array  $splitTable
      *
-     * @return void
+     * @return string
      */
     public function createSchema($config, $section, $table, $splitTable, $schema)
     {
@@ -68,26 +70,35 @@ class DatabaseGenerator
             $migrationName = 'create_'.str_plural(strtolower($table)).'_table';
         }
 
+        $parsedTable = '';
+
+        foreach (explode(',', $schema) as $key => $column) {
+            $columnDefinition = explode(':', $column);
+            if ($key === 0) {
+                $parsedTable .= "\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
+            } else {
+                $parsedTable .= "\t\t\t\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
+            }
+        }
+
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = file_get_contents($file->getPathname());
-                $parsedTable = '';
-
-                foreach (explode(',', $schema) as $key => $column) {
-                    $columnDefinition = explode(':', $column);
-                    if ($key === 0) {
-                        $parsedTable .= "\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
-                    } else {
-                        $parsedTable .= "\t\t\t\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
-                    }
-                }
-
                 $migrationData = str_replace("\$table->increments('id');", $parsedTable, $migrationData);
                 file_put_contents($file->getPathname(), $migrationData);
             }
         }
+
+        return $parsedTable;
     }
 
+    /**
+     * Get the migration path.
+     *
+     * @param  array  $config
+     * @param  boolean $relative
+     * @return string
+     */
     private function getMigrationsPath($config, $relative = false)
     {
         if (!is_dir($config['_path_migrations_'])) {

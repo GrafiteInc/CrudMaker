@@ -10,6 +10,7 @@ class DatabaseGeneratorTest extends AppTest
 {
     protected $generator;
     protected $config;
+    protected $artisanMock;
 
     public function setUp()
     {
@@ -18,6 +19,19 @@ class DatabaseGeneratorTest extends AppTest
         $this->config = [
             '_path_migrations_' => base_path('database/migrations')
         ];
+
+        $config = $this->config;
+        $this->artisanMock = Mockery::mock('Illuminate\Console\Command');
+        $this->artisanMock->shouldReceive('callSilent')
+            ->andReturn($this->artisanMock)
+            ->shouldReceive('make:migration')
+            ->with([
+                'name'      => 'create_testtables_table',
+                '--table'   => 'testtables',
+                '--create'  => 'true',
+                '--path'    => '/database/migrations',
+            ])
+            ->andReturn(true);
     }
 
     public function testCreateMigrationFail()
@@ -28,13 +42,15 @@ class DatabaseGeneratorTest extends AppTest
 
     public function testCreateMigrationSuccess()
     {
-        $this->generator->createMigration($this->config, '', 'TestTable', []);
+        $test = $this->generator->createMigration(
+            $this->config,
+            '',
+            'TestTable',
+            [],
+            $this->artisanMock
+        );
 
-        $this->assertEquals(count(glob(base_path('database/migrations').'/*')), 1);
-
-        array_map('unlink', glob(base_path('database/migrations').'/*'));
-
-        $this->assertEquals(count(glob(base_path('database/migrations').'/*')), 0);
+        $this->assertTrue($test);
     }
 
     public function testCreateMigrationSuccessAlternativeLocation()
@@ -43,27 +59,20 @@ class DatabaseGeneratorTest extends AppTest
             '_path_migrations_' => base_path('alternative_migrations_location')
         ];
 
-        $this->generator->createMigration($config, '', 'TestTable', []);
+        $test = $this->generator->createMigration($config, '', 'TestTable', [], $this->artisanMock);
 
-        $this->assertCount(1, glob(base_path('alternative_migrations_location').'/*'));
-
-        array_map('unlink', glob(base_path('alternative_migrations_location').'/*'));
-
-        $this->assertCount(0, glob(base_path('alternative_migrations_location').'/*'));
+        $this->assertTrue($test);
     }
 
     public function testCreateSchema()
     {
-        $this->generator->createMigration($this->config, '', 'TestTable', []);
-        $migrations = glob(base_path('database/migrations').'/*');
-        $this->assertEquals(count($migrations), 1);
+        $test = $this->generator->createMigration($this->config, '', 'TestTable', [], $this->artisanMock);
+        $this->assertTrue($test);
 
-        $this->generator->createSchema($this->config, '', 'TestTable', [], 'id:increments,name:string');
+        $otherTest = $this->generator->createSchema($this->config, '', 'TestTable', [], 'id:increments,name:string', $this->artisanMock);
 
-        $this->assertTrue(strpos(file_get_contents($migrations[0]), 'testtables') > 0);
-        $this->assertTrue(strpos(file_get_contents($migrations[0]), "table->increments('id')") > 0);
-
-        array_map('unlink', glob(base_path('database/migrations').'/*'));
+        $this->assertTrue((bool) stristr($otherTest, "table->increments('id')"));
+        $this->assertTrue((bool) stristr($otherTest, "table->string('name')"));
     }
 
     public function testCreateSchemaAlternativeLocation()
@@ -72,15 +81,12 @@ class DatabaseGeneratorTest extends AppTest
             '_path_migrations_' => base_path('alternative_migrations_location')
         ];
 
-        $this->generator->createMigration($config, '', 'TestTable', []);
-        $migrations = glob(base_path('alternative_migrations_location').'/*');
-        $this->assertCount(1, $migrations);
+        $test = $this->generator->createMigration($config, '', 'TestTable', [], $this->artisanMock);
+        $this->assertTrue($test);
 
-        $this->generator->createSchema($config, '', 'TestTable', [], 'id:increments,name:string');
+        $otherTest = $this->generator->createSchema($config, '', 'TestTable', [], 'id:increments,name:string', $this->artisanMock);
 
-        $this->assertContains('testtables', file_get_contents($migrations[0]));
-        $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
-
-        array_map('unlink', glob(base_path('alternative_migrations_location').'/*'));
+        $this->assertTrue((bool) stristr($otherTest, "table->increments('id')"));
+        $this->assertTrue((bool) stristr($otherTest, "table->string('name')"));
     }
 }

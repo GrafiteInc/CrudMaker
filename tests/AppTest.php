@@ -44,12 +44,12 @@ class AppTest extends Orchestra\Testbench\TestCase
         $this->withoutEvents();
     }
 
-    public function testFormMaker()
+    public function testCrudMaker()
     {
         $kernel = $this->app['Illuminate\Contracts\Console\Kernel'];
         $status = $kernel->handle(
             $input = new \Symfony\Component\Console\Input\ArrayInput([
-                'command' => 'crudmaker:make',
+                'command' => 'crudmaker:new',
                 '--no-interaction' => true
             ]),
             $output = new \Symfony\Component\Console\Output\BufferedOutput
