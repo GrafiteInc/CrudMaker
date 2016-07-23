@@ -1,11 +1,9 @@
 <?php
 
-namespace Yab\CrudMaker\Traits;
+namespace Yab\CrudMaker\Services;
 
-trait ConfigTrait
+class ConfigService
 {
-    abstract public function option($key = null);
-
     /**
      * Set the config of the CRUD.
      *

@@ -5,8 +5,8 @@ namespace Yab\CrudMaker\Console;
 use Config;
 use Exception;
 use Illuminate\Console\Command;
-use Yab\CrudMaker\Traits\ConfigTrait;
-use Yab\CrudMaker\Traits\GeneratorTrait;
+use Yab\CrudMaker\Services\ConfigService;
+use Yab\CrudMaker\Services\CrudService;
 use Yab\CrudMaker\Generators\CrudGenerator;
 use Yab\CrudMaker\Generators\DatabaseGenerator;
 use Yab\CrudMaker\Services\AppService;
@@ -14,9 +14,6 @@ use Yab\CrudMaker\Services\ValidatorService;
 
 class CrudMaker extends Command
 {
-    use ConfigTrait;
-    use GeneratorTrait;
-
     /**
      * Column Types.
      *
@@ -84,11 +81,50 @@ class CrudMaker extends Command
     protected $appService;
 
     /**
+     * The Crud service
+     *
+     * @var CrudService
+     */
+    protected $crudService;
+
+    /**
+     * The Config service
+     *
+     * @var ConfigService
+     */
+    protected $configService;
+
+    /**
      * The validator service
      *
      * @var ValidatorService
      */
     protected $validator;
+
+    /**
+     * CrudMaker Constructor
+     *
+     * @param AppService       $appService
+     * @param CrudService      $crudService
+     * @param crudGenerator    $crudGenerator
+     * @param ConfigService    $configService
+     * @param ValidatorService $validator
+     */
+    public function __construct(
+        AppService $appService,
+        CrudService $crudService,
+        CrudGenerator $crudGenerator,
+        ConfigService $configService,
+        ValidatorService $validator
+    ) {
+        parent::__construct();
+
+        $this->appService = $appService;
+        $this->crudService = $crudService;
+        $this->crudGenerator = $crudGenerator;
+        $this->configService = $configService;
+        $this->validator = $validator;
+    }
 
     /**
      * Generate a CRUD stack.
@@ -97,9 +133,6 @@ class CrudMaker extends Command
      */
     public function handle()
     {
-        $this->appService = new AppService();
-        $this->validator = new ValidatorService();
-
         $section = '';
         $splitTable = [];
 
@@ -114,8 +147,8 @@ class CrudMaker extends Command
 
         $table = ucfirst(str_singular($this->argument('table')));
 
-        $validator->validateSchema($this);
-        $validator->validateOptions($this);
+        $this->validator->validateSchema($this);
+        $this->validator->validateOptions($this);
 
         $config = [
             'framework'                  => $framework,
@@ -154,6 +187,14 @@ class CrudMaker extends Command
             '_camel_case_'               => ucfirst(camel_case($table)),
             '_camel_casePlural_'         => str_plural(camel_case($table)),
             '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case($table))),
+            'options-api'                => $this->option('api') ?: false,
+            'options-apiOnly'            => $this->option('apiOnly') ?: false,
+            'options-ui'                 => $this->option('ui') ?: false,
+            'options-serviceOnly'        => $this->option('serviceOnly') ?: false,
+            'options-withFacade'         => $this->option('withFacade') ?: false,
+            'options-migration'          => $this->option('migration') ?: false,
+            'options-schema'             => $this->option('schema') ?: false,
+            'options-relationships'      => $this->option('relationships') ?: false,
         ];
 
         if ($this->option('ui')) {
@@ -162,16 +203,16 @@ class CrudMaker extends Command
 
         $config['schema'] = $this->option('schema');
         $config['relationships'] = $this->option('relationships');
-        $config['template_source'] = $this->getTemplateConfig($framework, $basePath);
+        $config['template_source'] = $this->configService->getTemplateConfig($framework, $basePath);
 
         if (stristr($table, '_')) {
             $splitTable = explode('_', $table);
             $table = $splitTable[1];
             $section = $splitTable[0];
-            $config = $this->configASectionedCRUD($config, $section, $table, $splitTable);
+            $config = $this->configService->configASectionedCRUD($config, $section, $table, $splitTable);
         } else {
             $config = array_merge($config, app('config')->get('crudmaker.single', []));
-            $config = $this->setConfig($config, $section, $table);
+            $config = $this->configService->setConfig($config, $section, $table);
         }
 
         $this->createCRUD($config, $section, $table, $splitTable);
@@ -195,14 +236,11 @@ class CrudMaker extends Command
     {
         $bar = $this->output->createProgressBar(7);
 
-        $crudGenerator = new CrudGenerator();
-        $dbGenerator = new DatabaseGenerator();
-
         try {
-            $this->generateCore($crudGenerator, $config, $bar);
-            $this->generateAppBased($crudGenerator, $config, $bar);
+            $this->crudService->generateCore($config, $bar);
+            $this->crudService->generateAppBased($config, $bar);
 
-            $crudGenerator->createTests(
+            $this->crudGenerator->createTests(
                 $config,
                 $this->option('serviceOnly'),
                 $this->option('apiOnly'),
@@ -210,17 +248,18 @@ class CrudMaker extends Command
             );
             $bar->advance();
 
-            $crudGenerator->createFactory($config);
+            $this->crudGenerator->createFactory($config);
             $bar->advance();
 
-            $this->generateAPI($crudGenerator, $config, $bar);
+            $this->crudService->generateAPI($config, $bar);
             $bar->advance();
 
-            $this->generateDB($dbGenerator, $config, $bar, $section, $table, $splitTable);
+            $this->crudService->generateDB($config, $bar, $section, $table, $splitTable, $this);
             $bar->finish();
 
             $this->crudReport($table);
         } catch (Exception $e) {
+            dd($e);
             throw new Exception('Unable to generate your CRUD: '.$e->getMessage(), 1);
         }
     }
