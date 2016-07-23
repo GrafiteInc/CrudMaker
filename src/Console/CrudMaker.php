@@ -161,7 +161,14 @@ class CrudMaker extends Command
             'relationships'      => $this->option('relationships'),
         ];
 
-        $config = $this->configService->basicConfig($framework, $appPath, $basePath, $appNamespace, $options);
+        $config = $this->configService->basicConfig(
+            $framework,
+            $appPath,
+            $basePath,
+            $appNamespace,
+            $table,
+            $options
+        );
 
         if ($this->option('ui')) {
             $config[$this->option('ui')] = true;

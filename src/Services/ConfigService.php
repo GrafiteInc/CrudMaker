@@ -4,7 +4,7 @@ namespace Yab\CrudMaker\Services;
 
 class ConfigService
 {
-    public function basicConfig($framework, $appPath, $basePath, $appNamespace, $options)
+    public function basicConfig($framework, $appPath, $basePath, $appNamespace, $table, $options)
     {
         $config = [
             'framework'                  => $framework,
