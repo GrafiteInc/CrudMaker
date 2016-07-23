@@ -88,6 +88,13 @@ class CrudMaker extends Command
     protected $crudService;
 
     /**
+     * The Crud generator
+     *
+     * @var CrudGenerator
+     */
+    protected $crudGenerator;
+
+    /**
      * The Config service
      *
      * @var ConfigService

@@ -4,6 +4,23 @@ namespace Yab\CrudMaker\Services;
 
 class ConfigService
 {
+    /**
+     * The app service
+     *
+     * @var AppService
+     */
+    protected $appService;
+
+    /**
+     * CrudMaker Constructor
+     *
+     * @param AppService       $appService
+     */
+    public function __construct(AppService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     public function basicConfig($framework, $appPath, $basePath, $appNamespace, $table, $options)
     {
         $config = [
