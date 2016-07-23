@@ -4,6 +4,8 @@ namespace Yab\CrudMaker\Traits;
 
 trait GeneratorTrait
 {
+    abstract public function option($key = null);
+
     /**
      * Generate core elements.
      *

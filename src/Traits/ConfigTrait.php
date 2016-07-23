@@ -4,6 +4,8 @@ namespace Yab\CrudMaker\Traits;
 
 trait ConfigTrait
 {
+    abstract public function option($key = null);
+
     /**
      * Set the config of the CRUD.
      *
