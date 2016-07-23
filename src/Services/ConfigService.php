@@ -130,10 +130,10 @@ class ConfigService
     }
 
     /**
-     * Get the templates directory
+     * Get the templates directory.
      *
-     * @param  string $framework
-     * @param  string $basePath
+     * @param string $framework
+     * @param string $basePath
      *
      * @return string
      */

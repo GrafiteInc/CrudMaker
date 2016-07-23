@@ -3,9 +3,9 @@
 namespace Yab\CrudMaker\Generators;
 
 use Illuminate\Filesystem\Filesystem;
+use Yab\CrudMaker\Services\ModelService;
 use Yab\CrudMaker\Services\TableService;
 use Yab\CrudMaker\Services\TestService;
-use Yab\CrudMaker\Services\ModelService;
 
 /**
  * Generate the CRUD.

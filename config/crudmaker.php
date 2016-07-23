@@ -74,6 +74,6 @@ return [
         '_namespace_controller_'     => app()->getInstance()->getNamespace().'Http\Controllers\_section_',
         '_namespace_api_controller_' => app()->getInstance()->getNamespace().'Http\Controllers\Api\_section_',
         '_namespace_request_'        => app()->getInstance()->getNamespace().'Http\Requests\_section_',
-    ]
+    ],
 
 ];
