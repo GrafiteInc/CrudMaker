@@ -54,7 +54,7 @@ class TestService
     /**
      * Filter the services.
      *
-     * @param array        $templates
+     * @param array $templates
      *
      * @return array
      */

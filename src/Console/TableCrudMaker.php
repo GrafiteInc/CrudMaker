@@ -2,7 +2,6 @@
 
 namespace Yab\CrudMaker\Console;
 
-use Artisan;
 use Exception;
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;

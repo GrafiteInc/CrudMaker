@@ -5,11 +5,10 @@ namespace Yab\CrudMaker\Console;
 use Config;
 use Exception;
 use Illuminate\Console\Command;
+use Yab\CrudMaker\Generators\CrudGenerator;
+use Yab\CrudMaker\Services\AppService;
 use Yab\CrudMaker\Services\ConfigService;
 use Yab\CrudMaker\Services\CrudService;
-use Yab\CrudMaker\Generators\CrudGenerator;
-use Yab\CrudMaker\Generators\DatabaseGenerator;
-use Yab\CrudMaker\Services\AppService;
 use Yab\CrudMaker\Services\ValidatorService;
 
 class CrudMaker extends Command
@@ -74,42 +73,42 @@ class CrudMaker extends Command
     protected $description = 'Generate a magical CRUD for a table with options for: Migration, API, UI, Schema and even Relationships';
 
     /**
-     * The app service
+     * The app service.
      *
      * @var AppService
      */
     protected $appService;
 
     /**
-     * The Crud service
+     * The Crud service.
      *
      * @var CrudService
      */
     protected $crudService;
 
     /**
-     * The Crud generator
+     * The Crud generator.
      *
      * @var CrudGenerator
      */
     protected $crudGenerator;
 
     /**
-     * The Config service
+     * The Config service.
      *
      * @var ConfigService
      */
     protected $configService;
 
     /**
-     * The validator service
+     * The validator service.
      *
      * @var ValidatorService
      */
     protected $validator;
 
     /**
-     * CrudMaker Constructor
+     * CrudMaker Constructor.
      *
      * @param AppService       $appService
      * @param CrudService      $crudService
