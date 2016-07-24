@@ -15,7 +15,7 @@ class CrudGeneratorTest extends PHPUnit_Framework_TestCase
             'framework'                 => 'laravel',
             'bootstrap'                  => false,
             'semantic'                   => false,
-            'template_source'            => __DIR__.'/../src/Templates/Laravel',
+            'template_source'            => __DIR__.'/../../src/Templates/Laravel',
             '_sectionPrefix_'            => '',
             '_sectionTablePrefix_'       => '',
             '_sectionRoutePrefix_'       => '',

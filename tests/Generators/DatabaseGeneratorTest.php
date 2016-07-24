@@ -2,7 +2,7 @@
 
 use Yab\CrudMaker\Generators\DatabaseGenerator;
 
-class DatabaseGeneratorTest extends AppTest
+class DatabaseGeneratorTest extends TestCase
 {
     protected $generator;
     protected $config;
@@ -21,17 +21,6 @@ class DatabaseGeneratorTest extends AppTest
         ];
 
         $config = $this->config;
-        $this->artisanMock = Mockery::mock('Illuminate\Console\Command');
-        $this->artisanMock->shouldReceive('callSilent')
-            ->andReturn($this->artisanMock)
-            ->shouldReceive('make:migration')
-            ->with([
-                'name'      => 'create_testtables_table',
-                '--table'   => 'testtables',
-                '--create'  => 'true',
-                '--path'    => '/database/migrations',
-            ])
-            ->andReturn(true);
     }
 
     public function testCreateMigrationFail()
@@ -65,7 +54,7 @@ class DatabaseGeneratorTest extends AppTest
             'TestTable',
             [],
             'id:increments,name:string',
-            $this->artisanMock
+            $this->command
         );
 
         $this->assertContains('testtables', file_get_contents($migrations[0]));
@@ -85,7 +74,7 @@ class DatabaseGeneratorTest extends AppTest
             'TestTable',
             [],
             'id:increments,name:string',
-            $this->artisanMock
+            $this->command
         );
 
         $this->assertContains('table->increments', $schemaForm);

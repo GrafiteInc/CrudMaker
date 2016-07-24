@@ -28,5 +28,10 @@
             "Yab\\CrudMaker\\": "src/"
         }
     },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
     "minimum-stability": "stable"
 }

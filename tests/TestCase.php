@@ -1,6 +1,6 @@
 <?php
 
-class AppTest extends Orchestra\Testbench\TestCase
+class TestCase extends Orchestra\Testbench\TestCase
 {
     protected $app;
 
@@ -41,18 +41,5 @@ class AppTest extends Orchestra\Testbench\TestCase
         ]);
         $this->withoutMiddleware();
         $this->withoutEvents();
-    }
-
-    public function testCrudMaker()
-    {
-         $this->app['Illuminate\Contracts\Console\Kernel']->handle(
-            $input = new \Symfony\Component\Console\Input\ArrayInput([
-                'command' => 'crudmaker:new',
-                '--no-interaction' => true
-            ]),
-            $output = new \Symfony\Component\Console\Output\BufferedOutput
-        );
-
-        $this->assertContains('Not enough arguments (missing: "table")', $output->fetch());
     }
 }

@@ -3,7 +3,7 @@
 use org\bovigo\vfs\vfsStream;
 use Yab\CrudMaker\Services\ValidatorService;
 
-class ValidatorServiceTest extends AppTest
+class ValidatorServiceTest extends TestCase
 {
     protected $command;
     protected $validator;
