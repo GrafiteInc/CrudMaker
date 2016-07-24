@@ -20,10 +20,10 @@ class DatabaseGenerator
     /**
      * Create the migrations.
      *
-     * @param string                            $section
-     * @param string                            $table
-     * @param array                             $splitTable
-     * @param \Yab\CrudMaker\Console\CrudMaker  $command
+     * @param string                           $section
+     * @param string                           $table
+     * @param array                            $splitTable
+     * @param \Yab\CrudMaker\Console\CrudMaker $command
      *
      * @return bool
      */
@@ -95,8 +95,9 @@ class DatabaseGenerator
     /**
      * Get the migration path.
      *
-     * @param  array  $config
-     * @param  boolean $relative
+     * @param array $config
+     * @param bool  $relative
+     *
      * @return string
      */
     private function getMigrationsPath($config, $relative = false)

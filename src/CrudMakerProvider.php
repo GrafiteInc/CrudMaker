@@ -2,7 +2,6 @@
 
 namespace Yab\CrudMaker;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class CrudMakerProvider extends ServiceProvider
