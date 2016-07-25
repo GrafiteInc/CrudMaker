@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.2] - 2016-07-25
+
+### Fixed
+- Minor issues with templates
+-  routes and requests.
+
 ## [v1.0.1] - 2016-07-24
 
 ### Added
