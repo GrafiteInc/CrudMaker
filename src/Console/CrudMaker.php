@@ -268,7 +268,7 @@ class CrudMaker extends Command
         }
 
         $this->line('Built tests...');
-        $this->line('Added '.$table.' to database/factories/ModelFactory...');
+        $this->line('Built factory...');
 
         if ($this->option('api') || $this->option('apiOnly')) {
             $this->line('Built api...');
