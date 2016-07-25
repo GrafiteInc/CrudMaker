@@ -33,6 +33,7 @@ class CrudGeneratorTest extends PHPUnit_Framework_TestCase
             '_path_request_'             => vfsStream::url('Http/Requests'),
             '_path_routes_'              => vfsStream::url('Http/routes.php'),
             '_path_api_routes_'          => vfsStream::url('Http/api-routes.php'),
+            '_path_factory_'             => vfsStream::url('database/factories/ModelFactory.php'),
             'routes_prefix'              => '',
             'routes_suffix'              => '',
             '_namespace_services_'       => 'App\Services',
@@ -162,5 +163,17 @@ class CrudGeneratorTest extends PHPUnit_Framework_TestCase
         $contents = $this->crud->getChild('tests/integration/TestTableServiceIntegrationTest.php');
         $this->assertTrue($this->crud->hasChild('tests/integration/TestTableServiceIntegrationTest.php'));
         $this->assertContains('class TestTableServiceIntegrationTest', $contents->getContent());
+    }
+
+    public function testFactoryGenerator()
+    {
+        $this->crud = vfsStream::setup("database/factories");
+        file_put_contents(vfsStream::url('database/factories/ModelFactory.php'), 'test');
+
+        $this->generator->createFactory($this->config);
+        $contents = $this->crud->getChild('database/factories/ModelFactory.php');
+
+        $this->assertContains('TestTable::class', $contents->getContent());
+        $this->assertContains('$factory->define(', $contents->getContent());
     }
 }
