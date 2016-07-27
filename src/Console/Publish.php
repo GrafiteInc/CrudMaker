@@ -19,9 +19,15 @@ class Publish extends Command
      * @var string
      */
     protected $description = 'Crud initilization for Lumen based installation';
-
+    
+    /**
+     * @var Filesystem
+     */
     protected $fileSystem;
-
+    
+    /**
+     * Publish constructor.
+     */
     public function __construct()
     {
         parent::__construct();
