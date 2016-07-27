@@ -35,12 +35,20 @@ composer require "yab/crudmaker"
 
 Add this to the `config/app.php` in the providers array:
 ```php
+// Laravel
 Yab\CrudMaker\CrudMakerProvider::class
+
+// Lumen
+$app->register(Yab\CrudMaker\LumenCrudMakerProvider::class)
 ```
 
 Time to publish those assets!
 ```php
+// Laravel
 php artisan vendor:publish --provider="Yab\CrudMaker\CrudMakerProvider"
+
+// Lumen
+php artisan crudmaker:init
 ```
 
 ##### After these few steps you have the following tools at your fingertips:
