@@ -182,7 +182,7 @@ class CrudMaker extends Command
 
         $config['schema'] = $this->option('schema');
         $config['relationships'] = $this->option('relationships');
-        $config['template_source'] = $this->configService->getTemplateConfig($framework, $basePath);
+        $config['template_source'] = $this->configService->getTemplateConfig($framework);
 
         if (stristr($table, '_')) {
             $splitTable = explode('_', $table);

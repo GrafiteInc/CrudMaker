@@ -152,11 +152,10 @@ class ConfigService
      * Get the templates directory.
      *
      * @param string $framework
-     * @param string $basePath
      *
      * @return string
      */
-    public function getTemplateConfig($framework, $basePath)
+    public function getTemplateConfig($framework)
     {
         $templates = __DIR__.'/../Templates/'.$framework;
 
