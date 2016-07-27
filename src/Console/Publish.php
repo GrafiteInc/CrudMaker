@@ -40,12 +40,14 @@ class Publish extends Command
     }
 
     /**
-     * Copy a directory and its content
+     * Copy a directory and its content.
      *
      * @param $directory
      * @param $destination
-     * @return bool|int
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return bool|int
      */
     public function copyDirectory($directory, $destination)
     {
@@ -62,31 +64,27 @@ class Publish extends Command
     }
 
     /**
-     *  Publish config files for Lumen
+     *  Publish config files for Lumen.
      */
     private function publishConfig()
     {
         if (!file_exists(getcwd().'/config/crudmaker.php')) {
             $this->copyDirectory(__DIR__.'/../../config', getcwd().'/config');
             $this->info("\n\nLumen config file have been published");
-        }
-        else
-        {
+        } else {
             $this->error('Lumen config files has already been published');
         }
     }
 
     /**
-     *  Publish templates files for Lumen
+     *  Publish templates files for Lumen.
      */
     private function publishTemplates()
     {
         if (!$this->fileSystem->isDirectory(getcwd().'/resources/crudmaker/crud')) {
             $this->copyDirectory(__DIR__.'/../Templates/Lumen', getcwd().'/resources/crudmaker/crud');
             $this->info("\n\nLumen templates files have been published");
-        }
-        else
-        {
+        } else {
             $this->error('Lumen templates files has already been published');
         }
     }
