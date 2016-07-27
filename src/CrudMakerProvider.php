@@ -53,8 +53,8 @@ class CrudMakerProvider extends ServiceProvider
         | Register the helpers
         |--------------------------------------------------------------------------
         */
-        foreach (glob(__DIR__.'/../helpers/*.php') as $filename){
-            require_once($filename);
+        foreach (glob(__DIR__.'/../helpers/*.php') as $filename) {
+            require_once $filename;
         }
     }
 }
