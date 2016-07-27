@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.4] - 2016-07-27
+
+### Added
+- More tests
+
+### Fixed
+- Fixed an issue with config template_source
+
 ## [v1.0.3] - 2016-07-27
 
 ### Fixed
