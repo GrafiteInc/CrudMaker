@@ -28,6 +28,16 @@ class CrudMakerProvider extends ServiceProvider
     {
         /*
         |--------------------------------------------------------------------------
+        | Providers
+        |--------------------------------------------------------------------------
+        */
+
+        if (class_exists('Illuminate\Foundation\AliasLoader')) {
+            $this->app->register(\Yab\FormMaker\FormMakerProvider::class);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | Register the Commands
         |--------------------------------------------------------------------------
         */
