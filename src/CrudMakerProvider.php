@@ -46,5 +46,15 @@ class CrudMakerProvider extends ServiceProvider
             \Yab\CrudMaker\Console\CrudMaker::class,
             \Yab\CrudMaker\Console\TableCrudMaker::class,
         ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Register the helpers
+        |--------------------------------------------------------------------------
+        */
+        foreach (glob(__DIR__.'/../helpers/*.php') as $filename) {
+            require_once $filename;
+        }
     }
 }
