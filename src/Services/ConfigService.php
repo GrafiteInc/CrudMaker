@@ -159,9 +159,7 @@ class ConfigService
     {
         $templates = __DIR__.'/../Templates/'.$framework;
 
-        if ($framework === 'Laravel') {
-            $templates = app('config')->get('crudmaker.template_source', $templates);
-        }
+        $templates = app('config')->get('crudmaker.template_source', $templates);
 
         return $templates;
     }
