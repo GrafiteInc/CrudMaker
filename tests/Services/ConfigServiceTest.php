@@ -7,13 +7,14 @@ class ConfigServiceTest extends TestCase
 {
     protected $service;
     protected $config;
+    protected $app;
 
     public function setUp()
     {
         parent::setUp();
         $this->service = app(ConfigService::class);
         $this->config = [
-            'framework'                 => 'laravel',
+            'framework'                 => 'Laravel',
             'bootstrap'                  => false,
             'semantic'                   => false,
             'template_source'            => __DIR__.'/../src/Templates/Laravel',
@@ -114,6 +115,7 @@ class ConfigServiceTest extends TestCase
 
     public function testGetTemplateConfig()
     {
+        $this->app['config']->set('crudmaker.template_source', __DIR__.'/../../src/Templates/Laravel');
         $config = $this->service->getTemplateConfig('Laravel', 'home');
         $this->assertContains('Templates/Laravel', $config);
     }
