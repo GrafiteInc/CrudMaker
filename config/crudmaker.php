@@ -66,6 +66,14 @@ return [
         '_path_api_routes_'          => app()->path().'/Http/api-routes.php',
         'routes_prefix'              => "\n\nRoute::group(['namespace' => '_section_', 'prefix' => '_sectionLowerCase_', 'middleware' => ['web']], function () { \n",
         'routes_suffix'              => "\n});",
+        '_app_namespace_'            => app_namespace(),
+        '_namespace_services_'       => app_namespace().'Services',
+        '_namespace_facade_'         => app_namespace().'Facades',
+        '_namespace_repository_'     => app_namespace().'Repositories\_table_',
+        '_namespace_model_'          => app_namespace().'Repositories\_table_',
+        '_namespace_controller_'     => app_namespace().'Http\Controllers',
+        '_namespace_api_controller_' => app_namespace().'Http\Controllers\Api',
+        '_namespace_request_'        => app_namespace().'Http\Requests',
     ],
 
 ];
