@@ -27,7 +27,10 @@
     "autoload": {
         "psr-4": {
             "Yab\\CrudMaker\\": "src/"
-        }
+        },
+        "files": [
+          "src/Helpers/namespace.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
