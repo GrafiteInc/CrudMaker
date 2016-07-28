@@ -57,7 +57,7 @@ php artisan crudmaker:init
 These commands build a CRUD with unit tests! Use the `table` command for tables that already exist.
 
 ```php
-php artisan crudmaker:make {name or snake_names} {--api} {--ui=bootstrap|semantic} {--serviceOnly} {--withFacade} {--migration} {--schema=} {--relationships=}
+php artisan crudmaker:new {name or snake_names} {--api} {--ui=bootstrap|semantic} {--serviceOnly} {--withFacade} {--migration} {--schema=} {--relationships=}
 php artisan crudmaker:table {name or snake_names} {--api} {--ui=bootstrap|semantic} {--serviceOnly} {--withFacade}
 ```
 
@@ -157,7 +157,7 @@ Appends to the following Files:
 Single Word Example (Book):
 ------
 ```
-php artisan crudmaker:make Book --migration --schema="id:increments,title:string,author:string"
+php artisan crudmaker:new Book --migration --schema="id:increments,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
@@ -179,7 +179,7 @@ When using the default paths for the components, the following files will be gen
 Snake Name Example (Book_Author):
 ------
 ```
-php artisan crudmaker:make Book_Author --migration --schema="id:increments,firstname:string,lastname:string" --withFacade
+php artisan crudmaker:new Book_Author --migration --schema="id:increments,firstname:string,lastname:string" --withFacade
 ```
 
 When using the default paths for the components, the following files will be generated:
@@ -202,7 +202,7 @@ When using the default paths for the components, the following files will be gen
 Single Name Example (Book with API):
 ------
 ```
-php artisan crudmaker:make Book --api --migration --schema="id:increments,title:string,author:string"
+php artisan crudmaker:new Book --api --migration --schema="id:increments,title:string,author:string"
 ```
 
 When using the default paths for the components, the following files will be generated:
