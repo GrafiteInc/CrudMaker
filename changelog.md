@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.6] - 2016-07-28
+
+### Fixed
+- Minor issue with default config for creating snake_name CRUDS
+
 ## [v1.0.5] - 2016-07-27
 
 ### Added
