@@ -238,7 +238,6 @@ class CrudMaker extends Command
 
             $this->crudReport($table);
         } catch (Exception $e) {
-            dd($e);
             throw new Exception('Unable to generate your CRUD: '.$e->getMessage(), 1);
         }
     }
