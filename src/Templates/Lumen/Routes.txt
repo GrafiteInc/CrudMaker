@@ -1,0 +1,15 @@
+
+/*
+|--------------------------------------------------------------------------
+| _camel_case_ API Routes
+|--------------------------------------------------------------------------
+*/
+
+$app->group(['middleware' => 'auth'], function() use ($app) {
+    $app->get('api/v1/_lower_casePlural_', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@index');
+    $app->post('api/v1/_lower_casePlural_/search', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@search');
+    $app->post('api/v1/_lower_casePlural_', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@store');
+    $app->get('api/v1/_lower_casePlural_/{id}', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@show');
+    $app->patch('api/v1/_lower_casePlural_/{id}', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@update');
+    $app->delete('api/v1/_lower_casePlural_/{id}', '_namespace_api_controller_\_sectionNamespace__camel_case_Controller@destroy');
+});
