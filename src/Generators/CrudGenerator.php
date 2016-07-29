@@ -171,7 +171,7 @@ class CrudGenerator
         $routesMaster = $config['_path_routes_'];
 
         if (!empty($config['routes_prefix'])) {
-            $this->filesystem->put($routesMaster, $config['routes_prefix'], FILE_APPEND);
+            $this->filesystem->append($routesMaster, $config['routes_prefix']);
         }
 
         $routes = $this->filesystem->get($config['template_source'].'/Routes.txt');
@@ -180,10 +180,10 @@ class CrudGenerator
             $routes = str_replace($key, $value, $routes);
         }
 
-        $this->filesystem->put($routesMaster, $routes, FILE_APPEND);
+        $this->filesystem->append($routesMaster, $routes);
 
         if (!empty($config['routes_prefix'])) {
-            $this->filesystem->put($routesMaster, $config['routes_suffix'], FILE_APPEND);
+            $this->filesystem->append($routesMaster, $config['routes_suffix']);
         }
 
         return true;
@@ -214,7 +214,7 @@ class CrudGenerator
             $factory = str_replace($key, $value, $factory);
         }
 
-        return $this->filesystem->put($config['_path_factory_'], $factory, FILE_APPEND);
+        return $this->filesystem->append($config['_path_factory_'], $factory);
     }
 
     /**
@@ -342,7 +342,7 @@ class CrudGenerator
             $routes = str_replace($key, $value, $routes);
         }
 
-        $this->filesystem->put($routesMaster, $routes, FILE_APPEND);
+        $this->filesystem->append($routesMaster, $routes);
 
         $request = $this->filesystem->get($config['template_source'].'/ApiController.txt');
 
