@@ -38,13 +38,13 @@ class CrudGenerator
             mkdir($config['_path_controller_'], 0777, true);
         }
 
-        $request = file_get_contents($config['template_source'].'/Controller.txt');
+        $request = $this->filesystem->get($config['template_source'].'/Controller.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
         }
 
-        $request = file_put_contents($config['_path_controller_'].'/'.$config['_camel_case_'].'Controller.php', $request);
+        $request = $this->filesystem->put($config['_path_controller_'].'/'.$config['_camel_case_'].'Controller.php', $request);
 
         return $request;
     }
@@ -69,8 +69,8 @@ class CrudGenerator
             }
         }
 
-        $repo = file_get_contents($config['template_source'].'/Repository/Repository.txt');
-        $model = file_get_contents($config['template_source'].'/Repository/Model.txt');
+        $repo = $this->filesystem->get($config['template_source'].'/Repository/Repository.txt');
+        $model = $this->filesystem->get($config['template_source'].'/Repository/Model.txt');
         $model = $this->configTheModel($config, $model);
 
         foreach ($config as $key => $value) {
@@ -78,8 +78,8 @@ class CrudGenerator
             $model = str_replace($key, $value, $model);
         }
 
-        $repository = file_put_contents($config['_path_repository_'].'/'.$config['_camel_case_'].'Repository.php', $repo);
-        $model = file_put_contents($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
+        $repository = $this->filesystem->put($config['_path_repository_'].'/'.$config['_camel_case_'].'Repository.php', $repo);
+        $model = $this->filesystem->put($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
 
         return $repository && $model;
     }
@@ -124,13 +124,13 @@ class CrudGenerator
             mkdir($config['_path_request_'], 0777, true);
         }
 
-        $request = file_get_contents($config['template_source'].'/Request.txt');
+        $request = $this->filesystem->get($config['template_source'].'/Request.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
         }
 
-        $request = file_put_contents($config['_path_request_'].'/'.$config['_camel_case_'].'Request.php', $request);
+        $request = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'Request.php', $request);
 
         return $request;
     }
@@ -148,13 +148,13 @@ class CrudGenerator
             mkdir($config['_path_service_'], 0777, true);
         }
 
-        $request = file_get_contents($config['template_source'].'/Service.txt');
+        $request = $this->filesystem->get($config['template_source'].'/Service.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
         }
 
-        $request = file_put_contents($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $request);
+        $request = $this->filesystem->put($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $request);
 
         return $request;
     }
@@ -171,19 +171,19 @@ class CrudGenerator
         $routesMaster = $config['_path_routes_'];
 
         if (!empty($config['routes_prefix'])) {
-            file_put_contents($routesMaster, $config['routes_prefix'], FILE_APPEND);
+            $this->filesystem->append($routesMaster, $config['routes_prefix']);
         }
 
-        $routes = file_get_contents($config['template_source'].'/Routes.txt');
+        $routes = $this->filesystem->get($config['template_source'].'/Routes.txt');
 
         foreach ($config as $key => $value) {
             $routes = str_replace($key, $value, $routes);
         }
 
-        file_put_contents($routesMaster, $routes, FILE_APPEND);
+        $this->filesystem->append($routesMaster, $routes);
 
         if (!empty($config['routes_prefix'])) {
-            file_put_contents($routesMaster, $config['routes_suffix'], FILE_APPEND);
+            $this->filesystem->append($routesMaster, $config['routes_suffix']);
         }
 
         return true;
@@ -203,10 +203,10 @@ class CrudGenerator
         }
 
         if (!file_exists($config['_path_factory_'])) {
-            file_put_contents($config['_path_factory_'], '<?php');
+            $this->filesystem->put($config['_path_factory_'], '<?php');
         }
 
-        $factory = file_get_contents($config['template_source'].'/Factory.txt');
+        $factory = $this->filesystem->get($config['template_source'].'/Factory.txt');
 
         $factory = $this->tableService->getTableSchema($config, $factory);
 
@@ -214,7 +214,7 @@ class CrudGenerator
             $factory = str_replace($key, $value, $factory);
         }
 
-        return file_put_contents($config['_path_factory_'], $factory, FILE_APPEND);
+        return $this->filesystem->append($config['_path_factory_'], $factory);
     }
 
     /**
@@ -230,13 +230,13 @@ class CrudGenerator
             mkdir($config['_path_facade_'], 0777, true);
         }
 
-        $facade = file_get_contents($config['template_source'].'/Facade.txt');
+        $facade = $this->filesystem->get($config['template_source'].'/Facade.txt');
 
         foreach ($config as $key => $value) {
             $facade = str_replace($key, $value, $facade);
         }
 
-        $facade = file_put_contents($config['_path_facade_'].'/'.$config['_camel_case_'].'.php', $facade);
+        $facade = $this->filesystem->put($config['_path_facade_'].'/'.$config['_camel_case_'].'.php', $facade);
 
         return $facade;
     }
@@ -258,7 +258,7 @@ class CrudGenerator
         $filteredTestTemplates = $this->testService->filterTestTemplates($testTemplates, $serviceOnly, $apiOnly, $withApi);
 
         foreach ($filteredTestTemplates as $testTemplate) {
-            $test = file_get_contents($testTemplate->getRealPath());
+            $test = $this->filesystem->get($testTemplate->getRealPath());
             $testName = $config['_camel_case_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
             $testDirectory = $config['_path_tests_'].'/'.strtolower($testTemplate->getRelativePath());
 
@@ -272,7 +272,7 @@ class CrudGenerator
                 $test = str_replace($key, $value, $test);
             }
 
-            if (!file_put_contents($testDirectory.'/'.$testName.'.php', $test)) {
+            if (!$this->filesystem->put($testDirectory.'/'.$testName.'.php', $test)) {
                 return false;
             }
         }
@@ -306,12 +306,12 @@ class CrudGenerator
         $createdView = false;
 
         foreach (glob($config['template_source'].'/'.$viewTemplates.'/*') as $file) {
-            $viewContents = file_get_contents($file);
+            $viewContents = $this->filesystem->get($file);
             $basename = str_replace('txt', 'php', basename($file));
             foreach ($config as $key => $value) {
                 $viewContents = str_replace($key, $value, $viewContents);
             }
-            $createdView = file_put_contents($config['_path_views_'].'/'.$config['_lower_casePlural_'].'/'.$basename, $viewContents);
+            $createdView = $this->filesystem->put($config['_path_views_'].'/'.$config['_lower_casePlural_'].'/'.$basename, $viewContents);
         }
 
         return $createdView;
@@ -329,28 +329,28 @@ class CrudGenerator
         $routesMaster = $config['_path_api_routes_'];
 
         if (!file_exists($routesMaster)) {
-            file_put_contents($routesMaster, "<?php\n\n");
+            $this->filesystem->put($routesMaster, "<?php\n\n");
         }
 
         if (!is_dir($config['_path_api_controller_'])) {
             mkdir($config['_path_api_controller_'], 0777, true);
         }
 
-        $routes = file_get_contents($config['template_source'].'/ApiRoutes.txt');
+        $routes = $this->filesystem->get($config['template_source'].'/ApiRoutes.txt');
 
         foreach ($config as $key => $value) {
             $routes = str_replace($key, $value, $routes);
         }
 
-        file_put_contents($routesMaster, $routes, FILE_APPEND);
+        $this->filesystem->append($routesMaster, $routes);
 
-        $request = file_get_contents($config['template_source'].'/ApiController.txt');
+        $request = $this->filesystem->get($config['template_source'].'/ApiController.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
         }
 
-        $request = file_put_contents($config['_path_api_controller_'].'/'.$config['_camel_case_'].'Controller.php', $request);
+        $request = $this->filesystem->put($config['_path_api_controller_'].'/'.$config['_camel_case_'].'Controller.php', $request);
 
         return $request;
     }

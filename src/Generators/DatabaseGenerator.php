@@ -83,9 +83,9 @@ class DatabaseGenerator
 
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
-                $migrationData = file_get_contents($file->getPathname());
+                $migrationData = $this->filesystem->get($file->getPathname());
                 $migrationData = str_replace("\$table->increments('id');", $parsedTable, $migrationData);
-                file_put_contents($file->getPathname(), $migrationData);
+                $this->filesystem->put($file->getPathname(), $migrationData);
             }
         }
 
