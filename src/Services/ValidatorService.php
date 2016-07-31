@@ -24,8 +24,11 @@ class ValidatorService
                 if (!isset($columnDefinition[1])) {
                     throw new Exception('All schema columns require a column type.', 1);
                 }
-                if (!in_array(camel_case($columnDefinition[1]), $command->columnTypes)) {
-                    throw new Exception($columnDefinition[1].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
+
+                $columnDetails = explode('|', $columnDefinition[1]);
+
+                if (!in_array(camel_case($columnDetails[0]), $command->columnTypes)) {
+                    throw new Exception($columnDetails[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
                 }
             }
         }

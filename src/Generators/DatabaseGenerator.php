@@ -72,12 +72,18 @@ class DatabaseGenerator
 
         $parsedTable = '';
 
+        // Example
+        // id:increments,name:string|nullable()->default('n/a')
+
         foreach (explode(',', $schema) as $key => $column) {
             $columnDefinition = explode(':', $column);
+            $columnDetails = explode('|', $columnDefinition[1]);
+            $columnDetailString = $this->createColumnDetailString($columnDetails);
+
             if ($key === 0) {
-                $parsedTable .= "\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
+                $parsedTable .= "\$table->$columnDetails[0]('$columnDefinition[0]')$columnDetailString;\n";
             } else {
-                $parsedTable .= "\t\t\t\$table->$columnDefinition[1]('$columnDefinition[0]');\n";
+                $parsedTable .= "\t\t\t\$table->$columnDetails[0]('$columnDefinition[0]')$columnDetailString;\n";
             }
         }
 
@@ -91,6 +97,53 @@ class DatabaseGenerator
 
         return $parsedTable;
     }
+
+    /**
+     * Create a column detail string.
+     *
+     * @param  array $columnDetails
+     * @return string
+     */
+    public function createColumnDetailString($columnDetails)
+    {
+        $columnDetailString = '';
+
+        if (count($columnDetails) > 1) {
+            array_shift($columnDetails);
+
+            foreach ($columnDetails as $key => $detail) {
+                if ($key === 0) {
+                    $columnDetailString .= '->';
+                }
+                $columnDetailString .= $this->columnDetail($detail);
+                if ($key != count($columnDetails) - 1) {
+                    $columnDetailString .= '->';
+                }
+            }
+
+            return $columnDetailString;
+        }
+    }
+
+    /**
+     * Determine column detail string.
+     *
+     * @param  array $detail
+     * @return string
+     */
+    public function columnDetail($detail)
+    {
+        $columnDetailString = '';
+
+        if (stristr($detail, '(')) {
+            $columnDetailString .= $detail;
+        } else {
+            $columnDetailString .= $detail.'()';
+        }
+
+        return $columnDetailString;
+    }
+
 
     /**
      * Get the migration path.

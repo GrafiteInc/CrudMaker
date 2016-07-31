@@ -116,6 +116,12 @@ The following column types are available:
  * timestamp
  * uuid
 
+ ##### Want further definitions?
+
+ ```
+ --schema="id:increments|first,user_id:integer|unsigned,name:string|nullable|after('id'),age:integer|default(0)"
+ ```
+
 ### Relationships (Requires migration option)
 You can specifiy relationships, in order to automate a few more steps of building your CRUDs. You can set the relationship expressions like this:
 
