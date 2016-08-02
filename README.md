@@ -21,7 +21,7 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 ## Documentation
 
-[https://laracogs.com/docs/Services/crud](https://laracogs.com/docs/Services/crud)
+[https://laracogs.com/docs/Services/crud](https://laracogs.com/docs/Services/crud)<br>
 [https://laracogs.com/docs/Services/table-crud](https://laracogs.com/docs/Services/table-crud)
 
 ## License
