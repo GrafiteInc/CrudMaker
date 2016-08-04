@@ -56,7 +56,7 @@ class TableCrudMaker extends Command
             '--serviceOnly'   => $this->option('serviceOnly'),
             '--withFacade'    => $this->option('withFacade'),
             '--migration'     => $this->option('migration'),
-            '--relationships' => $this->option('relationships')
+            '--relationships' => $this->option('relationships'),
             '--schema'        => $tableDefintion,
         ]);
 
