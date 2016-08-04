@@ -22,7 +22,6 @@ class TableCrudMaker extends Command
         {--ui= : Select one of bootstrap|semantic for the UI}
         {--serviceOnly : Does not generate a Controller or Routes}
         {--withFacade : Creates a facade that can be bound in your app to access the CRUD service}
-        {--migration : Generates a migration file}
         {--relationships= : Define the relationship ie: hasOne|App\Comment|comment,hasOne|App\Rating|rating or relation|class|column (without the _id)}
     ';
 
@@ -55,7 +54,7 @@ class TableCrudMaker extends Command
             '--ui'            => $this->option('ui'),
             '--serviceOnly'   => $this->option('serviceOnly'),
             '--withFacade'    => $this->option('withFacade'),
-            '--migration'     => $this->option('migration'),
+            '--migration'     => true,
             '--relationships' => $this->option('relationships'),
             '--schema'        => $tableDefintion,
         ]);
