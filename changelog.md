@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.8] - 2016-08-24
+
+### Added
+- Support for Laravel 5.3
+
+### Changed
+- Minor layout improvements
+
 ## [v1.0.7] - 2016-08-02
 
 ### Added
