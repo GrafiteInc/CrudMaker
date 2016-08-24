@@ -17,7 +17,7 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 1. PHP 5.6+
 2. OpenSSL
-3. Laravel 5.1+
+3. Laravel 5.3+
 
 ## Documentation
 
