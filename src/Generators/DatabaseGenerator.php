@@ -101,7 +101,8 @@ class DatabaseGenerator
     /**
      * Create a column detail string.
      *
-     * @param  array $columnDetails
+     * @param array $columnDetails
+     *
      * @return string
      */
     public function createColumnDetailString($columnDetails)
@@ -128,7 +129,8 @@ class DatabaseGenerator
     /**
      * Determine column detail string.
      *
-     * @param  array $detail
+     * @param array $detail
+     *
      * @return string
      */
     public function columnDetail($detail)
@@ -143,7 +145,6 @@ class DatabaseGenerator
 
         return $columnDetailString;
     }
-
 
     /**
      * Get the migration path.
