@@ -13,13 +13,31 @@ class _camel_case_Repository
     }
 
     /**
+     * Returns where _camel_casePlural_
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function where($key, $operator, $value)
+    {
+        if (in_array('created_at', $this->model->getAttributes())) {
+            return $this->model->orderBy('created_at', 'desc')->where($key, $operator, $value)->get();
+        }
+
+        return $this->model->where($key, $operator, $value)->get();
+    }
+
+    /**
      * Returns all _camel_casePlural_
      *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function all()
     {
-        return $this->model->orderBy('created_at', 'desc')->get();
+        if (in_array('created_at', $this->model->getAttributes())) {
+            return $this->model->orderBy('created_at', 'desc')->get();
+        }
+
+        return $this->model->all();
     }
 
     /**
@@ -29,7 +47,11 @@ class _camel_case_Repository
      */
     public function paginated($paginate)
     {
-        return $this->model->orderBy('created_at', 'desc')->paginate($paginate);
+        if (in_array('created_at', $this->model->getAttributes())) {
+            return $this->model->orderBy('created_at', 'desc')->paginate($paginate);
+        }
+
+        return $this->model->paginate($paginate);
     }
 
     /**

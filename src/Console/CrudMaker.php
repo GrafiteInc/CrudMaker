@@ -272,7 +272,7 @@ class CrudMaker extends Command
         if ($this->option('api') || $this->option('apiOnly')) {
             $this->line('Built api...');
             $this->comment("\nAdd the following to your app/Providers/RouteServiceProvider.php: \n");
-            $this->info("require app_path('Http/api-routes.php'); \n");
+            $this->info("require base_path('routes/api.php'); \n");
         }
 
         if ($this->option('migration')) {
