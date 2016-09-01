@@ -105,7 +105,7 @@ class ConfigServiceTest extends TestCase
     public function testConfigASectionedCRUD()
     {
         $config = $this->service->configASectionedCRUD($this->config, 'admin', 'books', ['admin', 'books']);
-        $this->assertEquals($config['_namespace_model_'], 'App\Models\Admin\Books');
+        $this->assertEquals($config['_namespace_model_'], 'App\Models\Admin');
         $this->assertEquals($config['_table_name_'], 'admin_books');
     }
 
