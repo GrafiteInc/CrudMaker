@@ -39,8 +39,7 @@ class CrudServiceTest extends TestCase
             'schema'                     => null,
             '_path_facade_'              => vfsStream::url('Facades'),
             '_path_service_'             => vfsStream::url('Services'),
-            '_path_repository_'          => vfsStream::url('Repositories/'.ucfirst('testTable')),
-            '_path_model_'               => vfsStream::url('Repositories/'.ucfirst('testTable')),
+            '_path_model_'               => vfsStream::url('Models/'.ucfirst('testTable')),
             '_path_controller_'          => vfsStream::url('Http/Controllers'),
             '_path_api_controller_'      => vfsStream::url('Http/Controllers/Api'),
             '_path_views_'               => vfsStream::url('resources/views'),
@@ -53,8 +52,7 @@ class CrudServiceTest extends TestCase
             'routes_suffix'              => '',
             '_namespace_services_'       => 'App\Services',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_repository_'     => 'App\Repositories\\'.ucfirst('testTable'),
-            '_namespace_model_'          => 'App\Repositories\\'.ucfirst('testTable'),
+            '_namespace_model_'          => 'App\Models\\'.ucfirst('testTable'),
             '_namespace_controller_'     => 'App\Http\Controllers',
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
@@ -77,11 +75,11 @@ class CrudServiceTest extends TestCase
         $crud = vfsStream::setup("/");
 
         $this->service->generateCore($this->config, $this->bar);
-        $repoContents = $crud->getChild('Repositories/TestTable/TestTableRepository.php');
+        $modelContents = $crud->getChild('Models/TestTable/TestTable.php');
         $serviceContents = $crud->getChild('Services/TestTableService.php');
 
         $this->assertTrue($crud->hasChild('Services/TestTableService.php'));
-        $this->assertContains('class TestTableRepository', $repoContents->getContent());
+        $this->assertContains('class TestTable', $modelContents->getContent());
         $this->assertContains('class TestTableService', $serviceContents->getContent());
     }
 

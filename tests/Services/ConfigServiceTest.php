@@ -26,8 +26,7 @@ class ConfigServiceTest extends TestCase
             'schema'                     => null,
             '_path_facade_'              => vfsStream::url('Facades'),
             '_path_service_'             => vfsStream::url('Services'),
-            '_path_repository_'          => vfsStream::url('Repositories/'.ucfirst('testTable')),
-            '_path_model_'               => vfsStream::url('Repositories/'.ucfirst('testTable')),
+            '_path_model_'               => vfsStream::url('Models/'.ucfirst('testTable')),
             '_path_controller_'          => vfsStream::url('Http/Controllers'),
             '_path_api_controller_'      => vfsStream::url('Http/Controllers/Api'),
             '_path_views_'               => vfsStream::url('resources/views'),
@@ -39,8 +38,7 @@ class ConfigServiceTest extends TestCase
             'routes_suffix'              => '',
             '_namespace_services_'       => 'App\Services',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_repository_'     => 'App\Repositories\\'.ucfirst('testTable'),
-            '_namespace_model_'          => 'App\Repositories\\'.ucfirst('testTable'),
+            '_namespace_model_'          => 'App\Models\\'.ucfirst('testTable'),
             '_namespace_controller_'     => 'App\Http\Controllers',
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
@@ -53,8 +51,7 @@ class ConfigServiceTest extends TestCase
         $this->sectionedConfig = [
             '_path_facade_'              => 'Facades',
             '_path_service_'             => 'Services/_section_',
-            '_path_repository_'          => 'Repositories/_section_/_table_',
-            '_path_model_'               => 'Repositories/_section_/_table_',
+            '_path_model_'               => 'Models/_section_/_table_',
             '_path_controller_'          => 'Http/Controllers/_section_/',
             '_path_api_controller_'      => 'Http/Controllers/Api/_section_/',
             '_path_views_'               => 'resources/views/_sectionLowerCase_',
@@ -67,8 +64,7 @@ class ConfigServiceTest extends TestCase
             '_app_namespace_'            => 'App\\',
             '_namespace_services_'       => 'App\Services\_section_',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_repository_'     => 'App\Repositories\_section_\_table_',
-            '_namespace_model_'          => 'App\Repositories\_section_\_table_',
+            '_namespace_model_'          => 'App\Models\_section_\_table_',
             '_namespace_controller_'     => 'App\Http\Controllers\_section_',
             '_namespace_api_controller_' => 'App\Http\Controllers\Api\_section_',
             '_namespace_request_'        => 'App\Http\Requests\_section_',
@@ -103,13 +99,13 @@ class ConfigServiceTest extends TestCase
     public function testSetConfig()
     {
         $config = $this->service->setConfig($this->sectionedConfig, 'admin', 'books');
-        $this->assertEquals($config['_namespace_repository_'], 'App\Repositories\Admin\Books');
+        $this->assertEquals($config['_namespace_model_'], 'App\Models\Admin\Books');
     }
 
     public function testConfigASectionedCRUD()
     {
         $config = $this->service->configASectionedCRUD($this->config, 'admin', 'books', ['admin', 'books']);
-        $this->assertEquals($config['_namespace_repository_'], 'App\Repositories\Admin\Books');
+        $this->assertEquals($config['_namespace_model_'], 'App\Models\Admin\Books');
         $this->assertEquals($config['_table_name_'], 'admin_books');
     }
 

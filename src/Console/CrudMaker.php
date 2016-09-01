@@ -252,7 +252,7 @@ class CrudMaker extends Command
     private function crudReport($table)
     {
         $this->line("\n");
-        $this->line('Built repository...');
+        $this->line('Built model...');
         $this->line('Built request...');
         $this->line('Built service...');
 

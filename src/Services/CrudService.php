@@ -28,7 +28,7 @@ class CrudService
      */
     public function generateCore($config, $bar)
     {
-        $this->crudGenerator->createRepository($config);
+        $this->crudGenerator->createModel($config);
         $this->crudGenerator->createService($config);
 
         if (strtolower($config['framework']) === 'laravel') {

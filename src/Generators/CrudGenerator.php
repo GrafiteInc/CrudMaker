@@ -50,16 +50,15 @@ class CrudGenerator
     }
 
     /**
-     * Create the repository.
+     * Create the model.
      *
      * @param array $config
      *
      * @return bool
      */
-    public function createRepository($config)
+    public function createModel($config)
     {
         $repoParts = [
-            '_path_repository_',
             '_path_model_',
         ];
 
@@ -69,19 +68,16 @@ class CrudGenerator
             }
         }
 
-        $repo = $this->filesystem->get($config['template_source'].'/Repository/Repository.txt');
-        $model = $this->filesystem->get($config['template_source'].'/Repository/Model.txt');
+        $model = $this->filesystem->get($config['template_source'].'/Model.txt');
         $model = $this->configTheModel($config, $model);
 
         foreach ($config as $key => $value) {
-            $repo = str_replace($key, $value, $repo);
             $model = str_replace($key, $value, $model);
         }
 
-        $repository = $this->filesystem->put($config['_path_repository_'].'/'.$config['_camel_case_'].'Repository.php', $repo);
         $model = $this->filesystem->put($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
 
-        return $repository && $model;
+        return $model;
     }
 
     /**

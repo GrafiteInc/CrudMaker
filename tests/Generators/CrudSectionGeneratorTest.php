@@ -24,8 +24,7 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
             'schema'                     => null,
             '_path_facade_'              => vfsStream::url('Facades'),
             '_path_service_'             => vfsStream::url('Services/Superman'),
-            '_path_repository_'          => vfsStream::url('Repositories/Superman/'.ucfirst('testTable')),
-            '_path_model_'               => vfsStream::url('Repositories/Superman/'.ucfirst('testTable')),
+            '_path_model_'               => vfsStream::url('Models/Superman/'.ucfirst('testTable')),
             '_path_controller_'          => vfsStream::url('Http/Controllers/Superman'),
             '_path_api_controller_'      => vfsStream::url('Http/Controllers/Superman/Api'),
             '_path_views_'               => vfsStream::url('resources/views/superman'),
@@ -38,8 +37,7 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
             'routes_suffix'              => "\n});",
             '_namespace_services_'       => 'App\Services\Superman',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_repository_'     => 'App\Repositories\Superman\\'.ucfirst('testTable'),
-            '_namespace_model_'          => 'App\Repositories\Superman\\'.ucfirst('testTable'),
+            '_namespace_model_'          => 'App\Models\Superman\\'.ucfirst('testTable'),
             '_namespace_controller_'     => 'App\Http\Controllers\Superman',
             '_namespace_api_controller_' => 'App\Http\Controllers\Superman\Api',
             '_namespace_request_'        => 'App\Http\Requests\Superman',
@@ -73,15 +71,15 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->assertContains('class TestTableController extends Controller', $contents->getContent());
     }
 
-    public function testRepositoryGenerator()
+    public function testModelGenerator()
     {
-        $this->crud = vfsStream::setup("Repositories");
+        $this->crud = vfsStream::setup("Models");
 
-        $this->generator->createRepository($this->config);
-        $contents = $this->crud->getChild('Repositories/Superman/TestTable/TestTableRepository.php');
+        $this->generator->createModel($this->config);
+        $contents = $this->crud->getChild('Models/Superman/TestTable/TestTable.php');
 
-        $this->assertTrue($this->crud->hasChild('Repositories/Superman/TestTable/TestTableRepository.php'));
-        $this->assertContains('class TestTableRepository', $contents->getContent());
+        $this->assertTrue($this->crud->hasChild('Models/Superman/TestTable/TestTable.php'));
+        $this->assertContains('class TestTable', $contents->getContent());
     }
 
     public function testRequestGenerator()
@@ -140,10 +138,6 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->crud->hasChild('tests/acceptance/TestTableAcceptanceTest.php'));
         $this->assertContains('class TestTableAcceptanceTest', $contents->getContent());
 
-        $contents = $this->crud->getChild('tests/integration/TestTableRepositoryIntegrationTest.php');
-        $this->assertTrue($this->crud->hasChild('tests/integration/TestTableRepositoryIntegrationTest.php'));
-        $this->assertContains('class TestTableRepositoryIntegrationTest', $contents->getContent());
-
         $contents = $this->crud->getChild('tests/integration/TestTableServiceIntegrationTest.php');
         $this->assertTrue($this->crud->hasChild('tests/integration/TestTableServiceIntegrationTest.php'));
         $this->assertContains('class TestTableServiceIntegrationTest', $contents->getContent());
@@ -156,10 +150,6 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->generator->createTests($this->config, true));
 
         $this->assertFalse($this->crud->hasChild('tests/acceptance/TestTableAcceptanceTest.php'));
-
-        $contents = $this->crud->getChild('tests/integration/TestTableRepositoryIntegrationTest.php');
-        $this->assertTrue($this->crud->hasChild('tests/integration/TestTableRepositoryIntegrationTest.php'));
-        $this->assertContains('class TestTableRepositoryIntegrationTest', $contents->getContent());
 
         $contents = $this->crud->getChild('tests/integration/TestTableServiceIntegrationTest.php');
         $this->assertTrue($this->crud->hasChild('tests/integration/TestTableServiceIntegrationTest.php'));

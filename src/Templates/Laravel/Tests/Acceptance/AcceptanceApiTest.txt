@@ -12,10 +12,10 @@ class _camel_case_AcceptanceApiTest extends TestCase
     {
         parent::setUp();
 
-        $this->_lower_case_ = factory(_namespace_repository_\_camel_case_::class)->make([
+        $this->_lower_case_ = factory(_namespace_model_\_camel_case_::class)->make([
             // _camel_case_ table data
         ]);
-        $this->_lower_case_Edited = factory(_namespace_repository_\_camel_case_::class)->make([
+        $this->_lower_case_Edited = factory(_namespace_model_\_camel_case_::class)->make([
             // _camel_case_ table data
         ]);
         $user = factory(_app_namespace_Repositories\User\User::class)->make();

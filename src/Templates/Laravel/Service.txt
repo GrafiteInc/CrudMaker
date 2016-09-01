@@ -2,48 +2,118 @@
 
 namespace _namespace_services_;
 
-use _namespace_repository_\_camel_case_Repository;
+use _namespace_model_\_camel_case_;
+use Illuminate\Support\Facades\Schema;
 
 class _camel_case_Service
 {
-    public function __construct(_camel_case_Repository $_lower_case_Repository)
+    /**
+     * Service Model
+     *
+     * @var Model
+     */
+    public $model;
+
+    /**
+     * Pagination
+     *
+     * @var integer
+     */
+    public $pagination;
+
+    /**
+     * Service Constructor
+     *
+     * @param _camel_case_ $_lower_case_
+     */
+    public function __construct(_camel_case_ $_lower_case_)
     {
-        $this->repo = $_lower_case_Repository;
+        $this->model        = $_lower_case_;
+        $this->pagination   = env('PAGINATION', 25);
     }
 
+    /**
+     * All Model Items
+     *
+     * @return array
+     */
     public function all()
     {
-        return $this->repo->all();
+        return $this->model->all();
     }
 
+    /**
+     * Paginated items
+     *
+     * @return LengthAwarePaginator
+     */
     public function paginated()
     {
-        return $this->repo->paginated(env('paginate', 25));
+        return $this->model->paginate($this->pagination);
     }
 
+    /**
+     * Search the model
+     *
+     * @param  mixed $input
+     * @return LengthAwarePaginator
+     */
     public function search($input)
     {
-        return $this->repo->search($input, env('paginate', 25));
+        $query = $this->model->orderBy('created_at', 'desc');
+        $query->where('id', 'LIKE', '%'.$input.'%');
+
+        $columns = Schema::getColumnListing('_lower_casePlural_');
+
+        foreach ($columns as $attribute) {
+            $query->orWhere($attribute, 'LIKE', '%'.$input.'%');
+        };
+
+        return $query->paginate($this->pagination);
     }
 
+    /**
+     * Create the model item
+     *
+     * @param  array $input
+     * @return Model
+     */
     public function create($input)
     {
-        return $this->repo->create($input);
+        return $this->model->create($input);
     }
 
+    /**
+     * Find Model by ID
+     *
+     * @param  integer $id
+     * @return Model
+     */
     public function find($id)
     {
-        return $this->repo->find($id);
+        return $this->model->find($id);
     }
 
+    /**
+     * Model update
+     *
+     * @param  integer $id
+     * @param  array $input
+     * @return Model
+     */
     public function update($id, $input)
     {
-        return $this->repo->update($id, $input);
+        return $this->model->update($id, $input);
     }
 
+    /**
+     * Destroy the model
+     *
+     * @param  integer $id
+     * @return bool
+     */
     public function destroy($id)
     {
-        return $this->repo->destroy($id);
+        return $this->model->destroy($id);
     }
-
 }
