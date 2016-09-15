@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.1.1] - 2016-09-15
+
+### Fixed
+- Incorrect default config
+
 ## [v1.1.0] - 2016-09-06
 
 ### Changed
