@@ -7,7 +7,7 @@ use _app_namespace_Http\Controllers\Controller;
 use _namespace_services_\_camel_case_Service;
 use _namespace_request_\_camel_case_Request;
 
-class _camel_case_Controller extends Controller
+class _ucCamel_casePlural_Controller extends Controller
 {
     public function __construct(_camel_case_Service $_lower_case_Service)
     {
