@@ -55,18 +55,18 @@ class _camel_case_Service
     /**
      * Search the model
      *
-     * @param  mixed $input
+     * @param  mixed $payload
      * @return LengthAwarePaginator
      */
-    public function search($input)
+    public function search($payload)
     {
         $query = $this->model->orderBy('created_at', 'desc');
-        $query->where('id', 'LIKE', '%'.$input.'%');
+        $query->where('id', 'LIKE', '%'.$payload.'%');
 
         $columns = Schema::getColumnListing('_lower_casePlural_');
 
         foreach ($columns as $attribute) {
-            $query->orWhere($attribute, 'LIKE', '%'.$input.'%');
+            $query->orWhere($attribute, 'LIKE', '%'.$payload.'%');
         };
 
         return $query->paginate($this->pagination);
@@ -75,12 +75,12 @@ class _camel_case_Service
     /**
      * Create the model item
      *
-     * @param  array $input
+     * @param  array $payload
      * @return Model
      */
-    public function create($input)
+    public function create($payload)
     {
-        return $this->model->create($input);
+        return $this->model->create($payload);
     }
 
     /**
@@ -98,12 +98,12 @@ class _camel_case_Service
      * Model update
      *
      * @param  integer $id
-     * @param  array $input
+     * @param  array $payload
      * @return Model
      */
-    public function update($id, $input)
+    public function update($id, $payload)
     {
-        return $this->model->update($id, $input);
+        return $this->find($id)->update($payload);
     }
 
     /**
