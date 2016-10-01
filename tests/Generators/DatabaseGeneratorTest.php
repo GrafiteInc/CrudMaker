@@ -17,10 +17,9 @@ class DatabaseGeneratorTest extends TestCase
             \Artisan::call($command, $data);
         });
         $this->config = [
-            '_path_migrations_' => base_path('database/migrations')
+            '_path_migrations_' => base_path('database/migrations'),
+            'relationships' => 'hasOne|App\Models\Author|author_id'
         ];
-
-        $config = $this->config;
     }
 
     public function testCreateMigrationFail()
@@ -61,6 +60,7 @@ class DatabaseGeneratorTest extends TestCase
         $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
 
         $this->assertContains('table->increments', $schemaForm);
+        $this->assertContains('table->integer(\'author_id\')', $schemaForm);
         $this->assertContains('table->string(\'name\')', $schemaForm);
     }
 

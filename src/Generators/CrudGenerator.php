@@ -346,7 +346,7 @@ class CrudGenerator
             $request = str_replace($key, $value, $request);
         }
 
-        $request = $this->filesystem->put($config['_path_api_controller_'].'/'.$config['_camel_case_'].'Controller.php', $request);
+        $request = $this->filesystem->put($config['_path_api_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php', $request);
 
         return $request;
     }

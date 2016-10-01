@@ -24,7 +24,7 @@ class CrudSingleGeneratorTest extends PHPUnit_Framework_TestCase
             'schema'                     => null,
             '_path_facade_'              => vfsStream::url('Facades'),
             '_path_service_'             => vfsStream::url('Services'),
-            '_path_model_'               => vfsStream::url('Models/'.ucfirst('testTable')),
+            '_path_model_'               => vfsStream::url('Models'),
             '_path_controller_'          => vfsStream::url('Http/Controllers'),
             '_path_api_controller_'      => vfsStream::url('Http/Controllers/Api'),
             '_path_views_'               => vfsStream::url('resources/views'),
@@ -37,7 +37,7 @@ class CrudSingleGeneratorTest extends PHPUnit_Framework_TestCase
             'routes_suffix'              => '',
             '_namespace_services_'       => 'App\Services',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_model_'          => 'App\Models\\'.ucfirst('testTable'),
+            '_namespace_model_'          => 'App\Models',
             '_namespace_controller_'     => 'App\Http\Controllers',
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
@@ -45,6 +45,7 @@ class CrudSingleGeneratorTest extends PHPUnit_Framework_TestCase
             '_lower_casePlural_'         => str_plural(strtolower('testTable')),
             '_camel_case_'               => ucfirst(camel_case('testTable')),
             '_camel_casePlural_'         => str_plural(camel_case('testTable')),
+            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case('testTable'))),
         ];
     }
 
@@ -53,10 +54,10 @@ class CrudSingleGeneratorTest extends PHPUnit_Framework_TestCase
         $this->crud = vfsStream::setup("Http/Controllers/Api");
 
         $this->generator->createApi($this->config, false);
-        $contents = $this->crud->getChild('Http/Controllers/Api/TestTableController.php');
+        $contents = $this->crud->getChild('Http/Controllers/Api/TestTablesController.php');
 
-        $this->assertTrue($this->crud->hasChild('Http/Controllers/Api/TestTableController.php'));
-        $this->assertContains('class TestTableController extends Controller', $contents->getContent());
+        $this->assertTrue($this->crud->hasChild('Http/Controllers/Api/TestTablesController.php'));
+        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testControllerGenerator()
@@ -64,20 +65,20 @@ class CrudSingleGeneratorTest extends PHPUnit_Framework_TestCase
         $this->crud = vfsStream::setup("Http/Controllers");
         $this->generator->createController($this->config);
 
-        $this->assertTrue($this->crud->hasChild('Http/Controllers/TestTableController.php'));
-        $contents = $this->crud->getChild('Http/Controllers/TestTableController.php');
+        $this->assertTrue($this->crud->hasChild('Http/Controllers/TestTablesController.php'));
+        $contents = $this->crud->getChild('Http/Controllers/TestTablesController.php');
 
-        $this->assertContains('class TestTableController extends Controller', $contents->getContent());
+        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testModelsGenerator()
     {
-        $this->crud = vfsStream::setup("Models/TestTable");
+        $this->crud = vfsStream::setup("Models");
 
         $this->generator->createModel($this->config);
-        $contents = $this->crud->getChild('Models/TestTable/TestTable.php');
+        $contents = $this->crud->getChild('Models/TestTable.php');
 
-        $this->assertTrue($this->crud->hasChild('Models/TestTable/TestTable.php'));
+        $this->assertTrue($this->crud->hasChild('Models/TestTable.php'));
         $this->assertContains('class TestTable', $contents->getContent());
     }
 

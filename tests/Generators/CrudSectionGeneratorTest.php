@@ -24,7 +24,7 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
             'schema'                     => null,
             '_path_facade_'              => vfsStream::url('Facades'),
             '_path_service_'             => vfsStream::url('Services/Superman'),
-            '_path_model_'               => vfsStream::url('Models/Superman/'.ucfirst('testTable')),
+            '_path_model_'               => vfsStream::url('Models/Superman'),
             '_path_controller_'          => vfsStream::url('Http/Controllers/Superman'),
             '_path_api_controller_'      => vfsStream::url('Http/Controllers/Superman/Api'),
             '_path_views_'               => vfsStream::url('resources/views/superman'),
@@ -37,7 +37,7 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
             'routes_suffix'              => "\n});",
             '_namespace_services_'       => 'App\Services\Superman',
             '_namespace_facade_'         => 'App\Facades',
-            '_namespace_model_'          => 'App\Models\Superman\\'.ucfirst('testTable'),
+            '_namespace_model_'          => 'App\Models\Superman',
             '_namespace_controller_'     => 'App\Http\Controllers\Superman',
             '_namespace_api_controller_' => 'App\Http\Controllers\Superman\Api',
             '_namespace_request_'        => 'App\Http\Requests\Superman',
@@ -45,6 +45,7 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
             '_lower_casePlural_'         => str_plural(strtolower('testTable')),
             '_camel_case_'               => ucfirst(camel_case('testTable')),
             '_camel_casePlural_'         => str_plural(camel_case('testTable')),
+            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case('testTable'))),
             '_table_name_'               => 'superman_testtable',
         ];
     }
@@ -54,10 +55,10 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->crud = vfsStream::setup("Http/Controllers/Superman/Api");
 
         $this->generator->createApi($this->config, false);
-        $contents = $this->crud->getChild('Http/Controllers/Superman/Api/TestTableController.php');
+        $contents = $this->crud->getChild('Http/Controllers/Superman/Api/TestTablesController.php');
 
-        $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/Api/TestTableController.php'));
-        $this->assertContains('class TestTableController extends Controller', $contents->getContent());
+        $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/Api/TestTablesController.php'));
+        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testControllerGenerator()
@@ -65,10 +66,10 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->crud = vfsStream::setup("Http/Controllers");
         $this->generator->createController($this->config);
 
-        $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/TestTableController.php'));
-        $contents = $this->crud->getChild('Http/Controllers/Superman/TestTableController.php');
+        $this->assertTrue($this->crud->hasChild('Http/Controllers/Superman/TestTablesController.php'));
+        $contents = $this->crud->getChild('Http/Controllers/Superman/TestTablesController.php');
 
-        $this->assertContains('class TestTableController extends Controller', $contents->getContent());
+        $this->assertContains('class TestTablesController extends Controller', $contents->getContent());
     }
 
     public function testModelGenerator()
@@ -76,9 +77,9 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->crud = vfsStream::setup("Models");
 
         $this->generator->createModel($this->config);
-        $contents = $this->crud->getChild('Models/Superman/TestTable/TestTable.php');
+        $contents = $this->crud->getChild('Models/Superman/TestTable.php');
 
-        $this->assertTrue($this->crud->hasChild('Models/Superman/TestTable/TestTable.php'));
+        $this->assertTrue($this->crud->hasChild('Models/Superman/TestTable.php'));
         $this->assertContains('class TestTable', $contents->getContent());
     }
 
