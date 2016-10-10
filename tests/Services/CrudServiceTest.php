@@ -95,7 +95,7 @@ class CrudServiceTest extends TestCase
 
         $this->assertTrue($crud->hasChild('Http/Controllers/TestTablesController.php'));
         $this->assertContains('class TestTablesController', $controllerContents->getContent());
-        $this->assertContains('TestTableController', $routesContents->getContent());
+        $this->assertContains('TestTablesController', $routesContents->getContent());
     }
 
     public function testGenerateAPI()
@@ -109,6 +109,6 @@ class CrudServiceTest extends TestCase
 
         $this->assertTrue($crud->hasChild('Http/Controllers/Api/TestTablesController.php'));
         $this->assertContains('class TestTablesController', $controllerContents->getContent());
-        $this->assertContains('TestTableController', $routesContents->getContent());
+        $this->assertContains('TestTablesController', $routesContents->getContent());
     }
 }
