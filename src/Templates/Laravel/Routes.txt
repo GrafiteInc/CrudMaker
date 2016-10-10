@@ -8,5 +8,5 @@
 Route::resource('_lower_casePlural_', '_ucCamel_casePlural_Controller', ['except' => ['show']]);
 Route::post('_sectionRoutePrefix__lower_casePlural_/search', [
     'as' => '_sectionPrefix__lower_casePlural_.search',
-    'uses' => '_camel_case_Controller@search'
+    'uses' => '_ucCamel_casePlural_Controller@search'
 ]);
