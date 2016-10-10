@@ -87,12 +87,12 @@ class DatabaseGenerator
             }
         }
 
-        if (isset($config['relationships']) && ! is_null($config['relationships'])) {
+        if (isset($config['relationships']) && !is_null($config['relationships'])) {
             $relationships = explode(',', $config['relationships']);
             foreach ($relationships as $relationship) {
                 $relation = explode('|', $relationship);
 
-                if (! stristr($parsedTable, "integer('$relation[2]')")) {
+                if (!stristr($parsedTable, "integer('$relation[2]')")) {
                     $parsedTable .= "\t\t\t\$table->integer('$relation[2]');\n";
                 }
             }
