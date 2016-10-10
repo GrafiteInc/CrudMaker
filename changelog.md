@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.1.2] - 2016-10-10
+
+### Changed
+- Naming conventions of the controllers
+
+### Fixed
+- Issue with templates and variable terms
+
 ## [v1.1.2] - 2016-10-01
 
 ### Changed
