@@ -113,9 +113,9 @@ class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
         $this->generator->createRoutes($this->config, false);
         $contents = $this->crud->getChild('Http/routes.php');
 
-        $this->assertContains('TestTableController', $contents->getContent());
+        $this->assertContains('TestTablesController', $contents->getContent());
         $this->assertContains('\'as\' => \'superman.testtables.search\'', $contents->getContent());
-        $this->assertContains('\'uses\' => \'TestTableController@search\'', $contents->getContent());
+        $this->assertContains('\'uses\' => \'TestTablesController@search\'', $contents->getContent());
     }
 
     public function testViewsGenerator()
