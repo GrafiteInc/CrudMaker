@@ -92,8 +92,10 @@ class DatabaseGenerator
             foreach ($relationships as $relationship) {
                 $relation = explode('|', $relationship);
 
-                if (!stristr($parsedTable, "integer('$relation[2]')")) {
-                    $parsedTable .= "\t\t\t\$table->integer('$relation[2]');\n";
+                if (isset($relation[2])) {
+                    if (!stristr($parsedTable, "integer('$relation[2]')")) {
+                        $parsedTable .= "\t\t\t\$table->integer('$relation[2]');\n";
+                    }
                 }
             }
         }
