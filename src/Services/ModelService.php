@@ -2,8 +2,17 @@
 
 namespace Yab\CrudMaker\Services;
 
+use Yab\CrudMaker\Services\TableService;
+
 class ModelService
 {
+    protected $tableService;
+
+    public function __construct()
+    {
+        $this->tableService = new TableService();
+    }
+
     /**
      * Prepare a models relationships.
      *
@@ -33,5 +42,32 @@ class ModelService
         }
 
         return $relationshipMethods;
+    }
+
+    /**
+     * Configure the model.
+     *
+     * @param array  $config
+     * @param string $model
+     *
+     * @return string
+     */
+    public function configTheModel($config, $model)
+    {
+        if (!empty($config['schema'])) {
+            $model = str_replace('// _camel_case_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
+        }
+
+        if (!empty($config['relationships'])) {
+            $relationships = [];
+
+            foreach (explode(',', $config['relationships']) as $relationshipExpression) {
+                $relationships[] = explode('|', $relationshipExpression);
+            }
+
+            $model = str_replace('// _camel_case_ relationships', $this->prepareModelRelationships($relationships), $model);
+        }
+
+        return $model;
     }
 }

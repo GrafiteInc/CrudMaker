@@ -4,6 +4,7 @@ namespace Yab\CrudMaker\Generators;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Yab\CrudMaker\Services\FileService;
 
 /**
  * Generate the CRUD database components.
@@ -11,10 +12,12 @@ use Illuminate\Filesystem\Filesystem;
 class DatabaseGenerator
 {
     protected $filesystem;
+    protected $fileService;
 
     public function __construct()
     {
         $this->filesystem = new Filesystem();
+        $this->fileService = new FileService();
     }
 
     /**
@@ -71,9 +74,6 @@ class DatabaseGenerator
         }
 
         $parsedTable = '';
-
-        // Example
-        // id:increments,name:string|nullable()->default('n/a')
 
         foreach (explode(',', $schema) as $key => $column) {
             $columnDefinition = explode(':', $column);
@@ -169,9 +169,7 @@ class DatabaseGenerator
      */
     private function getMigrationsPath($config, $relative = false)
     {
-        if (!is_dir($config['_path_migrations_'])) {
-            mkdir($config['_path_migrations_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_migrations_'], 0777, true);
 
         if ($relative) {
             return str_replace(base_path(), '', $config['_path_migrations_']);

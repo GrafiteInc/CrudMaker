@@ -3,6 +3,7 @@
 namespace Yab\CrudMaker\Generators;
 
 use Illuminate\Filesystem\Filesystem;
+use Yab\CrudMaker\Services\FileService;
 use Yab\CrudMaker\Services\ModelService;
 use Yab\CrudMaker\Services\TableService;
 use Yab\CrudMaker\Services\TestService;
@@ -13,6 +14,7 @@ use Yab\CrudMaker\Services\TestService;
 class CrudGenerator
 {
     protected $filesystem;
+    protected $fileService;
     protected $tableService;
     protected $testService;
     protected $modelService;
@@ -20,6 +22,7 @@ class CrudGenerator
     public function __construct()
     {
         $this->filesystem = new Filesystem();
+        $this->fileService = new FileService();
         $this->tableService = new TableService();
         $this->testService = new TestService();
         $this->modelService = new ModelService();
@@ -34,9 +37,7 @@ class CrudGenerator
      */
     public function createController($config)
     {
-        if (!is_dir($config['_path_controller_'])) {
-            mkdir($config['_path_controller_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_controller_'], 0777, true);
 
         $request = $this->filesystem->get($config['template_source'].'/Controller.txt');
 
@@ -63,46 +64,17 @@ class CrudGenerator
         ];
 
         foreach ($repoParts as $repoPart) {
-            if (!is_dir($config[$repoPart])) {
-                mkdir($config[$repoPart], 0777, true);
-            }
+            $this->fileService->mkdir($config[$repoPart], 0777, true);
         }
 
         $model = $this->filesystem->get($config['template_source'].'/Model.txt');
-        $model = $this->configTheModel($config, $model);
+        $model = $this->modelService->configTheModel($config, $model);
 
         foreach ($config as $key => $value) {
             $model = str_replace($key, $value, $model);
         }
 
         $model = $this->filesystem->put($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
-
-        return $model;
-    }
-
-    /**
-     * Configure the model.
-     *
-     * @param array  $config
-     * @param string $model
-     *
-     * @return string
-     */
-    public function configTheModel($config, $model)
-    {
-        if (!empty($config['schema'])) {
-            $model = str_replace('// _camel_case_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
-        }
-
-        if (!empty($config['relationships'])) {
-            $relationships = [];
-
-            foreach (explode(',', $config['relationships']) as $relationshipExpression) {
-                $relationships[] = explode('|', $relationshipExpression);
-            }
-
-            $model = str_replace('// _camel_case_ relationships', $this->modelService->prepareModelRelationships($relationships), $model);
-        }
 
         return $model;
     }
@@ -116,9 +88,7 @@ class CrudGenerator
      */
     public function createRequest($config)
     {
-        if (!is_dir($config['_path_request_'])) {
-            mkdir($config['_path_request_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_request_'], 0777, true);
 
         $request = $this->filesystem->get($config['template_source'].'/Request.txt');
 
@@ -140,9 +110,7 @@ class CrudGenerator
      */
     public function createService($config)
     {
-        if (!is_dir($config['_path_service_'])) {
-            mkdir($config['_path_service_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_service_'], 0777, true);
 
         $request = $this->filesystem->get($config['template_source'].'/Service.txt');
 
@@ -194,9 +162,7 @@ class CrudGenerator
      */
     public function createFactory($config)
     {
-        if (!is_dir(dirname($config['_path_factory_']))) {
-            mkdir(dirname($config['_path_factory_']), 0777, true);
-        }
+        $this->fileService->mkdir(dirname($config['_path_factory_']), 0777, true);
 
         if (!file_exists($config['_path_factory_'])) {
             $this->filesystem->put($config['_path_factory_'], '<?php');
@@ -222,9 +188,7 @@ class CrudGenerator
      */
     public function createFacade($config)
     {
-        if (!is_dir($config['_path_facade_'])) {
-            mkdir($config['_path_facade_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_facade_'], 0777, true);
 
         $facade = $this->filesystem->get($config['template_source'].'/Facade.txt');
 
@@ -258,9 +222,7 @@ class CrudGenerator
             $testName = $config['_camel_case_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
             $testDirectory = $config['_path_tests_'].'/'.strtolower($testTemplate->getRelativePath());
 
-            if (!is_dir($testDirectory)) {
-                mkdir($testDirectory, 0777, true);
-            }
+            $this->fileService->mkdir($testDirectory, 0777, true);
 
             $test = $this->tableService->getTableSchema($config, $test);
 
@@ -285,9 +247,7 @@ class CrudGenerator
      */
     public function createViews($config)
     {
-        if (!is_dir($config['_path_views_'].'/'.$config['_lower_casePlural_'])) {
-            mkdir($config['_path_views_'].'/'.$config['_lower_casePlural_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_views_'].'/'.$config['_lower_casePlural_'], 0777, true);
 
         $viewTemplates = 'Views';
 
@@ -328,9 +288,7 @@ class CrudGenerator
             $this->filesystem->put($routesMaster, "<?php\n\n");
         }
 
-        if (!is_dir($config['_path_api_controller_'])) {
-            mkdir($config['_path_api_controller_'], 0777, true);
-        }
+        $this->fileService->mkdir($config['_path_api_controller_'], 0777, true);
 
         $routes = $this->filesystem->get($config['template_source'].'/ApiRoutes.txt');
 
