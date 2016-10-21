@@ -42,7 +42,6 @@ class CrudMaker extends Command
         'morphs',
         'smallInteger',
         'string',
-        'string',
         'text',
         'time',
         'tinyInteger',
