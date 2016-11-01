@@ -13,12 +13,46 @@ use Yab\CrudMaker\Services\TestService;
  */
 class CrudGenerator
 {
+    /**
+     * Filesystem instance.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
     protected $filesystem;
+
+    /**
+     * FileService instance.
+     *
+     * @var \Yab\CrudMaker\Services\FileService
+     */
     protected $fileService;
+
+    /**
+     * TableService instance.
+     *
+     * @var \Yab\CrudMaker\Services\TableService
+     */
     protected $tableService;
+
+    /**
+     * TestService instance.
+     *
+     * @var \Yab\CrudMaker\Services\TestService
+     */
     protected $testService;
+
+    /**
+     * ModelService instance.
+     *
+     * @var \Yab\CrudMaker\Services\ModelService
+     */
     protected $modelService;
 
+    /**
+     * Create new CrudGenerator instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->filesystem = new Filesystem();
