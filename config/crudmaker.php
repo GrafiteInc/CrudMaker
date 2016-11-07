@@ -61,7 +61,7 @@ return [
         '_path_request_'             => app()->path().'/Http/Requests/_section_',
         '_path_routes_'              => app()->basePath().'/routes/web.php',
         '_path_api_routes_'          => app()->basePath().'/routes/api.php',
-        'routes_prefix'              => "\n\nRoute::group(['namespace' => '_section_', 'prefix' => '_sectionLowerCase_', 'middleware' => ['web']], function () { \n",
+        'routes_prefix'              => "\n\nRoute::group(['namespace' => '_section_', 'prefix' => '_sectionLowerCase_', 'as' => '_sectionLowerCase_', 'middleware' => ['web']], function () { \n",
         'routes_suffix'              => "\n});",
         '_app_namespace_'            => app_namespace(),
         '_namespace_services_'       => app_namespace().'Services',
