@@ -69,7 +69,9 @@ class _camel_case_Service
             $query->orWhere($attribute, 'LIKE', '%'.$payload.'%');
         };
 
-        return $query->paginate($this->pagination);
+        return $query->paginate($this->pagination)->appends([
+            'search' => $payload
+        ]);
     }
 
     /**
