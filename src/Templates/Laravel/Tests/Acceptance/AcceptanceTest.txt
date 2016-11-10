@@ -18,7 +18,7 @@ class _camel_case_AcceptanceTest extends TestCase
         $this->_lower_case_Edited = factory(_namespace_repository_\_camel_case_::class)->make([
             // _camel_case_ table data
         ]);
-        $user = factory(_app_namespace_Repositories\User\User::class)->make();
+        $user = factory(_app_namespace_Repositories\Models\User::class)->make();
         $this->actor = $this->actingAs($user);
     }
 
