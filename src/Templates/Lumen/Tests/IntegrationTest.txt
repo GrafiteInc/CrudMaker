@@ -12,10 +12,10 @@ class _camel_case_IntegrationTest extends TestCase
         parent::setUp();
         $this->app->instance('middleware.disable', true);
 
-        $this->_lower_case_ = factory(_namespace_repository_\_camel_case_::class)->make([
+        $this->_lower_case_ = factory(_namespace_model_\_camel_case_::class)->make([
             // _camel_case_ table data
         ]);
-        $this->_lower_case_Edited = factory(_namespace_repository_\_camel_case_::class)->make([
+        $this->_lower_case_Edited = factory(_namespace_model_\_camel_case_::class)->make([
             // _camel_case_ table data
         ]);
     }
@@ -34,14 +34,14 @@ class _camel_case_IntegrationTest extends TestCase
 
     public function testShow()
     {
-        factory(_namespace_repository_\_camel_case_::class)->create($this->_lower_case_->toArray());
+        factory(_namespace_model_\_camel_case_::class)->create($this->_lower_case_->toArray());
         $this->get('api/v1/_lower_casePlural_/'.$this->_lower_case_->id);
         $this->assertEquals(200, $this->response->getStatusCode());
     }
 
     public function testUpdate()
     {
-        factory(_namespace_repository_\_camel_case_::class)->create($this->_lower_case_->toArray());
+        factory(_namespace_model_\_camel_case_::class)->create($this->_lower_case_->toArray());
         $this->patch('api/v1/_lower_casePlural_/1', $this->_lower_case_Edited->toArray());
         $this->assertEquals(200, $this->response->getStatusCode());
         $this->seeInDatabase('_lower_casePlural_', $this->_lower_case_Edited->toArray());
@@ -49,7 +49,7 @@ class _camel_case_IntegrationTest extends TestCase
 
     public function testDelete()
     {
-        factory(_namespace_repository_\_camel_case_::class)->create($this->_lower_case_->toArray());
+        factory(_namespace_model_\_camel_case_::class)->create($this->_lower_case_->toArray());
         $this->delete('api/v1/_lower_casePlural_/'.$this->_lower_case_->id);
         $this->assertEquals(200, $this->response->getStatusCode());
     }
