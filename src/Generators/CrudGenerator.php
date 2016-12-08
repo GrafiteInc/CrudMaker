@@ -50,8 +50,6 @@ class CrudGenerator
 
     /**
      * Create new CrudGenerator instance.
-     *
-     * @return void
      */
     public function __construct()
     {
