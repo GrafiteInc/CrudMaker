@@ -21,8 +21,8 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 ## Documentation
 
-[https://laracogs.com/docs/Services/crud](https://laracogs.com/docs/Services/crud)<br>
-[https://laracogs.com/docs/Services/table-crud](https://laracogs.com/docs/Services/table-crud)
+[https://laracogs.com/docs/services/crud](https://laracogs.com/docs/services/crud)<br>
+[https://laracogs.com/docs/services/table-crud](https://laracogs.com/docs/services/table-crud)
 
 ## License
 CrudMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
