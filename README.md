@@ -17,12 +17,18 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 1. PHP 5.6+
 2. OpenSSL
-3. Laravel 5.3+
+
+## Compatibility and Support
+
+| Laravel Version | Package Tag | Supported |
+|-----------------|-------------|-----------|
+| 5.4.x | 1.2.x | yes |
+| 5.3.x | 1.1.x | no |
 
 ## Documentation
 
-[https://laracogs.com/docs/Services/crud](https://laracogs.com/docs/Services/crud)<br>
-[https://laracogs.com/docs/Services/table-crud](https://laracogs.com/docs/Services/table-crud)
+[https://laracogs.com/docs/services/crud](https://laracogs.com/docs/services/crud)<br>
+[https://laracogs.com/docs/services/table-crud](https://laracogs.com/docs/services/table-crud)
 
 ## License
 CrudMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

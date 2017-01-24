@@ -122,15 +122,18 @@ class CrudGenerator
     {
         $this->fileService->mkdir($config['_path_request_'], 0777, true);
 
-        $request = $this->filesystem->get($config['template_source'].'/Request.txt');
+        $createRequest = $this->filesystem->get($config['template_source'].'/CreateRequest.txt');
+        $updateRequest = $this->filesystem->get($config['template_source'].'/UpdateRequest.txt');
 
         foreach ($config as $key => $value) {
-            $request = str_replace($key, $value, $request);
+            $createRequest = str_replace($key, $value, $createRequest);
+            $updateRequest = str_replace($key, $value, $updateRequest);
         }
 
-        $request = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'Request.php', $request);
+        $createRequest = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'CreateRequest.php', $createRequest);
+        $updateRequest = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'UpdateRequest.php', $updateRequest);
 
-        return $request;
+        return $createRequest;
     }
 
     /**

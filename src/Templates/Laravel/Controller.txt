@@ -5,7 +5,8 @@ namespace _namespace_controller_;
 use Illuminate\Http\Request;
 use _app_namespace_Http\Controllers\Controller;
 use _namespace_services_\_camel_case_Service;
-use _namespace_request_\_camel_case_Request;
+use _namespace_request_\_camel_case_CreateRequest;
+use _namespace_request_\_camel_case_UpdateRequest;
 
 class _ucCamel_casePlural_Controller extends Controller
 {
@@ -49,10 +50,10 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\_camel_case_Request  $request
+     * @param  \Illuminate\Http\_camel_case_CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(_camel_case_Request $request)
+    public function store(_camel_case_CreateRequest $request)
     {
         $result = $this->service->create($request->except('_token'));
 
@@ -64,7 +65,7 @@ class _ucCamel_casePlural_Controller extends Controller
     }
 
     /**
-     * Display the _lower_casePlural_.
+     * Display the _lower_case_.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -76,7 +77,7 @@ class _ucCamel_casePlural_Controller extends Controller
     }
 
     /**
-     * Show the form for editing the _lower_casePlural_.
+     * Show the form for editing the _lower_case_.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -90,11 +91,11 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Update the _lower_casePlural_ in storage.
      *
-     * @param  \Illuminate\Http\_camel_case_Request  $request
+     * @param  \Illuminate\Http\_camel_case_UpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(_camel_case_Request $request, $id)
+    public function update(_camel_case_UpdateRequest $request, $id)
     {
         $result = $this->service->update($id, $request->except('_token'));
 
