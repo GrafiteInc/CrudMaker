@@ -3,14 +3,14 @@
 namespace Yab\CrudMaker\Console;
 
 use Exception;
-use Illuminate\Console\AppNamespaceDetectorTrait;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Yab\CrudMaker\Services\TableService;
 
 class TableCrudMaker extends Command
 {
-    use AppNamespaceDetectorTrait;
+    use DetectsApplicationNamespace;
 
     /**
      * The console command name.
@@ -49,14 +49,14 @@ class TableCrudMaker extends Command
         }
 
         $this->call('crudmaker:new', [
-            'table'           => $table,
-            '--api'           => $this->option('api'),
-            '--ui'            => $this->option('ui'),
-            '--serviceOnly'   => $this->option('serviceOnly'),
-            '--withFacade'    => $this->option('withFacade'),
-            '--migration'     => true,
+            'table' => $table,
+            '--api' => $this->option('api'),
+            '--ui' => $this->option('ui'),
+            '--serviceOnly' => $this->option('serviceOnly'),
+            '--withFacade' => $this->option('withFacade'),
+            '--migration' => true,
             '--relationships' => $this->option('relationships'),
-            '--schema'        => $tableDefintion,
+            '--schema' => $tableDefintion,
         ]);
 
         $migrationName = 'create_'.$table.'_table';
