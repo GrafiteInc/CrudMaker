@@ -18,13 +18,13 @@ class DatabaseGeneratorTest extends TestCase
         });
         $this->config = [
             '_path_migrations_' => base_path('database/migrations'),
-            'relationships' => 'hasOne|App\Models\Author|author_id'
+            'relationships' => 'hasOne|App\Models\Author|author_id',
         ];
     }
 
     public function testCreateMigrationFail()
     {
-        $this->setExpectedException('Exception');
+        $this->expectException('Exception');
 
         $this->generator->createMigration('random_string', 'TestTable', 'another_random_string', $this->command);
     }
@@ -37,7 +37,7 @@ class DatabaseGeneratorTest extends TestCase
     public function testCreateMigrationSuccessAlternativeLocation()
     {
         $config = [
-            '_path_migrations_' => base_path('alternative_migrations_location')
+            '_path_migrations_' => base_path('alternative_migrations_location'),
         ];
 
         $this->createMigration('alternative_migrations_location');
@@ -85,7 +85,7 @@ class DatabaseGeneratorTest extends TestCase
     {
         if ($location) {
             $this->config = [
-                '_path_migrations_' => base_path($location)
+                '_path_migrations_' => base_path($location),
             ];
         }
 
@@ -101,6 +101,6 @@ class DatabaseGeneratorTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-        array_map('unlink', glob($this->config['_path_migrations_'] . '/*'));
+        array_map('unlink', glob($this->config['_path_migrations_'].'/*'));
     }
 }
