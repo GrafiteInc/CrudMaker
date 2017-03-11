@@ -23,8 +23,6 @@ class CrudService
      *
      * @param array                                         $config
      * @param \Symfony\Component\Console\Helper\ProgressBar $bar
-     *
-     * @return void
      */
     public function generateCore($config, $bar)
     {
@@ -43,8 +41,6 @@ class CrudService
      *
      * @param array                                         $config
      * @param \Symfony\Component\Console\Helper\ProgressBar $bar
-     *
-     * @return void
      */
     public function generateAppBased($config, $bar)
     {
@@ -68,8 +64,6 @@ class CrudService
      * @param string                                        $table
      * @param array                                         $splitTable
      * @param \Yab\CrudMaker\Console\CrudMaker              $command
-     *
-     * @return void
      */
     public function generateDB($config, $bar, $section, $table, $splitTable, $command)
     {
@@ -99,8 +93,6 @@ class CrudService
      *
      * @param array                                         $config
      * @param \Symfony\Component\Console\Helper\ProgressBar $bar
-     *
-     * @return void
      */
     public function generateAPI($config, $bar)
     {

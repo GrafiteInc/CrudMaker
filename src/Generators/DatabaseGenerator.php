@@ -5,12 +5,15 @@ namespace Yab\CrudMaker\Generators;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Yab\CrudMaker\Services\FileService;
+use Yab\CrudMaker\Traits\SchemaTrait;
 
 /**
  * Generate the CRUD database components.
  */
 class DatabaseGenerator
 {
+    use SchemaTrait;
+
     protected $filesystem;
     protected $fileService;
 
@@ -50,7 +53,7 @@ class DatabaseGenerator
 
             return true;
         } catch (Exception $e) {
-            throw new Exception('Could not create the migration', 1);
+            throw new Exception('Could not create the migration: '.$e->getMessage(), 1);
         }
     }
 
@@ -75,15 +78,17 @@ class DatabaseGenerator
 
         $parsedTable = '';
 
-        foreach (explode(',', $schema) as $key => $column) {
+        $definitions = $this->calibrateDefinitions($schema);
+
+        foreach ($definitions as $key => $column) {
             $columnDefinition = explode(':', $column);
             $columnDetails = explode('|', $columnDefinition[1]);
             $columnDetailString = $this->createColumnDetailString($columnDetails);
 
             if ($key === 0) {
-                $parsedTable .= "\$table->$columnDetails[0]('$columnDefinition[0]')$columnDetailString;\n";
+                $parsedTable .= $this->getSchemaString($columnDetails, $columnDefinition, $columnDetailString);
             } else {
-                $parsedTable .= "\t\t\t\$table->$columnDetails[0]('$columnDefinition[0]')$columnDetailString;\n";
+                $parsedTable .= "\t\t".$this->getSchemaString($columnDetails, $columnDefinition, $columnDetailString);
             }
         }
 
@@ -109,6 +114,18 @@ class DatabaseGenerator
         }
 
         return $parsedTable;
+    }
+
+    public function getSchemaString($columnDetails, $columnDefinition, $columnDetailString)
+    {
+        if (strpos($columnDetails[0], '(')) {
+            $injectedColumn = explode('(', $columnDetails[0]);
+            $columnDef = $injectedColumn[0].'(\''.$columnDefinition[0].'\','.$injectedColumn[1];
+        } else {
+            $columnDef = $columnDetails[0].'(\''.$columnDefinition[0].'\')';
+        }
+
+        return "\$table->$columnDef$columnDetailString;\n";
     }
 
     /**

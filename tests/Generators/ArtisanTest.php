@@ -1,49 +1,11 @@
 <?php
 
-use org\bovigo\vfs\vfsStream;
 
 class ArtisanTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-
-        // $this->config = [
-        //     'framework' => 'laravel',
-        //     'bootstrap' => false,
-        //     'semantic' => false,
-        //     'template_source' => __DIR__.'/../../src/Templates/Laravel',
-        //     '_sectionPrefix_' => '',
-        //     '_sectionTablePrefix_' => '',
-        //     '_sectionRoutePrefix_' => '',
-        //     '_sectionNamespace_' => '',
-        //     'relationships' => null,
-        //     'schema' => null,
-        //     '_path_facade_' => vfsStream::url('Facades'),
-        //     '_path_service_' => vfsStream::url('Services'),
-        //     '_path_model_' => vfsStream::url('Models'),
-        //     '_path_controller_' => vfsStream::url('Http/Controllers'),
-        //     '_path_api_controller_' => vfsStream::url('Http/Controllers/Api'),
-        //     '_path_views_' => vfsStream::url('resources/views'),
-        //     '_path_tests_' => vfsStream::url('tests'),
-        //     '_path_request_' => vfsStream::url('Http/Requests'),
-        //     '_path_routes_' => vfsStream::url('Http/routes.php'),
-        //     '_path_api_routes_' => vfsStream::url('Http/api-routes.php'),
-        //     '_path_factory_' => vfsStream::url('database/factories/ModelFactory.php'),
-        //     'routes_prefix' => '',
-        //     'routes_suffix' => '',
-        //     '_namespace_services_' => 'App\Services',
-        //     '_namespace_facade_' => 'App\Facades',
-        //     '_namespace_model_' => 'App\Models',
-        //     '_namespace_controller_' => 'App\Http\Controllers',
-        //     '_namespace_api_controller_' => 'App\Http\Controllers\Api',
-        //     '_namespace_request_' => 'App\Http\Requests',
-        //     '_lower_case_' => strtolower('testTable'),
-        //     '_lower_casePlural_' => str_plural(strtolower('testTable')),
-        //     '_camel_case_' => ucfirst(camel_case('testTable')),
-        //     '_camel_casePlural_' => str_plural(camel_case('testTable')),
-        //     '_ucCamel_casePlural_' => ucfirst(str_plural(camel_case('testTable'))),
-        // ];
 
         $this->artisan('vendor:publish');
 
@@ -60,7 +22,7 @@ class ArtisanTest extends TestCase
             '--migration' => true,
             '--api' => true,
             '--ui' => 'bootstrap',
-            '--schema' => 'id:increments,name:string',
+            '--schema' => 'id:increments,name:string(200),price:decimal(10,4),ibsn:integer|unsigned|references(\'id\')|on(\'products\')|onDelete(\'restrict\')',
         ]);
     }
 
@@ -82,10 +44,19 @@ class ArtisanTest extends TestCase
 
     public function testModels()
     {
-        $file = $this->destinationDir.'/app/Http/Controllers/BooksController.php';
+        $file = $this->destinationDir.'/app/Models/Book.php';
         $this->assertTrue(file_exists($file));
         $contents = file_get_contents($file);
-        $this->assertContains('class BooksController extends Controller', $contents);
+        $this->assertContains('class Book extends Model', $contents);
+    }
+
+    public function testSchema()
+    {
+        $files = glob($this->destinationDir.'/database/migrations/*_create_books_table.php');
+        $this->assertTrue(file_exists($files[0]));
+        $contents = file_get_contents($files[0]);
+        $this->assertContains('$table->decimal(\'price\',10,4);', $contents);
+        $this->assertContains('$table->integer(\'ibsn\')->unsigned()->references(\'id\')->on(\'products\')->onDelete(\'restrict\');', $contents);
     }
 
     public function testRequest()
