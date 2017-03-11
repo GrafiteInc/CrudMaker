@@ -42,10 +42,10 @@ class DatabaseGenerator
             }
 
             $command->callSilent('make:migration', [
-                'name'     => $migrationName,
-                '--table'  => $tableName,
+                'name' => $migrationName,
+                '--table' => $tableName,
                 '--create' => true,
-                '--path'   => $this->getMigrationsPath($config, true),
+                '--path' => $this->getMigrationsPath($config, true),
             ]);
 
             return true;
