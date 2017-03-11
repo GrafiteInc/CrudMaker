@@ -9,9 +9,9 @@ use _namespace_request_\_camel_case_Request;
 
 class _ucCamel_casePlural_Controller extends Controller
 {
-    public function __construct(_camel_case_Service $_lower_case_Service)
+    public function __construct(_camel_case_Service $_lower_case__service)
     {
-        $this->service = $_lower_case_Service;
+        $this->service = $_lower_case__service;
     }
 
     /**
@@ -21,8 +21,8 @@ class _ucCamel_casePlural_Controller extends Controller
      */
     public function index(Request $request)
     {
-        $_lower_casePlural_ = $this->service->paginated();
-        return response()->json($_lower_casePlural_);
+        $_snake_casePlural_ = $this->service->paginated();
+        return response()->json($_snake_casePlural_);
     }
 
     /**
@@ -32,8 +32,8 @@ class _ucCamel_casePlural_Controller extends Controller
      */
     public function search(Request $request)
     {
-        $_lower_casePlural_ = $this->service->search($request->search);
-        return response()->json($_lower_casePlural_);
+        $_snake_casePlural_ = $this->service->search($request->search);
+        return response()->json($_snake_casePlural_);
     }
 
     /**
@@ -50,7 +50,7 @@ class _ucCamel_casePlural_Controller extends Controller
             return response()->json($result);
         }
 
-        return response()->json(['error' => 'Unable to create _lower_case_'], 500);
+        return response()->json(['error' => 'Unable to create _plain_space_textLower_'], 500);
     }
 
     /**
@@ -80,7 +80,7 @@ class _ucCamel_casePlural_Controller extends Controller
             return response()->json($result);
         }
 
-        return response()->json(['error' => 'Unable to update _lower_case_'], 500);
+        return response()->json(['error' => 'Unable to update _plain_space_textLower_'], 500);
     }
 
     /**
@@ -94,9 +94,9 @@ class _ucCamel_casePlural_Controller extends Controller
         $result = $this->service->destroy($id);
 
         if ($result) {
-            return response()->json(['success' => '_lower_case_ was deleted'], 200);
+            return response()->json(['success' => '_plain_space_textFirst_ was deleted'], 200);
         }
 
-        return response()->json(['error' => 'Unable to delete _lower_case_'], 500);
+        return response()->json(['error' => 'Unable to delete _plain_space_textLower_'], 500);
     }
 }
