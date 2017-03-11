@@ -79,4 +79,3 @@ class _camel_case_ServiceIntegrationTest extends TestCase
     }
 
 }
-
