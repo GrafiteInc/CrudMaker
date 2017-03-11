@@ -10,9 +10,9 @@ use _namespace_request_\_camel_case_UpdateRequest;
 
 class _ucCamel_casePlural_Controller extends Controller
 {
-    public function __construct(_camel_case_Service $_lower_case_Service)
+    public function __construct(_camel_case_Service $_lower_case__service)
     {
-        $this->service = $_lower_case_Service;
+        $this->service = $_lower_case__service;
     }
 
     /**
@@ -22,8 +22,8 @@ class _ucCamel_casePlural_Controller extends Controller
      */
     public function index(Request $request)
     {
-        $_lower_casePlural_ = $this->service->paginated();
-        return view('_sectionPrefix__lower_casePlural_.index')->with('_lower_casePlural_', $_lower_casePlural_);
+        $_snake_casePlural_ = $this->service->paginated();
+        return view('_sectionPrefix__lower_casePlural_.index')->with('_snake_casePlural_', $_snake_casePlural_);
     }
 
     /**
@@ -33,8 +33,8 @@ class _ucCamel_casePlural_Controller extends Controller
      */
     public function search(Request $request)
     {
-        $_lower_casePlural_ = $this->service->search($request->search);
-        return view('_sectionPrefix__lower_casePlural_.index')->with('_lower_casePlural_', $_lower_casePlural_);
+        $_snake_casePlural_ = $this->service->search($request->search);
+        return view('_sectionPrefix__lower_casePlural_.index')->with('_snake_casePlural_', $_snake_casePlural_);
     }
 
     /**
