@@ -3,7 +3,7 @@
 use org\bovigo\vfs\vfsStream;
 use Yab\CrudMaker\Generators\CrudGenerator;
 
-class CrudSectionGeneratorTest extends PHPUnit_Framework_TestCase
+class CrudSectionGeneratorTest extends TestCase
 {
     protected $generator;
     protected $config;

@@ -3,12 +3,15 @@
 namespace Yab\CrudMaker\Services;
 
 use Exception;
+use Yab\CrudMaker\Traits\SchemaTrait;
 
 /**
  * CRUD Validator.
  */
 class ValidatorService
 {
+    use SchemaTrait;
+
     /**
      * Validate the Schema.
      *
@@ -19,7 +22,9 @@ class ValidatorService
     public function validateSchema($command)
     {
         if ($command->option('schema')) {
-            foreach (explode(',', $command->option('schema')) as $column) {
+            $definitions = $this->calibrateDefinitions($command->option('schema'));
+
+            foreach ($definitions as $column) {
                 $columnDefinition = explode(':', $column);
                 if (!isset($columnDefinition[1])) {
                     throw new Exception('All schema columns require a column type.', 1);
@@ -27,8 +32,10 @@ class ValidatorService
 
                 $columnDetails = explode('|', $columnDefinition[1]);
 
-                if (!in_array(camel_case($columnDetails[0]), $command->columnTypes)) {
-                    throw new Exception($columnDetails[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
+                preg_match('([A-z\/_.]+)', $columnDetails[0], $columnDetailsType);
+
+                if (!in_array(camel_case($columnDetailsType[0]), $command->columnTypes)) {
+                    throw new Exception($columnDetailsType[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
                 }
             }
         }

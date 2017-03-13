@@ -4,9 +4,12 @@ namespace Yab\CrudMaker\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Yab\CrudMaker\Traits\SchemaTrait;
 
 class TableService
 {
+    use SchemaTrait;
+
     /**
      * Prepare a string of the table.
      *
@@ -17,8 +20,9 @@ class TableService
     public function prepareTableDefinition($table)
     {
         $tableDefintion = '';
+        $definitions = $this->calibrateDefinitions($table);
 
-        foreach (explode(',', $table) as $column) {
+        foreach ($definitions as $column) {
             $columnDefinition = explode(':', $column);
             $tableDefintion .= "\t\t'$columnDefinition[0]',\n";
         }
@@ -36,8 +40,9 @@ class TableService
     public function prepareTableExample($table)
     {
         $tableExample = '';
+        $definitions = $this->calibrateDefinitions($table);
 
-        foreach (explode(',', $table) as $key => $column) {
+        foreach ($definitions as $key => $column) {
             $columnDefinition = explode(':', $column);
             $example = $this->createExampleByType($columnDefinition[1]);
 
@@ -65,7 +70,6 @@ class TableService
             $string = str_replace('// _camel_case_ table data', $this->prepareTableExample($config['schema']), $string);
         }
 
-
         return $string;
     }
 
@@ -80,29 +84,29 @@ class TableService
     {
         $typeArray = [
             'bigIncrements' => 1,
-            'increments'    => 1,
-            'string'        => 'laravel',
-            'boolean'       => 1,
-            'binary'        => 'Its a bird, its a plane, no its Superman!',
-            'char'          => 'a',
-            'ipAddress'     => '192.168.1.1',
-            'macAddress'    => 'X1:X2:X3:X4:X5:X6',
-            'json'          => json_encode(['json' => 'test']),
-            'text'          => 'I am Batman',
-            'longText'      => 'I am Batman',
-            'mediumText'    => 'I am Batman',
-            'dateTime'      => date('Y-m-d h:i:s'),
-            'date'          => date('Y-m-d'),
-            'time'          => date('h:i:s'),
-            'timestamp'     => time(),
-            'float'         => 1.1,
-            'decimal'       => 1.1,
-            'double'        => 1.1,
-            'integer'       => 1,
-            'bigInteger'    => 1,
+            'increments' => 1,
+            'string' => 'laravel',
+            'boolean' => 1,
+            'binary' => 'Its a bird, its a plane, no its Superman!',
+            'char' => 'a',
+            'ipAddress' => '192.168.1.1',
+            'macAddress' => 'X1:X2:X3:X4:X5:X6',
+            'json' => json_encode(['json' => 'test']),
+            'text' => 'I am Batman',
+            'longText' => 'I am Batman',
+            'mediumText' => 'I am Batman',
+            'dateTime' => date('Y-m-d h:i:s'),
+            'date' => date('Y-m-d'),
+            'time' => date('h:i:s'),
+            'timestamp' => time(),
+            'float' => 1.1,
+            'decimal' => 1.1,
+            'double' => 1.1,
+            'integer' => 1,
+            'bigInteger' => 1,
             'mediumInteger' => 1,
-            'smallInteger'  => 1,
-            'tinyInteger'   => 1,
+            'smallInteger' => 1,
+            'tinyInteger' => 1,
         ];
 
         if (isset($typeArray[$type])) {
@@ -147,9 +151,9 @@ class TableService
     private function columnNameCheck($column)
     {
         $columnsToAdjust = [
-            'datetime'   => 'dateTime',
-            'smallint'   => 'smallInteger',
-            'bigint'     => 'bigInteger',
+            'datetime' => 'dateTime',
+            'smallint' => 'smallInteger',
+            'bigint' => 'bigInteger',
             'datetimetz' => 'timestamp',
         ];
 

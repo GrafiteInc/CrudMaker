@@ -58,6 +58,7 @@ class CrudMaker extends Command
         {--api : Creates an API Controller and Routes}
         {--apiOnly : Creates only the API Controller and Routes}
         {--ui= : Select one of bootstrap|semantic for the UI}
+        {--withoutViews : Prevent the generating of views}
         {--serviceOnly : Does not generate a Controller or Routes}
         {--withFacade : Creates a facade that can be bound in your app to access the CRUD service}
         {--migration : Generates a migration file}
@@ -156,14 +157,14 @@ class CrudMaker extends Command
         $this->validator->validateOptions($this);
 
         $options = [
-            'api'                => $this->option('api'),
-            'apiOnly'            => $this->option('apiOnly'),
-            'ui'                 => $this->option('ui'),
-            'serviceOnly'        => $this->option('serviceOnly'),
-            'withFacade'         => $this->option('withFacade'),
-            'migration'          => $this->option('migration'),
-            'schema'             => $this->option('schema'),
-            'relationships'      => $this->option('relationships'),
+            'api' => $this->option('api'),
+            'apiOnly' => $this->option('apiOnly'),
+            'ui' => $this->option('ui'),
+            'serviceOnly' => $this->option('serviceOnly'),
+            'withFacade' => $this->option('withFacade'),
+            'migration' => $this->option('migration'),
+            'schema' => $this->option('schema'),
+            'relationships' => $this->option('relationships'),
         ];
 
         $config = $this->configService->basicConfig(
@@ -207,8 +208,6 @@ class CrudMaker extends Command
      * @param string $section
      * @param string $table
      * @param array  $splitTable
-     *
-     * @return void
      */
     public function createCRUD($config, $section, $table, $splitTable)
     {
@@ -237,7 +236,7 @@ class CrudMaker extends Command
 
             $this->crudReport($table);
         } catch (Exception $e) {
-            throw new Exception('Unable to generate your CRUD: '.$e->getMessage(), 1);
+            throw new Exception('Unable to generate your CRUD: ('.$e->getFile().':'.$e->getLine().') '.$e->getMessage(), 1);
         }
     }
 
@@ -245,8 +244,6 @@ class CrudMaker extends Command
      * Generate a CRUD report.
      *
      * @param string $table
-     *
-     * @return void
      */
     private function crudReport($table)
     {
@@ -257,7 +254,9 @@ class CrudMaker extends Command
 
         if (!$this->option('serviceOnly') && !$this->option('apiOnly')) {
             $this->line('Built controller...');
-            $this->line('Built views...');
+            if (!$this->option('withoutViews')) {
+                $this->line('Built views...');
+            }
             $this->line('Built routes...');
         }
 
