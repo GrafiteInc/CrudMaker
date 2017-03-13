@@ -18,7 +18,5 @@ class _camel_case_ extends Model
     public static $rules = [
         // create rules
     ];
-
     // _camel_case_ relationships
-
 }
