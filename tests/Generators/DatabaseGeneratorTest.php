@@ -56,7 +56,7 @@ class DatabaseGeneratorTest extends TestCase
             $this->command
         );
 
-        $this->assertContains('testtables', file_get_contents($migrations[0]));
+        $this->assertContains('test_tables', file_get_contents($migrations[0]));
         $this->assertContains('table->increments(\'id\')', file_get_contents($migrations[0]));
 
         $this->assertContains('table->increments', $schemaForm);
