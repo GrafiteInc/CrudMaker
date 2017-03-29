@@ -40,8 +40,8 @@ class DatabaseGenerator
                 $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
                 $tableName = str_plural(strtolower(implode('_', $splitTable)));
             } else {
-                $migrationName = 'create_'.str_plural(strtolower($table)).'_table';
-                $tableName = str_plural(strtolower($table));
+                $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
+                $tableName = str_plural(strtolower(snake_case($table)));
             }
 
             $command->callSilent('make:migration', [
@@ -73,7 +73,7 @@ class DatabaseGenerator
         if (!empty($section)) {
             $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
         } else {
-            $migrationName = 'create_'.str_plural(strtolower($table)).'_table';
+            $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
         }
 
         $parsedTable = '';

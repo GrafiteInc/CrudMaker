@@ -59,7 +59,11 @@ class TableCrudMaker extends Command
             '--schema' => $tableDefintion,
         ]);
 
-        $migrationName = 'create_'.$table.'_table';
+        // Format the table name accordingly
+        // usecase: OrderProducts turns into order_products
+        $table_name = str_plural(strtolower(snake_case($table)));
+
+        $migrationName = 'create_'.$table_name.'_table';
         $migrationFiles = $filesystem->allFiles(base_path('database/migrations'));
 
         foreach ($migrationFiles as $file) {

@@ -38,7 +38,7 @@ class ModelService
 
             $relationshipMethods .= "\n\tpublic function ".$method.'() {';
             $relationshipMethods .= "\n\t\treturn \$this->$relation[0]($relation[1]::class);";
-            $relationshipMethods .= "\n\t}";
+            $relationshipMethods .= "\n\t}\n\t";
         }
 
         return $relationshipMethods;
