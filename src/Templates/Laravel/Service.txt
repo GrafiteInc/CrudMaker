@@ -60,8 +60,8 @@ class _camel_case_Service
      */
     public function search($payload)
     {
-        $query = $this->model->orderBy('created_at', 'desc');
-        $query->where('id', 'LIKE', '%'.$payload.'%');
+        $query = $this->model->orderBy(_camel_case_::CREATED_AT, 'desc');
+        $query->where($this->model->primaryKey, 'LIKE', '%'.$payload.'%');
 
         $columns = Schema::getColumnListing('_lower_casePlural_');
 
