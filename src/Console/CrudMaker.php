@@ -236,6 +236,7 @@ class CrudMaker extends Command
 
         if ($this->option('asPackage')) {
             $this->createPackageServiceProvider($config);
+            $this->crudService->correctViewNamespace($config);
         }
 
         $this->info("\nYou may wish to add this as your testing database:\n");

@@ -102,8 +102,29 @@ class CrudService
         $bar->advance();
     }
 
+    /**
+     * Generates a service provider.
+     *
+     * @param  array $config
+     */
     public function generatePackageServiceProvider($config)
     {
         $this->crudGenerator->generatePackageServiceProvider($config);
+    }
+
+    /**
+     * Corrects the namespace for the view.
+     *
+     * @param  array $config
+     */
+    public function correctViewNamespace($config)
+    {
+        $controllerFile = $config['_path_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php';
+
+        $controller = file_get_contents($controllerFile);
+
+        $controller = str_replace("view('".$config['_sectionPrefix_'].$config['_lower_casePlural_'].".", "view('".$config['_sectionPrefix_'].$config['_lower_casePlural_']."::", $controller);
+
+        file_put_contents($controllerFile, $controller);
     }
 }
