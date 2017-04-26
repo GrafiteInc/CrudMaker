@@ -237,6 +237,26 @@ class CrudGenerator
     }
 
     /**
+     * Create a service provider.
+     *
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function generatePackageServiceProvider($config)
+    {
+        $provider = $this->filesystem->get(__DIR__.'/../Templates/Provider.txt');
+
+        foreach ($config as $key => $value) {
+            $provider = str_replace($key, $value, $provider);
+        }
+
+        $provider = $this->filesystem->put($config['_path_package_'].'/'.$config['_camel_case_'].'ServiceProvider.php', $provider);
+
+        return $provider;
+    }
+
+    /**
      * Create the tests.
      *
      * @param array        $config

@@ -62,6 +62,7 @@ class CrudMaker extends Command
         {--serviceOnly : Does not generate a Controller or Routes}
         {--withFacade : Creates a facade that can be bound in your app to access the CRUD service}
         {--migration : Generates a migration file}
+        {--asPackage= : Generate the CRUD as a package by setting a directory}
         {--schema= : Basic schema support ie: id,increments,name:string,parent_id:integer}
         {--relationships= : Define the relationship ie: hasOne|App\Comment|comment,hasOne|App\Rating|rating or relation|class|column (without the _id)}';
 
@@ -164,8 +165,19 @@ class CrudMaker extends Command
             'withFacade' => $this->option('withFacade'),
             'migration' => $this->option('migration'),
             'schema' => $this->option('schema'),
+            'asPackage' => $this->option('asPackage'),
             'relationships' => $this->option('relationships'),
         ];
+
+        if ($this->option('asPackage')) {
+            $newPath = base_path($this->option('asPackage').'/'.str_plural($table));
+            if (!is_dir($newPath)) {
+                mkdir($newPath, 755, true);
+            }
+            $appPath = $newPath;
+            $basePath = $newPath;
+            $appNamespace = ucfirst($this->option('asPackage'));
+        }
 
         $config = $this->configService->basicConfig(
             $framework,
@@ -194,11 +206,51 @@ class CrudMaker extends Command
             $config = $this->configService->setConfig($config, $section, $table);
         }
 
+        if ($this->option('asPackage')) {
+            $moduleDirectory = base_path($this->option('asPackage').'/'.str_plural($table));
+            $config = array_merge($config, [
+                '_path_package_' => $moduleDirectory,
+                '_path_facade_' => $moduleDirectory.'/Facades',
+                '_path_service_' => $moduleDirectory.'/Services',
+                '_path_model_' => $moduleDirectory.'/Models',
+                '_path_model_' => $moduleDirectory.'/Models',
+                '_path_controller_' => $moduleDirectory.'/Controllers',
+                '_path_views_' => $moduleDirectory.'/Views',
+                '_path_tests_' => $moduleDirectory.'/Tests',
+                '_path_request_' => $moduleDirectory.'/Requests',
+                '_path_routes_' => $moduleDirectory.'/Routes/web.php',
+                '_namespace_services_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Services',
+                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Facades',
+                '_namespace_model_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Models',
+                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Controllers',
+                '_namespace_request_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Requests',
+                '_namespace_package_' => $appNamespace.'\\'.ucfirst(str_plural($table)),
+            ]);
+
+            if (! is_dir($moduleDirectory.'/Routes')) {
+                mkdir($moduleDirectory.'/Routes');
+            }
+        }
+
         $this->createCRUD($config, $section, $table, $splitTable);
+
+        if ($this->option('asPackage')) {
+            $this->createPackageServiceProvider($config);
+        }
 
         $this->info("\nYou may wish to add this as your testing database:\n");
         $this->comment("'testing' => [ 'driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '' ],");
         $this->info("\n".'You now have a working CRUD for '.$table."\n");
+    }
+
+    /**
+     * Generate a service provider for the new module.
+     *
+     * @param  array $config
+     */
+    public function createPackageServiceProvider($config)
+    {
+        $this->crudService->generatePackageServiceProvider($config);
     }
 
     /**

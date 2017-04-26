@@ -101,4 +101,9 @@ class CrudService
         }
         $bar->advance();
     }
+
+    public function generatePackageServiceProvider($config)
+    {
+        $this->crudGenerator->generatePackageServiceProvider($config);
+    }
 }
