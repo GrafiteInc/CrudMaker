@@ -26,7 +26,7 @@ class DatabaseGeneratorTest extends TestCase
     {
         $this->expectException('Exception');
 
-        $this->generator->createMigration('random_string', 'TestTable', 'another_random_string', $this->command);
+        $this->generator->createMigration($this->config, 'random_string', 'TestTable', 'another_random_string', $this->command);
     }
 
     public function testCreateMigrationSuccess()

@@ -26,6 +26,7 @@ class DatabaseGenerator
     /**
      * Create the migrations.
      *
+     * @param array                            $config
      * @param string                           $section
      * @param string                           $table
      * @param array                            $splitTable
@@ -60,6 +61,7 @@ class DatabaseGenerator
     /**
      * Create the Schema.
      *
+     * @param array $config
      * @param string $section
      * @param string $table
      * @param array  $splitTable
