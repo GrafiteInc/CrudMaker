@@ -77,7 +77,7 @@ class CrudGenerator
             $request = str_replace($key, $value, $request);
         }
 
-        $request = $this->filesystem->put($config['_path_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php', $request);
+        $request = $this->putIfNotExists($config['_path_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php', $request);
 
         return $request;
     }
@@ -106,7 +106,7 @@ class CrudGenerator
             $model = str_replace($key, $value, $model);
         }
 
-        $model = $this->filesystem->put($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
+        $model = $this->putIfNotExists($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
 
         return $model;
     }
@@ -130,8 +130,8 @@ class CrudGenerator
             $updateRequest = str_replace($key, $value, $updateRequest);
         }
 
-        $createRequest = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'CreateRequest.php', $createRequest);
-        $updateRequest = $this->filesystem->put($config['_path_request_'].'/'.$config['_camel_case_'].'UpdateRequest.php', $updateRequest);
+        $createRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_camel_case_'].'CreateRequest.php', $createRequest);
+        $updateRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_camel_case_'].'UpdateRequest.php', $updateRequest);
 
         return $createRequest;
     }
@@ -153,7 +153,7 @@ class CrudGenerator
             $request = str_replace($key, $value, $request);
         }
 
-        $request = $this->filesystem->put($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $request);
+        $request = $this->putIfNotExists($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $request);
 
         return $request;
     }
@@ -200,7 +200,7 @@ class CrudGenerator
         $this->fileService->mkdir(dirname($config['_path_factory_']), 0777, true);
 
         if (!file_exists($config['_path_factory_'])) {
-            $this->filesystem->put($config['_path_factory_'], '<?php');
+            $this->putIfNotExists($config['_path_factory_'], '<?php');
         }
 
         $factory = $this->filesystem->get($config['template_source'].'/Factory.txt');
@@ -231,7 +231,7 @@ class CrudGenerator
             $facade = str_replace($key, $value, $facade);
         }
 
-        $facade = $this->filesystem->put($config['_path_facade_'].'/'.$config['_camel_case_'].'.php', $facade);
+        $facade = $this->putIfNotExists($config['_path_facade_'].'/'.$config['_camel_case_'].'.php', $facade);
 
         return $facade;
     }
@@ -251,7 +251,7 @@ class CrudGenerator
             $provider = str_replace($key, $value, $provider);
         }
 
-        $provider = $this->filesystem->put($config['_path_package_'].'/'.$config['_camel_case_'].'ServiceProvider.php', $provider);
+        $provider = $this->putIfNotExists($config['_path_package_'].'/'.$config['_camel_case_'].'ServiceProvider.php', $provider);
 
         return $provider;
     }
@@ -285,7 +285,7 @@ class CrudGenerator
                 $test = str_replace($key, $value, $test);
             }
 
-            if (!$this->filesystem->put($testDirectory.'/'.$testName.'.php', $test)) {
+            if (!$this->putIfNotExists($testDirectory.'/'.$testName.'.php', $test)) {
                 return false;
             }
         }
@@ -322,7 +322,7 @@ class CrudGenerator
             foreach ($config as $key => $value) {
                 $viewContents = str_replace($key, $value, $viewContents);
             }
-            $createdView = $this->filesystem->put($config['_path_views_'].'/'.$config['_lower_casePlural_'].'/'.$basename, $viewContents);
+            $createdView = $this->putIfNotExists($config['_path_views_'].'/'.$config['_lower_casePlural_'].'/'.$basename, $viewContents);
         }
 
         return $createdView;
@@ -340,7 +340,7 @@ class CrudGenerator
         $routesMaster = $config['_path_api_routes_'];
 
         if (!file_exists($routesMaster)) {
-            $this->filesystem->put($routesMaster, "<?php\n\n");
+            $this->putIfNotExists($routesMaster, "<?php\n\n");
         }
 
         $this->fileService->mkdir($config['_path_api_controller_'], 0777, true);
@@ -359,8 +359,25 @@ class CrudGenerator
             $request = str_replace($key, $value, $request);
         }
 
-        $request = $this->filesystem->put($config['_path_api_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php', $request);
+        $request = $this->putIfNotExists($config['_path_api_controller_'].'/'.$config['_ucCamel_casePlural_'].'Controller.php', $request);
 
         return $request;
+    }
+
+    /**
+     * Make a file if it doesnt exist.
+     *
+     * @param  string $file
+     * @param  mixed $contents
+     *
+     * @return void
+     */
+    public function putIfNotExists($file, $contents)
+    {
+        if (!$this->filesystem->exists($file)) {
+            return $this->filesystem->put($file, $contents);
+        }
+
+        return $this->filesystem->get($file);
     }
 }

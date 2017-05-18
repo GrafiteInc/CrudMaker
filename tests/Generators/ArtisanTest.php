@@ -127,6 +127,6 @@ class ArtisanTest extends TestCase
     public function tearDown()
     {
         $files = glob($this->destinationDir.'/database/migrations/*_create_books_table.php');
-        unlink($files[0]);
+        @unlink($files[0]);
     }
 }
