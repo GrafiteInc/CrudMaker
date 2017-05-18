@@ -55,7 +55,7 @@ class _camel_case_ServiceIntegrationTest extends TestCase
         $item = $this->service->create($this->originalArray);
 
         $response = $this->service->find($item->id);
-        $this->assertEquals(1, $response->id);
+        $this->assertEquals($item->id, $response->id);
     }
 
     public function testUpdate()
@@ -65,8 +65,7 @@ class _camel_case_ServiceIntegrationTest extends TestCase
 
         $response = $this->service->update($item->id, $this->editedArray);
 
-        $this->assertEquals(1, $response->id);
-        $this->seeInDatabase('_table_name_', $this->editedArray);
+        $this->assertDatabaseHas('_table_name_', $this->editedArray);
     }
 
     public function testDestroy()
@@ -77,5 +76,4 @@ class _camel_case_ServiceIntegrationTest extends TestCase
         $response = $this->service->destroy($item->id);
         $this->assertTrue($response);
     }
-
 }

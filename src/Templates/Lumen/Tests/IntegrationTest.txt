@@ -44,7 +44,7 @@ class _camel_case_IntegrationTest extends TestCase
         factory(_namespace_model_\_camel_case_::class)->create($this->_lower_case_->toArray());
         $this->patch('api/v1/_lower_casePlural_/1', $this->_lower_case_Edited->toArray());
         $this->assertEquals(200, $this->response->getStatusCode());
-        $this->seeInDatabase('_lower_casePlural_', $this->_lower_case_Edited->toArray());
+        $this->assertDatabaseHas('_lower_casePlural_', $this->_lower_case_Edited->toArray());
     }
 
     public function testDelete()

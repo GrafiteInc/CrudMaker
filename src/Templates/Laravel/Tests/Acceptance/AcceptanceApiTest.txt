@@ -40,7 +40,7 @@ class _camel_case_AcceptanceApiTest extends TestCase
         $this->actor->call('POST', 'api/v1/_sectionRoutePrefix__lower_casePlural_', $this->_camel_case_->toArray());
         $response = $this->actor->call('PATCH', 'api/v1/_sectionRoutePrefix__lower_casePlural_/1', $this->_camel_case_Edited->toArray());
         $this->assertEquals(200, $response->getStatusCode());
-        $this->seeInDatabase('_table_name_', $this->_camel_case_Edited->toArray());
+        $this->assertDatabaseHas('_table_name_', $this->_camel_case_Edited->toArray());
     }
 
     public function testDelete()

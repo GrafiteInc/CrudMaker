@@ -58,7 +58,7 @@ class _camel_case_AcceptanceTest extends TestCase
         $response = $this->actor->call('PATCH', '_sectionRoutePrefix__lower_casePlural_/1', $this->_camel_case_Edited->toArray());
 
         $this->assertEquals(302, $response->getStatusCode());
-        $this->seeInDatabase('_table_name_', $this->_camel_case_Edited->toArray());
+        $this->assertDatabaseHas('_table_name_', $this->_camel_case_Edited->toArray());
         $this->assertRedirectedTo('/');
     }
 
