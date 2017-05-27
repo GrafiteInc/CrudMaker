@@ -184,7 +184,8 @@ class TableService
 
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
-                $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+                //$type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = Schema::getColumnType($table, $column);
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
