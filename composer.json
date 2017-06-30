@@ -1,9 +1,9 @@
 {
-	"name": "luozong05/crud-maker",
+    "name": "luozong05/crud-maker",
     "description": "CRUD maker for Laravel, Its modify from Yab CrudMaker",
     "license": "MIT",
     "authors": [
-		{
+        {
             "name": "luozong05",
             "email": "luozong05@126.com"
         },
