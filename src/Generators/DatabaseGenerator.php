@@ -33,6 +33,7 @@ class DatabaseGenerator
      * @param \Yab\CrudMaker\Console\CrudMaker $command
      *
      * @return bool
+     * @throws Exception
      */
     public function createMigration($config, $section, $table, $splitTable, $command)
     {
