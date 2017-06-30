@@ -1,8 +1,12 @@
 {
-    "name": "yab/crudmaker",
-    "description": "An incredibly powerful and some say magical CRUD maker for Laravel",
+	"name": "luozong05/crud-maker",
+    "description": "CRUD maker for Laravel",
     "license": "MIT",
     "authors": [
+		{
+            "name": "luozong05",
+            "email": "luozong05@126.com"
+        }
         {
             "name": "Matt Lantz",
             "email": "matt@yabhq.com"
