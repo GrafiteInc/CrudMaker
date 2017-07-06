@@ -1,0 +1,10 @@
+
+/*
+|--------------------------------------------------------------------------
+| _camel_case_ API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('_lower_case_', '_ucCamel_case_Controller', ['as' => 'api']);
+});
