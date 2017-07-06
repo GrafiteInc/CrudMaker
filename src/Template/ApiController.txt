@@ -1,0 +1,98 @@
+<?php
+
+namespace _namespace_api_controller_;
+
+use Illuminate\Http\Request;
+use _app_namespace_Http\Controllers\BaseController;
+use _namespace_services_\_ucCamel_case_Service;
+use _namespace_request_\_ucCamel_case_Request;
+
+class _ucCamel_case_Controller extends BaseController
+{
+    public $_camel_case_Service;
+    public function __construct(_ucCamel_case_Service $_camel_case_Service)
+    {
+        $this->_camel_case_Service = $_camel_case_Service;
+    }
+
+
+    /**
+     * Display a listing of the resource searched.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $_camel_casePlural_ = $this->_camel_case_Service->search($request->search);
+        $this->viewData['_camel_casePlural_'] = $_camel_casePlural_;
+        return $this->returnJson();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  _ucCamel_case_Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(_ucCamel_case_Request $request)
+    {
+        $result = $this->_camel_case_Service->create($request->except('_token'));
+
+        if ($result) {
+            $this->viewData['result'] = $result;
+            return $this->returnJson();
+        }
+        $this->errorData['error'] = 'Unable to create _plain_space_textLower_';
+        return $this->returnJson(500);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $_camel_case_ = $this->_camel_case_Service->find($id);
+        $this->viewData['_camel_case_'] = $_camel_case_;
+        return $this->returnJson();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  _ucCamel_case_Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(_ucCamel_case_Request $request, $id)
+    {
+        $result = $this->_camel_case_Service->update($id, $request->except('_token'));
+
+        if ($result) {
+            $this->viewData['result'] = $result;
+            return $this->returnJson();
+        }
+        $this->errorData['error'] = 'Unable to update _plain_space_textLower_';
+        return $this->returnJson(500);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $result = $this->_camel_case_Service->destroy($id);
+
+        if ($result) {
+            $this->viewData['result'] = '_plain_space_textFirst_ was deleted';
+            return $this->returnJson();
+        }
+        $this->errorData['error'] = 'Unable to delete _plain_space_textLower_';
+        return $this->returnJson(500);
+    }
+}

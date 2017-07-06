@@ -1,0 +1,120 @@
+<?php
+
+namespace _namespace_services_;
+
+use _namespace_model_\_ucCamel_case_;
+
+class _ucCamel_case_Service{
+    /**
+     * Service Model
+     *
+     * @var Model
+     */
+    public $_camel_case_Model;
+
+    /**
+     * Service Constructor
+     *
+     * @param _ucCamel_case_ $_camel_case_
+     */
+    public function __construct(_ucCamel_case_ $_camel_case_) {
+        $this->_camel_case_Model = $_camel_case_;
+    }
+
+    /**
+     * All Model Items
+     *
+     * @return array
+     */
+    public function all() {
+        return $this->_camel_case_Model->all();
+    }
+
+    /**
+     * Search the _camel_case_Model
+     *
+     * @param  array $payload
+     * @param  int $per_page
+     * @param  string $fields
+     * @param  string $orderBy
+     * @param  string $with
+     * @return LengthAwarePaginator|array
+     */
+    public function search($payload=[], $per_page = 10, $fields = "*", $orderBy = "id", $with = null){
+        $query = $this->_camel_case_Model->select($fields)->where($payload)->orderBy($orderBy);
+        if (!empty($with)){
+            $query->with($with);
+        }
+        if($per_page > 0){
+            return $query->paginate($per_page);
+        }else{
+            return $query->get();
+        }
+    }
+
+    /**
+     * Create a _ucCamel_case_Model item
+     *
+     * @param  array $payload
+     * @return Model
+     */
+    public function create($payload) {
+        return $this->_camel_case_Model->create($payload);
+    }
+
+    /**
+     * Create a _ucCamel_case_Model item
+     *
+     * @param  array $payload
+     * @return Model
+     */
+    public function insert($payload) {
+        return $this->_camel_case_Model->insert($payload);
+    }
+
+    /**
+     * Create a _ucCamel_case_Model item
+     *
+     * @param  array $payload
+     * @return Model
+     */
+    public function firstOrCreate($payload) {
+        return $this->_camel_case_Model->firstOrCreate($payload);
+    }
+
+    /**
+     * Find Model by ID
+     *
+     * @param  integer $id
+     * @param  bool $is_new
+     * @return Model
+     */
+    public function find($id, $is_new = false) {
+        if($is_new) {
+            return $this->_camel_case_Model->firstOrNew(["id" => $id]);
+        }else{
+            return $this->_camel_case_Model->find($id);
+        }
+    }
+
+    /**
+     * Model update
+     *
+     * @param  integer $id
+     * @param  array $payload
+     * @return Model
+     */
+    public function update($id, $payload) {
+        return $this->find($id)->update($payload);
+    }
+
+    /**
+     * Destroy the _camel_case_Model
+     *
+     * @param  integer $id
+     * @return bool
+     */
+    public function destroy($id) {
+        return $this->_camel_case_Model->destroy($id);
+    }
+}

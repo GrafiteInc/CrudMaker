@@ -1,0 +1,25 @@
+<?php
+
+namespace _namespace_controller_;
+
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+class BaseController extends Controller
+{
+    use AuthorizesRequests;
+
+    protected $request;
+    protected $viewData = [];
+    protected $errorData = [];
+
+
+    public function showView($template){
+        return view($template, $this->viewData);
+    }
+
+    public function returnJson($status = 1){
+        return ["status" => $status, 'data' => $this->viewData, "error" => $this->errorData];
+    }
+
+}

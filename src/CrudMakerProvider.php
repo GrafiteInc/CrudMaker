@@ -1,8 +1,15 @@
 <?php
 
-namespace Yab\CrudMaker;
+/**
+ * ServiceProvider
+ * User: Administrator
+ * Date: 2017/7/3
+ * Time: 15:37
+ */
+namespace Louis\CrudMaker;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Router;
 
 class CrudMakerProvider extends ServiceProvider
 {
@@ -14,8 +21,8 @@ class CrudMakerProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Templates/Laravel'          => base_path('resources/crudmaker/crud'),
-            __DIR__.'/../config/crudmaker.php'    => base_path('config/crudmaker.php'),
+            __DIR__ . '/Template' => base_path('resources/crud'),
+            __DIR__ . '/config.php' => base_path('config/crud.php'),
         ]);
     }
 
@@ -28,23 +35,12 @@ class CrudMakerProvider extends ServiceProvider
     {
         /*
         |--------------------------------------------------------------------------
-        | Providers
-        |--------------------------------------------------------------------------
-        */
-
-        if (class_exists('Illuminate\Foundation\AliasLoader')) {
-            $this->app->register(\Yab\FormMaker\FormMakerProvider::class);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
         | Register the Commands
         |--------------------------------------------------------------------------
         */
 
         $this->commands([
-            \Yab\CrudMaker\Console\CrudMaker::class,
-            \Yab\CrudMaker\Console\TableCrudMaker::class,
+            \Louis\CrudMaker\Console\CrudMaker::class,
         ]);
     }
 }
