@@ -135,13 +135,13 @@ class CrudSectionGeneratorTest extends TestCase
 
         $this->assertTrue($this->generator->createTests($this->config, false));
 
-        $contents = $this->crud->getChild('tests/acceptance/TestTableAcceptanceTest.php');
-        $this->assertTrue($this->crud->hasChild('tests/acceptance/TestTableAcceptanceTest.php'));
+        $contents = $this->crud->getChild('tests/feature/TestTableAcceptanceTest.php');
+        $this->assertTrue($this->crud->hasChild('tests/feature/TestTableAcceptanceTest.php'));
         $this->assertContains('class TestTableAcceptanceTest', $contents->getContent());
 
-        $contents = $this->crud->getChild('tests/integration/TestTableServiceIntegrationTest.php');
-        $this->assertTrue($this->crud->hasChild('tests/integration/TestTableServiceIntegrationTest.php'));
-        $this->assertContains('class TestTableServiceIntegrationTest', $contents->getContent());
+        $contents = $this->crud->getChild('tests/unit/TestTableServiceTest.php');
+        $this->assertTrue($this->crud->hasChild('tests/unit/TestTableServiceTest.php'));
+        $this->assertContains('class TestTableServiceTest', $contents->getContent());
     }
 
     public function testTestGeneratorServiceOnly()
@@ -152,9 +152,9 @@ class CrudSectionGeneratorTest extends TestCase
 
         $this->assertFalse($this->crud->hasChild('tests/acceptance/TestTableAcceptanceTest.php'));
 
-        $contents = $this->crud->getChild('tests/integration/TestTableServiceIntegrationTest.php');
-        $this->assertTrue($this->crud->hasChild('tests/integration/TestTableServiceIntegrationTest.php'));
-        $this->assertContains('class TestTableServiceIntegrationTest', $contents->getContent());
+        $contents = $this->crud->getChild('tests/unit/TestTableServiceTest.php');
+        $this->assertTrue($this->crud->hasChild('tests/unit/TestTableServiceTest.php'));
+        $this->assertContains('class TestTableServiceTest', $contents->getContent());
     }
 
     public function testFactoryGenerator()

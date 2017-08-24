@@ -87,8 +87,8 @@ class Publish extends Command
      */
     private function publishTemplates()
     {
-        if (!$this->fileSystem->isDirectory(getcwd().'/resources/crudmaker/crud')) {
-            $this->copyDirectory(__DIR__.'/../Templates/Lumen', getcwd().'/resources/crudmaker/crud');
+        if (!$this->fileSystem->isDirectory(getcwd().'/resources/crudmaker')) {
+            $this->copyDirectory(__DIR__.'/../Templates/Lumen', getcwd().'/resources/crudmaker');
             $this->info("\n\nLumen templates files have been published");
         } else {
             $this->error('Lumen templates files has already been published');

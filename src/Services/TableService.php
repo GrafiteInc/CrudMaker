@@ -5,6 +5,7 @@ namespace Yab\CrudMaker\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Yab\CrudMaker\Traits\SchemaTrait;
+use Faker\Factory as Faker;
 
 class TableService
 {
@@ -82,19 +83,21 @@ class TableService
      */
     public function createExampleByType($type)
     {
+        $faker = Faker::create();
+
         $typeArray = [
             'bigIncrements' => 1,
             'increments' => 1,
-            'string' => 'laravel',
+            'string' => $faker->word,
             'boolean' => 1,
-            'binary' => 'Its a bird, its a plane, no its Superman!',
+            'binary' => implode(" ", $faker->words(10)),
             'char' => 'a',
             'ipAddress' => '192.168.1.1',
             'macAddress' => 'X1:X2:X3:X4:X5:X6',
             'json' => json_encode(['json' => 'test']),
-            'text' => 'I am Batman',
-            'longText' => 'I am Batman',
-            'mediumText' => 'I am Batman',
+            'text' => implode(" ", $faker->words(4)),
+            'longText' => implode(" ", $faker->sentences(4)),
+            'mediumText' => implode(" ", $faker->sentences(2)),
             'dateTime' => date('Y-m-d h:i:s'),
             'date' => date('Y-m-d'),
             'time' => date('h:i:s'),

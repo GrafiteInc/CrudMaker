@@ -14,7 +14,7 @@ class CrudMakerProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Templates/Laravel'          => base_path('resources/crudmaker/crud'),
+            __DIR__.'/Templates/Laravel'          => base_path('resources/crudmaker'),
             __DIR__.'/../config/crudmaker.php'    => base_path('config/crudmaker.php'),
         ]);
     }

@@ -61,8 +61,8 @@ class TableServiceTest extends TestCase
 
         $result = $this->service->prepareTableExample($table);
 
-        $this->assertContains('laravel', $result);
-        $this->assertContains('I am Batman', $result);
+        $this->assertContains('name', $result);
+        $this->assertContains('details', $result);
         $this->assertContains('1', $result);
     }
 }

@@ -9,7 +9,7 @@ class ArtisanTest extends TestCase
 
         $this->artisan('vendor:publish');
 
-        $this->destinationDir = __DIR__.'/../../vendor/orchestra/testbench/fixture';
+        $this->destinationDir = __DIR__.'/../../vendor/orchestra/testbench-core/fixture';
 
         if (!is_dir($this->destinationDir.'/routes')) {
             mkdir($this->destinationDir.'/routes');
@@ -104,15 +104,15 @@ class ArtisanTest extends TestCase
 
     public function testTest()
     {
-        $fileA = $this->destinationDir.'/tests/acceptance/BookAcceptanceTest.php';
+        $fileA = $this->destinationDir.'/tests/feature/BookAcceptanceTest.php';
         $contentsA = file_get_contents($fileA);
         $this->assertTrue(file_exists($fileA));
         $this->assertContains('class BookAcceptanceTest', $contentsA);
 
-        $fileB = $this->destinationDir.'/tests/integration/BookServiceIntegrationTest.php';
+        $fileB = $this->destinationDir.'/tests/unit/BookServiceTest.php';
         $contentsB = file_get_contents($fileB);
         $this->assertTrue(file_exists($fileB));
-        $this->assertContains('class BookServiceIntegrationTest', $contentsB);
+        $this->assertContains('class BookServiceTest', $contentsB);
     }
 
     public function testFactory()
