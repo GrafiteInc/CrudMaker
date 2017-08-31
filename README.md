@@ -22,7 +22,7 @@ It can generate magical CRUD prototypes rapidly with full testing scripts prepar
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| 5.5.x | 1.2.x | yes |
+| 5.5.x | 1.3.x | yes |
 | 5.4.x | 1.2.x | yes |
 | 5.3.x | 1.1.x | no |
 

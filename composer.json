@@ -13,9 +13,9 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "doctrine/dbal": "^2.5",
-        "illuminate/support": "^5.4",
+        "illuminate/support": "^5.5",
         "yab/formmaker": "^1.1"
     },
     "require-dev": {
@@ -36,6 +36,13 @@
         "classmap": [
             "tests/TestCase.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yab\\CrudMaker\\CrudMakerProvider"
+            ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

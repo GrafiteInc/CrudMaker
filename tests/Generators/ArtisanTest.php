@@ -7,9 +7,7 @@ class ArtisanTest extends TestCase
     {
         parent::setUp();
 
-        $this->artisan('vendor:publish');
-
-        $this->destinationDir = __DIR__.'/../../vendor/orchestra/testbench-core/fixture';
+        $this->destinationDir = __DIR__.'/../../vendor/orchestra/testbench-core/laravel';
 
         if (!is_dir($this->destinationDir.'/routes')) {
             mkdir($this->destinationDir.'/routes');
