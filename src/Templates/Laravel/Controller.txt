@@ -50,7 +50,7 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\_camel_case_CreateRequest  $request
+     * @param  _namespace_request_\_camel_case_CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(_camel_case_CreateRequest $request)
@@ -91,7 +91,7 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Update the _lower_casePlural_ in storage.
      *
-     * @param  \Illuminate\Http\_camel_case_UpdateRequest  $request
+     * @param  _namespace_request_\_camel_case_UpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
