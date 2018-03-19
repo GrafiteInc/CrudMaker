@@ -1,8 +1,8 @@
 <?php
 
-namespace Yab\CrudMaker\Services;
+namespace Grafite\CrudMaker\Services;
 
-use Yab\CrudMaker\Services\TableService;
+use Grafite\CrudMaker\Services\TableService;
 
 class ModelService
 {

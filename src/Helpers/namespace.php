@@ -3,7 +3,7 @@
 if (!function_exists('app_namespace')) {
     function app_namespace()
     {
-        return app('Yab\CrudMaker\Services\AppService')
+        return app('Grafite\CrudMaker\Services\AppService')
             ->getAppNamespace();
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Yab\CrudMaker\Generators;
+namespace Grafite\CrudMaker\Generators;
 
 use Illuminate\Filesystem\Filesystem;
-use Yab\CrudMaker\Services\FileService;
-use Yab\CrudMaker\Services\ModelService;
-use Yab\CrudMaker\Services\TableService;
-use Yab\CrudMaker\Services\TestService;
+use Grafite\CrudMaker\Services\FileService;
+use Grafite\CrudMaker\Services\ModelService;
+use Grafite\CrudMaker\Services\TableService;
+use Grafite\CrudMaker\Services\TestService;
 
 /**
  * Generate the CRUD.
@@ -23,28 +23,28 @@ class CrudGenerator
     /**
      * FileService instance.
      *
-     * @var \Yab\CrudMaker\Services\FileService
+     * @var \Grafite\CrudMaker\Services\FileService
      */
     protected $fileService;
 
     /**
      * TableService instance.
      *
-     * @var \Yab\CrudMaker\Services\TableService
+     * @var \Grafite\CrudMaker\Services\TableService
      */
     protected $tableService;
 
     /**
      * TestService instance.
      *
-     * @var \Yab\CrudMaker\Services\TestService
+     * @var \Grafite\CrudMaker\Services\TestService
      */
     protected $testService;
 
     /**
      * ModelService instance.
      *
-     * @var \Yab\CrudMaker\Services\ModelService
+     * @var \Grafite\CrudMaker\Services\ModelService
      */
     protected $modelService;
 

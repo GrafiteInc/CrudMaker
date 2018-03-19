@@ -1,6 +1,6 @@
 <?php
 
-use Yab\CrudMaker\Services\ModelService;
+use Grafite\CrudMaker\Services\ModelService;
 
 class ModelServiceTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\CrudMaker\Console;
+namespace Grafite\CrudMaker\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

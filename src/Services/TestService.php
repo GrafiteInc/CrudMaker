@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\CrudMaker\Services;
+namespace Grafite\CrudMaker\Services;
 
 class TestService
 {

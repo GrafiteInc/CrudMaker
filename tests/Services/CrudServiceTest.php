@@ -1,7 +1,7 @@
 <?php
 
 use org\bovigo\vfs\vfsStream;
-use Yab\CrudMaker\Services\CrudService;
+use Grafite\CrudMaker\Services\CrudService;
 
 class MockProgressBar
 {

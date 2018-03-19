@@ -1,9 +1,9 @@
 <?php
 
-namespace Yab\CrudMaker\Services;
+namespace Grafite\CrudMaker\Services;
 
 use Exception;
-use Yab\CrudMaker\Traits\SchemaTrait;
+use Grafite\CrudMaker\Traits\SchemaTrait;
 
 /**
  * CRUD Validator.
@@ -15,7 +15,7 @@ class ValidatorService
     /**
      * Validate the Schema.
      *
-     * @param \Yab\CrudMaker\Console\CrudMaker $command
+     * @param \Grafite\CrudMaker\Console\CrudMaker $command
      *
      * @return bool|Exception
      */
@@ -46,7 +46,7 @@ class ValidatorService
     /**
      * Validate the options.
      *
-     * @param \Yab\CrudMaker\Console\CrudMaker $command
+     * @param \Grafite\CrudMaker\Console\CrudMaker $command
      *
      * @return bool|Exception
      */

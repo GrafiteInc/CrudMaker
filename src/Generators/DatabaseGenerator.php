@@ -1,11 +1,11 @@
 <?php
 
-namespace Yab\CrudMaker\Generators;
+namespace Grafite\CrudMaker\Generators;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Yab\CrudMaker\Services\FileService;
-use Yab\CrudMaker\Traits\SchemaTrait;
+use Grafite\CrudMaker\Services\FileService;
+use Grafite\CrudMaker\Traits\SchemaTrait;
 
 /**
  * Generate the CRUD database components.
@@ -30,7 +30,7 @@ class DatabaseGenerator
      * @param string                           $section
      * @param string                           $table
      * @param array                            $splitTable
-     * @param \Yab\CrudMaker\Console\CrudMaker $command
+     * @param \Grafite\CrudMaker\Console\CrudMaker $command
      *
      * @return bool
      */

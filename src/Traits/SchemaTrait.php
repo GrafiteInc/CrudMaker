@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\CrudMaker\Traits;
+namespace Grafite\CrudMaker\Traits;
 
 trait SchemaTrait
 {

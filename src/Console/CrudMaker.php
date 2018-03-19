@@ -1,15 +1,15 @@
 <?php
 
-namespace Yab\CrudMaker\Console;
+namespace Grafite\CrudMaker\Console;
 
 use Config;
 use Exception;
 use Illuminate\Console\Command;
-use Yab\CrudMaker\Generators\CrudGenerator;
-use Yab\CrudMaker\Services\AppService;
-use Yab\CrudMaker\Services\ConfigService;
-use Yab\CrudMaker\Services\CrudService;
-use Yab\CrudMaker\Services\ValidatorService;
+use Grafite\CrudMaker\Generators\CrudGenerator;
+use Grafite\CrudMaker\Services\AppService;
+use Grafite\CrudMaker\Services\ConfigService;
+use Grafite\CrudMaker\Services\CrudService;
+use Grafite\CrudMaker\Services\ValidatorService;
 
 class CrudMaker extends Command
 {

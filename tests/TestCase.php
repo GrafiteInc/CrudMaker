@@ -18,7 +18,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Yab\CrudMaker\CrudMakerProvider::class,
+            \Grafite\CrudMaker\CrudMakerProvider::class,
         ];
     }
 
@@ -35,7 +35,7 @@ class TestCase extends Orchestra\Testbench\TestCase
             '--database' => 'testbench',
         ]);
         $this->artisan('vendor:publish', [
-            '--provider' => 'Yab\CrudMaker\CrudMakerProvider',
+            '--provider' => 'Grafite\CrudMaker\CrudMakerProvider',
             '--force' => true,
         ]);
         $this->withoutMiddleware();

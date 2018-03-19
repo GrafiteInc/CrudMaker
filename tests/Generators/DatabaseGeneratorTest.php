@@ -1,6 +1,6 @@
 <?php
 
-use Yab\CrudMaker\Generators\DatabaseGenerator;
+use Grafite\CrudMaker\Generators\DatabaseGenerator;
 
 class DatabaseGeneratorTest extends TestCase
 {

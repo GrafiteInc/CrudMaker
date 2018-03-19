@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Filesystem\Filesystem;
-use Yab\CrudMaker\Services\TestService;
+use Grafite\CrudMaker\Services\TestService;
 
 class TestServiceTest extends TestCase
 {

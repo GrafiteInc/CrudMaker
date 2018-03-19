@@ -1,7 +1,8 @@
 <?php
 
-namespace Yab\CrudMaker;
+namespace Grafite\CrudMaker;
 
+use Grafite\FormMaker\FormMakerProvider;
 use Illuminate\Support\ServiceProvider;
 
 class CrudMakerProvider extends ServiceProvider
@@ -14,8 +15,8 @@ class CrudMakerProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Templates/Laravel'          => base_path('resources/crudmaker'),
-            __DIR__.'/../config/crudmaker.php'    => base_path('config/crudmaker.php'),
+            __DIR__.'/Templates/Laravel' => base_path('resources/crudmaker'),
+            __DIR__.'/../config/crudmaker.php' => base_path('config/crudmaker.php'),
         ]);
     }
 
@@ -33,7 +34,7 @@ class CrudMakerProvider extends ServiceProvider
         */
 
         if (class_exists('Illuminate\Foundation\AliasLoader')) {
-            $this->app->register(\Yab\FormMaker\FormMakerProvider::class);
+            $this->app->register(FormMakerProvider::class);
         }
 
         /*
@@ -43,8 +44,8 @@ class CrudMakerProvider extends ServiceProvider
         */
 
         $this->commands([
-            \Yab\CrudMaker\Console\CrudMaker::class,
-            \Yab\CrudMaker\Console\TableCrudMaker::class,
+            \Grafite\CrudMaker\Console\CrudMaker::class,
+            \Grafite\CrudMaker\Console\TableCrudMaker::class,
         ]);
     }
 }

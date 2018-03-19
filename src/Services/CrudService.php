@@ -1,9 +1,9 @@
 <?php
 
-namespace Yab\CrudMaker\Services;
+namespace Grafite\CrudMaker\Services;
 
-use Yab\CrudMaker\Generators\CrudGenerator;
-use Yab\CrudMaker\Generators\DatabaseGenerator;
+use Grafite\CrudMaker\Generators\CrudGenerator;
+use Grafite\CrudMaker\Generators\DatabaseGenerator;
 
 class CrudService
 {
@@ -63,7 +63,7 @@ class CrudService
      * @param string                                        $section
      * @param string                                        $table
      * @param array                                         $splitTable
-     * @param \Yab\CrudMaker\Console\CrudMaker              $command
+     * @param \Grafite\CrudMaker\Console\CrudMaker              $command
      */
     public function generateDB($config, $bar, $section, $table, $splitTable, $command)
     {

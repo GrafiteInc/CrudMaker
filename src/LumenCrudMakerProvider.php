@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\CrudMaker;
+namespace Grafite\CrudMaker;
 
 class LumenCrudMakerProvider extends CrudMakerProvider
 {
@@ -26,7 +26,7 @@ class LumenCrudMakerProvider extends CrudMakerProvider
         parent::register();
 
         $this->commands([
-            \Yab\CrudMaker\Console\Publish::class,
+            \Grafite\CrudMaker\Console\Publish::class,
         ]);
     }
 }

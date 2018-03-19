@@ -1,6 +1,6 @@
 <?php
 
-use Yab\CrudMaker\Services\AppService;
+use Grafite\CrudMaker\Services\AppService;
 
 class AppServiceTest extends TestCase
 {
