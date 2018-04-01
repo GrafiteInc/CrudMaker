@@ -21,6 +21,18 @@ class ConfigService
         $this->appService = $appService;
     }
 
+    /**
+     * Generate the basic config
+     *
+     * @param  string $framework
+     * @param  string $appPath
+     * @param  string $basePath
+     * @param  string $appNamespace
+     * @param  string $table
+     * @param  array $options
+     *
+     * @return array
+     */
     public function basicConfig($framework, $appPath, $basePath, $appNamespace, $table, $options)
     {
         $config = [
@@ -43,7 +55,7 @@ class ConfigService
             '_path_routes_'              => $basePath.'/routes/web.php',
             '_path_api_routes_'          => $basePath.'/routes/api.php',
             '_path_migrations_'          => $basePath.'/database/migrations',
-            '_path_factory_'             => $basePath.'/database/factories/ModelFactory.php',
+            '_path_factory_'             => $basePath.'/database/factories/'.snake_case($table).'Factory.php',
             'routes_prefix'              => '',
             'routes_suffix'              => '',
             '_app_namespace_'            => 'App\\',
