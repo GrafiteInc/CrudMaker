@@ -61,7 +61,7 @@ class _ucCamel_casePlural_Controller extends Controller
             return redirect(route('_sectionRoutePrefix__lower_casePlural_.edit', ['id' => $result->id]))->with('message', 'Successfully created');
         }
 
-        return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->with('message', 'Failed to create');
+        return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->withErrors('Failed to create');
     }
 
     /**
@@ -103,7 +103,7 @@ class _ucCamel_casePlural_Controller extends Controller
             return back()->with('message', 'Successfully updated');
         }
 
-        return back()->with('message', 'Failed to update');
+        return back()->withErrors('Failed to update');
     }
 
     /**
@@ -120,6 +120,6 @@ class _ucCamel_casePlural_Controller extends Controller
             return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->with('message', 'Successfully deleted');
         }
 
-        return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->with('message', 'Failed to delete');
+        return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->withErrors('Failed to delete');
     }
 }
