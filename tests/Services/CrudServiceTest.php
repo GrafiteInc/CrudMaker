@@ -65,6 +65,7 @@ class CrudServiceTest extends TestCase
             'options-serviceOnly'        => false,
             'options-apiOnly'            => false,
             'options-withFacade'         => false,
+            'options-withBaseService'    => false,
             'options-migration'          => true,
             'options-api'                => true,
             'options-schema'             => 'id:increments,name:string',

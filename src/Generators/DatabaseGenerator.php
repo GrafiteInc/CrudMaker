@@ -90,7 +90,7 @@ class DatabaseGenerator
             if ($key === 0) {
                 $parsedTable .= $this->getSchemaString($columnDetails, $columnDefinition, $columnDetailString);
             } else {
-                $parsedTable .= "\t\t".$this->getSchemaString($columnDetails, $columnDefinition, $columnDetailString);
+                $parsedTable .= "\t\t\t".$this->getSchemaString($columnDetails, $columnDefinition, $columnDetailString);
             }
         }
 

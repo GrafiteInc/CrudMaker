@@ -80,6 +80,7 @@ class ConfigService
             'options-ui'                 => $options['ui'],
             'options-serviceOnly'        => $options['serviceOnly'],
             'options-withFacade'         => $options['withFacade'],
+            'options-withBaseService'    => $options['withBaseService'],
             'options-migration'          => $options['migration'],
             'options-schema'             => $options['schema'],
             'options-relationships'      => $options['relationships'],

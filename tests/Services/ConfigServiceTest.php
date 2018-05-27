@@ -88,6 +88,7 @@ class ConfigServiceTest extends TestCase
                 'migration' => true,
                 'schema' => 'id:increments,name:string',
                 'relationships' => null,
+                'withBaseService' => false
             ]
         );
 

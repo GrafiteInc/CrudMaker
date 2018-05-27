@@ -60,6 +60,7 @@ class CrudMaker extends Command
         {--ui= : Select one of bootstrap|semantic for the UI}
         {--withoutViews : Prevent the generating of views}
         {--serviceOnly : Does not generate a Controller or Routes}
+        {--withBaseService : Creates service as an extension of a BaseService class}
         {--withFacade : Creates a facade that can be bound in your app to access the CRUD service}
         {--migration : Generates a migration file}
         {--asPackage= : Generate the CRUD as a package by setting a directory}
@@ -163,6 +164,7 @@ class CrudMaker extends Command
             'ui' => $this->option('ui'),
             'serviceOnly' => $this->option('serviceOnly'),
             'withFacade' => $this->option('withFacade'),
+            'withBaseService' => $this->option('withBaseService'),
             'migration' => $this->option('migration'),
             'schema' => $this->option('schema'),
             'asPackage' => $this->option('asPackage'),
