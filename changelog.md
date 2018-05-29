@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.4.1] - 2018-05-29
+
+### Added
+- withBaseService optionfor less code duplication
+
+### Changed
+- Better error messages
+
+### Fixed
+- Fixed factory issue
+
 ## [v1.4.0] - 2018-03-19
 
 ### Changed
