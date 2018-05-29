@@ -115,7 +115,7 @@ class ArtisanTest extends TestCase
 
     public function testFactory()
     {
-        $file = $this->destinationDir.'/database/factories/ModelFactory.php';
+        $file = $this->destinationDir.'/database/factories/BookFactory.php';
         $contents = file_get_contents($file);
 
         $this->assertContains('Book::class', $contents);
