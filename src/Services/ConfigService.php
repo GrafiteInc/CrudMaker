@@ -121,7 +121,7 @@ class ConfigService
             '_path_routes_'              => $appPath.'/Http/routes.php',
             '_path_api_routes_'          => $appPath.'/Http/api-routes.php',
             '_path_migrations_'          => $basePath.'/database/migrations',
-            '_path_factory_'             => $basePath.'/database/factories/ModelFactory.php',
+            '_path_factory_'             => $basePath.'/database/factories/'.snake_case($table).'Factory.php',
             'routes_prefix'              => "\n\nRoute::group(['namespace' => '".ucfirst($section)."', 'prefix' => '".strtolower($section)."', 'middleware' => ['web']], function () { \n",
             'routes_suffix'              => "\n});",
             '_app_namespace_'            => $appNamespace,
