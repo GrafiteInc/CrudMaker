@@ -71,7 +71,7 @@ class CrudGenerator
     {
         $this->fileService->mkdir($config['_path_controller_'], 0777, true);
 
-        $request = $this->filesystem->get($config['template_source'].'/Controller.txt');
+        $request = $this->fileService->get($config['template_source'].'/Controller.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
@@ -99,7 +99,7 @@ class CrudGenerator
             $this->fileService->mkdir($config[$repoPart], 0777, true);
         }
 
-        $model = $this->filesystem->get($config['template_source'].'/Model.txt');
+        $model = $this->fileService->get($config['template_source'].'/Model.txt');
         $model = $this->modelService->configTheModel($config, $model);
 
         foreach ($config as $key => $value) {
@@ -122,8 +122,8 @@ class CrudGenerator
     {
         $this->fileService->mkdir($config['_path_request_'], 0777, true);
 
-        $createRequest = $this->filesystem->get($config['template_source'].'/CreateRequest.txt');
-        $updateRequest = $this->filesystem->get($config['template_source'].'/UpdateRequest.txt');
+        $createRequest = $this->fileService->get($config['template_source'].'/CreateRequest.txt');
+        $updateRequest = $this->fileService->get($config['template_source'].'/UpdateRequest.txt');
 
         foreach ($config as $key => $value) {
             $createRequest = str_replace($key, $value, $createRequest);
@@ -147,11 +147,11 @@ class CrudGenerator
     {
         $this->fileService->mkdir($config['_path_service_'], 0777, true);
 
-        $service = $this->filesystem->get($config['template_source'].'/Service.txt');
-        $baseService = $this->filesystem->get($config['template_source'].'/BaseService.txt');
+        $service = $this->fileService->get($config['template_source'].'/Service.txt');
+        $baseService = $this->fileService->get($config['template_source'].'/BaseService.txt');
 
         if ($config['options-withBaseService'] ?? false) {
-            $service = $this->filesystem->get($config['template_source'].'/ExtendedService.txt');
+            $service = $this->fileService->get($config['template_source'].'/ExtendedService.txt');
         }
 
         foreach ($config as $key => $value) {
@@ -183,7 +183,7 @@ class CrudGenerator
             $this->filesystem->append($routesMaster, $config['routes_prefix']);
         }
 
-        $routes = $this->filesystem->get($config['template_source'].'/Routes.txt');
+        $routes = $this->fileService->get($config['template_source'].'/Routes.txt');
 
         foreach ($config as $key => $value) {
             $routes = str_replace($key, $value, $routes);
@@ -213,7 +213,7 @@ class CrudGenerator
             $this->putIfNotExists($config['_path_factory_'], '<?php');
         }
 
-        $factory = $this->filesystem->get($config['template_source'].'/Factory.txt');
+        $factory = $this->fileService->get($config['template_source'].'/Factory.txt');
 
         $factory = $this->tableService->getTableSchema($config, $factory);
 
@@ -235,7 +235,7 @@ class CrudGenerator
     {
         $this->fileService->mkdir($config['_path_facade_'], 0777, true);
 
-        $facade = $this->filesystem->get($config['template_source'].'/Facade.txt');
+        $facade = $this->fileService->get($config['template_source'].'/Facade.txt');
 
         foreach ($config as $key => $value) {
             $facade = str_replace($key, $value, $facade);
@@ -255,7 +255,7 @@ class CrudGenerator
      */
     public function generatePackageServiceProvider($config)
     {
-        $provider = $this->filesystem->get(__DIR__.'/../Templates/Provider.txt');
+        $provider = $this->fileService->get(__DIR__.'/../Templates/Provider.txt');
 
         foreach ($config as $key => $value) {
             $provider = str_replace($key, $value, $provider);
@@ -283,7 +283,7 @@ class CrudGenerator
         $filteredTestTemplates = $this->testService->filterTestTemplates($testTemplates, $serviceOnly, $apiOnly, $withApi);
 
         foreach ($filteredTestTemplates as $testTemplate) {
-            $test = $this->filesystem->get($testTemplate->getRealPath());
+            $test = $this->fileService->get($testTemplate->getRealPath());
             $testName = $config['_camel_case_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
             $testDirectory = $config['_path_tests_'].'/'.strtolower($testTemplate->getRelativePath());
 
@@ -327,7 +327,7 @@ class CrudGenerator
         $createdView = false;
 
         foreach (glob($config['template_source'].'/'.$viewTemplates.'/*') as $file) {
-            $viewContents = $this->filesystem->get($file);
+            $viewContents = $this->fileService->get($file);
             $basename = str_replace('txt', 'php', basename($file));
             foreach ($config as $key => $value) {
                 $viewContents = str_replace($key, $value, $viewContents);
@@ -355,7 +355,7 @@ class CrudGenerator
 
         $this->fileService->mkdir($config['_path_api_controller_'], 0777, true);
 
-        $routes = $this->filesystem->get($config['template_source'].'/ApiRoutes.txt');
+        $routes = $this->fileService->get($config['template_source'].'/ApiRoutes.txt');
 
         foreach ($config as $key => $value) {
             $routes = str_replace($key, $value, $routes);
@@ -363,7 +363,7 @@ class CrudGenerator
 
         $this->filesystem->append($routesMaster, $routes);
 
-        $request = $this->filesystem->get($config['template_source'].'/ApiController.txt');
+        $request = $this->fileService->get($config['template_source'].'/ApiController.txt');
 
         foreach ($config as $key => $value) {
             $request = str_replace($key, $value, $request);
@@ -388,6 +388,6 @@ class CrudGenerator
             return $this->filesystem->put($file, $contents);
         }
 
-        return $this->filesystem->get($file);
+        return $this->fileService->get($file);
     }
 }
