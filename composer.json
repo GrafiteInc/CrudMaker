@@ -25,7 +25,7 @@
             "Grafite\\CrudMaker\\": "src/"
         },
         "files": [
-          "src/Helpers/namespace.php"
+            "src/Helpers/namespace.php"
         ]
     },
     "autoload-dev": {

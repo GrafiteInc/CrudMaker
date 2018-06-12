@@ -29,7 +29,6 @@ class CrudMaker extends Command
         'dateTime',
         'decimal',
         'double',
-        'enum',
         'float',
         'integer',
         'ipAddress',
