@@ -148,15 +148,17 @@ class CrudGenerator
         $this->fileService->mkdir($config['_path_service_'], 0777, true);
 
         $service = $this->fileService->get($config['template_source'].'/Service.txt');
-        $baseService = $this->fileService->get($config['template_source'].'/BaseService.txt');
 
         if ($config['options-withBaseService'] ?? false) {
+            $baseService = $this->fileService->get($config['template_source'].'/BaseService.txt');
             $service = $this->fileService->get($config['template_source'].'/ExtendedService.txt');
         }
 
         foreach ($config as $key => $value) {
             $service = str_replace($key, $value, $service);
-            $baseService = str_replace($key, $value, $baseService);
+            if ($config['options-withBaseService'] ?? false) {
+                $baseService = str_replace($key, $value, $baseService);
+            }
         }
 
         $service = $this->putIfNotExists($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $service);
