@@ -10,6 +10,8 @@ use Grafite\CrudMaker\Traits\SchemaTrait;
  */
 class ValidatorService
 {
+    const VALID_COLUMN_NAME_REGEX = '[A-z\/_.]+';
+
     use SchemaTrait;
 
     /**
@@ -32,7 +34,7 @@ class ValidatorService
 
                 $columnDetails = explode('|', $columnDefinition[1]);
 
-                preg_match('([A-z\/_.]+)', $columnDetails[0], $columnDetailsType);
+                preg_match('('.self::VALID_COLUMN_NAME_REGEX.')', $columnDetails[0], $columnDetailsType);
 
                 if (!in_array(camel_case($columnDetailsType[0]), $command->columnTypes)) {
                     throw new Exception($columnDetailsType[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
