@@ -102,12 +102,12 @@ class ArtisanTest extends TestCase
 
     public function testTest()
     {
-        $fileA = $this->destinationDir.'/tests/feature/BookAcceptanceTest.php';
+        $fileA = $this->destinationDir.'/tests/Feature/BookAcceptanceTest.php';
         $contentsA = file_get_contents($fileA);
         $this->assertTrue(file_exists($fileA));
         $this->assertContains('class BookAcceptanceTest', $contentsA);
 
-        $fileB = $this->destinationDir.'/tests/unit/BookServiceTest.php';
+        $fileB = $this->destinationDir.'/tests/Unit/BookServiceTest.php';
         $contentsB = file_get_contents($fileB);
         $this->assertTrue(file_exists($fileB));
         $this->assertContains('class BookServiceTest', $contentsB);
