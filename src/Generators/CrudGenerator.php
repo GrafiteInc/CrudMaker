@@ -272,13 +272,13 @@ class CrudGenerator
      * Create the tests.
      *
      * @param array        $config
-     * @param string|array $serviceOnly
-     * @param string|array $apiOnly
-     * @param string|array $withApi
+     * @param bool $serviceOnly
+     * @param bool $apiOnly
+     * @param bool $withApi
      *
      * @return bool
      */
-    public function createTests($config, $serviceOnly = '', $apiOnly = false, $withApi = false)
+    public function createTests($config, $serviceOnly = false, $apiOnly = false, $withApi = false)
     {
         $testTemplates = $this->filesystem->allFiles($config['template_source'].'/Tests');
 
@@ -287,7 +287,7 @@ class CrudGenerator
         foreach ($filteredTestTemplates as $testTemplate) {
             $test = $this->fileService->get($testTemplate->getRealPath());
             $testName = $config['_camel_case_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
-            $testDirectory = $config['_path_tests_'].'/'.strtolower($testTemplate->getRelativePath());
+            $testDirectory = $config['_path_tests_'].'/'.$testTemplate->getRelativePath();
 
             $this->fileService->mkdir($testDirectory, 0777, true);
 
