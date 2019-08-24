@@ -1,5 +1,7 @@
 # CrudMaker
 
+> Unfortunately, we've decided to abandon this library. You're free to fork and maintain your own version if you like.
+
 **CrudMaker** - An incredibly powerful and some say magical CRUD maker for Laravel
 
 [![Build Status](https://travis-ci.org/GrafiteInc/CrudMaker.svg?branch=master)](https://travis-ci.org/GrafiteInc/CrudMaker)
